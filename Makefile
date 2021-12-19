@@ -1,7 +1,7 @@
-thesis.pdf: thesis.tex titlePage.tex bibliografia.tex esercizi.tex
-	@mkdir -p bin
-	latexmk -pdf -output-directory=bin thesis.tex
-	@mv ./bin/thesis.pdf ./
+thesis.pdf: thesis.tex sezioni/titlePage.tex sezioni/bibliografia.tex sezioni/esercizi.tex
+	@mkdir -p .bin/sezioni
+	latexmk -pdf -output-directory=.bin thesis.tex
+	@mv .bin/thesis.pdf ./
 
 clean:
-	rm -rf ./bin/*
+	rm -rf .bin

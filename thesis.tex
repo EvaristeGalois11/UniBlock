@@ -44,7 +44,7 @@
 \usepackage{appendix}
 \usepackage{siunitx}
 %--------------------------------------------------------------
-\usepackage{dia-classicthesis-ldpkg}
+\usepackage{lib/dia-classicthesis-ldpkg}
 %--------------------------------------------------------------
 % Options for classicthesis.sty:
 % tocaligned eulerchapternumbers drafting linedheaders 
@@ -94,7 +94,7 @@ parts]{classicthesis}
 %--------------------------------------------------------------
 % Frontmatter
 %--------------------------------------------------------------
-\include{titlePage}
+\include{sezioni/titlePage}
 \pagestyle{scrheadings}
 %--------------------------------------------------------------
 % Mainmatter
@@ -111,8 +111,8 @@ parts]{classicthesis}
 \emph{"Inserire citazione" \break --- Inserire autore citazione} \vspace{\stretch{2}}\null
 \end{flushright}
 \cleardoublepage
-\include{esercizi}
-\include{bibliografia}
+\include{sezioni/esercizi}
+\include{sezioni/bibliografia}
 %--------------------------------------------------------------
 \end{document}
 %--------------------------------------------------------------
