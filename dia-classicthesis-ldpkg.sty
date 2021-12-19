@@ -51,7 +51,6 @@
 \RequirePackage{xspace} % to get the spacing after macros right
 \RequirePackage{tabularx} % better tables
 \RequirePackage{mparhack} % get marginpar right
-\RequirePackage{fixltx2e} % fixes some LaTeX stuff
 %\RequirePackage{ellipsis} % ... ;-)                  
 \RequirePackage{relsize} % scale font up or down                                        
 \RequirePackage[smaller]{acronym} % nice macros for handling all acronyms in the thesis
@@ -98,7 +97,7 @@
     
 % ********************************************************************
 % caption numbering now w/o chapter number
-\RequirePackage{remreset}
+%\RequirePackage{remreset}
     \makeatletter
         \ifthenelse{\boolean{cld@nochapters}}%
         {\relax}{%
