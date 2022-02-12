@@ -1,3 +1,3 @@
 package it.unifi.nave.data;
 
-public class Event extends Hashable {}
+public abstract class Event extends Hashable {}
