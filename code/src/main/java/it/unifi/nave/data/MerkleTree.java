@@ -1,6 +1,7 @@
 package it.unifi.nave.data;
 
 import com.google.common.collect.Lists;
+import it.unifi.nave.crypto.CryptoFactory;
 
 import java.util.List;
 
@@ -29,6 +30,6 @@ public class MerkleTree {
       hashes.add(hashes.get(0));
     }
     String doubleHash = hashes.get(0) + hashes.get(1);
-    return HashUtil.hash(doubleHash);
+    return CryptoFactory.newHashUtil().hash(doubleHash);
   }
 }
