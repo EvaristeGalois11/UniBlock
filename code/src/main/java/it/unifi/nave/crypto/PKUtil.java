@@ -1,69 +1,45 @@
 package it.unifi.nave.crypto;
 
-import javax.crypto.*;
-import javax.crypto.spec.GCMParameterSpec;
-import javax.crypto.spec.SecretKeySpec;
-import java.nio.ByteBuffer;
-import java.nio.charset.StandardCharsets;
-import java.security.*;
-import java.util.Arrays;
-import java.util.Base64;
+import javax.crypto.KeyAgreement;
+import java.security.InvalidKeyException;
+import java.security.KeyPair;
+import java.security.KeyPairGenerator;
+import java.security.NoSuchAlgorithmException;
+import java.security.PrivateKey;
+import java.security.PublicKey;
 
 public class PKUtil {
+  private static final String PUBLIC_KEY_TYPE = "X25519";
+  private static final String PUBLIC_KEY_AGREEMENT = "XDH";
 
-  public void test() {
+  public KeyPair generateKeyPair() {
     try {
-      var test = "uno di noi";
-      System.out.println("The string that will be exchanged: " + test);
-      // ECC KEYS GENERATION
-      var kpg = KeyPairGenerator.getInstance("X25519");
-      var kp1 = kpg.generateKeyPair();
-      var kp2 = kpg.generateKeyPair();
-
-      // ENCRYPTION
-      var secret1 = generateSecret(kp1.getPrivate(), kp2.getPublic());
-      var encrypt = encrypt(secret1, test);
-      System.out.println("String encrypted by the first user: " + encrypt);
-
-      // DECRYPTION
-      var secret2 = generateSecret(kp2.getPrivate(), kp1.getPublic());
-      var decrypt = decrypt(secret2, Base64.getDecoder().decode(encrypt));
-      System.out.println("String decrypted by the second user: " + decrypt);
-    } catch (Exception e) {
+      return KeyPairGenerator.getInstance(PUBLIC_KEY_TYPE).generateKeyPair();
+    } catch (NoSuchAlgorithmException e) {
       e.printStackTrace();
+      throw new RuntimeException("This jre can't produce key of the necessary type", e);
     }
   }
 
-  private byte[] generateSecret(PrivateKey privateKey, PublicKey publicKey) throws Exception {
-    var agreement1 = KeyAgreement.getInstance("XDH");
-    agreement1.init(privateKey);
-    agreement1.doPhase(publicKey, true);
-    return agreement1.generateSecret();
+  public String encrypt(PrivateKey pk, PublicKey pbk, String string) {
+    var secret = generateSecret(pk, pbk);
+    return CryptoFactory.newAESUtil().encrypt(secret, string, true);
   }
 
-  private String encrypt(byte[] secret, String string) throws Exception {
-    var key = Arrays.copyOf(CryptoFactory.newHashUtil().hashRaw(secret), 16);
-    var iv = CryptoFactory.generateRandom(12);
-    var cipher = Cipher.getInstance("AES/GCM/NoPadding");
-    var parameterSpec = new GCMParameterSpec(128, iv);
-    cipher.init(Cipher.ENCRYPT_MODE, new SecretKeySpec(key, "AES"), parameterSpec);
-    var cipherText = cipher.doFinal(string.getBytes(StandardCharsets.UTF_8));
-    var cipherMessage =
-        ByteBuffer.allocate(iv.length + cipherText.length).put(iv).put(cipherText).array();
-    Arrays.fill(secret, (byte) 0);
-    Arrays.fill(key, (byte) 0);
-    Arrays.fill(iv, (byte) 0);
-    return Base64.getEncoder().encodeToString(cipherMessage);
+  public String decrypt(PrivateKey pk, PublicKey pbk, String string) {
+    var secret = generateSecret(pk, pbk);
+    return CryptoFactory.newAESUtil().decrypt(secret, string, true);
   }
 
-  private String decrypt(byte[] secret, byte[] encoded) throws Exception {
-    var key = Arrays.copyOf(CryptoFactory.newHashUtil().hashRaw(secret), 16);
-    var cipher = Cipher.getInstance("AES/GCM/NoPadding");
-    var parameterSpec = new GCMParameterSpec(128, encoded, 0, 12);
-    cipher.init(Cipher.DECRYPT_MODE, new SecretKeySpec(key, "AES"), parameterSpec);
-    var plainText = cipher.doFinal(encoded, 12, encoded.length - 12);
-    Arrays.fill(secret, (byte) 0);
-    Arrays.fill(key, (byte) 0);
-    return new String(plainText, StandardCharsets.UTF_8);
+  private byte[] generateSecret(PrivateKey privateKey, PublicKey publicKey) {
+    try {
+      var agreement = KeyAgreement.getInstance(PUBLIC_KEY_AGREEMENT);
+      agreement.init(privateKey);
+      agreement.doPhase(publicKey, true);
+      return agreement.generateSecret();
+    } catch (NoSuchAlgorithmException | InvalidKeyException e) {
+      e.printStackTrace();
+      throw new RuntimeException("This jre can't generate the secret", e);
+    }
   }
 }

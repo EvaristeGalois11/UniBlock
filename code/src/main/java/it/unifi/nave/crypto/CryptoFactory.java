@@ -13,6 +13,10 @@ public class CryptoFactory {
     return new PKUtil();
   }
 
+  public static AESUtil newAESUtil() {
+    return new AESUtil();
+  }
+
   public static byte[] generateRandom(int length) {
     var random = new byte[length];
     SECURE_RANDOM.nextBytes(random);

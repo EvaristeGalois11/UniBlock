@@ -1,6 +1,5 @@
 package it.unifi.nave;
 
-import it.unifi.nave.crypto.CryptoFactory;
 import it.unifi.nave.data.BlockHeader;
 
 import java.time.Duration;
@@ -8,7 +7,6 @@ import java.time.Instant;
 
 public class Main {
   public static void main(String[] args) {
-    CryptoFactory.newPKUtil().test();
   }
 
   private static void testMining() {
