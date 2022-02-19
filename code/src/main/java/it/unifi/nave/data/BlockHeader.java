@@ -2,7 +2,7 @@ package it.unifi.nave.data;
 
 import java.time.Instant;
 
-public class BlockHeader extends Hashable {
+public class BlockHeader implements Hashable {
   private final String previousHash;
   private final int difficulty;
   private Instant timestamp;

@@ -7,25 +7,25 @@ import java.util.List;
 public class Block {
   private BlockHeader blockHeader;
   private int eventsNum;
-  private List<Event> events;
+  private List<EventContainer> eventContainers;
 
   public Block(String previousHash, int difficulty) {
     blockHeader = new BlockHeader(previousHash, difficulty);
-    events = new ArrayList<>();
+    eventContainers = new ArrayList<>();
   }
 
-  public void addEvent(Event event) {
-    addEvents(Collections.singletonList(event));
+  public void addEvent(EventContainer eventContainer) {
+    addEvents(Collections.singletonList(eventContainer));
   }
 
-  public void addEvents(List<Event> events) {
-    this.events.addAll(events);
-    eventsNum = events.size();
+  public void addEvents(List<EventContainer> eventContainers) {
+    this.eventContainers.addAll(eventContainers);
+    eventsNum = eventContainers.size();
     updateRootHash();
   }
 
   private void updateRootHash() {
-    MerkleTree merkleTree = new MerkleTree(events);
+    MerkleTree merkleTree = new MerkleTree(eventContainers);
     blockHeader.setRootHash(merkleTree.getRootHash());
   }
 

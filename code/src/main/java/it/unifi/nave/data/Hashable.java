@@ -7,20 +7,20 @@ import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 
-public abstract class Hashable implements Serializable {
-  public String hash() {
+public interface Hashable extends Serializable {
+  default String hash() {
+    return CryptoFactory.newHashUtil().hash(serialize());
+  }
+
+  default byte[] serialize() {
     try {
-      return CryptoFactory.newHashUtil().hash(serialize());
+      ByteArrayOutputStream arrayOutputStream = new ByteArrayOutputStream();
+      ObjectOutputStream objectOutputStream = new ObjectOutputStream(arrayOutputStream);
+      objectOutputStream.writeObject(this);
+      return arrayOutputStream.toByteArray();
     } catch (IOException e) {
       e.printStackTrace();
       throw new RuntimeException("Something went wrong", e);
     }
-  }
-
-  private byte[] serialize() throws IOException {
-    ByteArrayOutputStream arrayOutputStream = new ByteArrayOutputStream();
-    ObjectOutputStream objectOutputStream = new ObjectOutputStream(arrayOutputStream);
-    objectOutputStream.writeObject(this);
-    return arrayOutputStream.toByteArray();
   }
 }

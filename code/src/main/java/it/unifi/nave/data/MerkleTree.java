@@ -7,14 +7,14 @@ import java.util.List;
 
 // TODO Creare una vera struttura ad albero
 public class MerkleTree {
-  private List<Event> events;
+  private List<EventContainer> eventContainers;
 
-  public MerkleTree(List<Event> events) {
-    this.events = events;
+  public MerkleTree(List<EventContainer> eventContainers) {
+    this.eventContainers = eventContainers;
   }
 
   public String getRootHash() {
-    return getRootHash(events.stream().map(Hashable::hash).toList());
+    return getRootHash(eventContainers.stream().map(Hashable::hash).toList());
   }
 
   private String getRootHash(List<String> hashes) {

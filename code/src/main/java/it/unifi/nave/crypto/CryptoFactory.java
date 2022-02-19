@@ -1,6 +1,7 @@
 package it.unifi.nave.crypto;
 
 import java.security.SecureRandom;
+import java.util.Arrays;
 
 public class CryptoFactory {
   private static final SecureRandom SECURE_RANDOM = new SecureRandom();
@@ -21,5 +22,11 @@ public class CryptoFactory {
     var random = new byte[length];
     SECURE_RANDOM.nextBytes(random);
     return random;
+  }
+
+  public static void erase(byte[]... arrays) {
+    for (var array : arrays) {
+      Arrays.fill(array, (byte) 0);
+    }
   }
 }
