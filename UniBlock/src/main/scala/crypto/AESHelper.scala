@@ -23,14 +23,12 @@ object AESHelper {
 
   def encrypt(secret: Array[Byte], bytes: Array[Byte], derive: Boolean): Array[Byte] = {
     val key = if (derive) deriveKey(secret) else secret
-    val iv = CommonHelper.generateRandom(IV_GCM_SIZE_BYTE)
+    val iv = RandomHelper.generateRandom(IV_GCM_SIZE_BYTE)
     val cipher = Cipher.getInstance(AES_SUITE)
     val parameterSpec = new GCMParameterSpec(GCM_TAG_SIZE_BIT, iv)
     cipher.init(Cipher.ENCRYPT_MODE, new SecretKeySpec(key, SYMMETRIC_CIPHER), parameterSpec)
     val cipherText = cipher.doFinal(bytes)
-    val cipherMessage = ByteBuffer.allocate(iv.length + cipherText.length).put(iv).put(cipherText).array
-    CommonHelper.erase(secret, key, iv)
-    cipherMessage
+    ByteBuffer.allocate(iv.length + cipherText.length).put(iv).put(cipherText).array
   }
 
   def decryptEncoded(secret: Array[Byte], string: String, derive: Boolean): String = decryptEncoded(secret, Base64.getDecoder.decode(string), derive)
@@ -45,9 +43,7 @@ object AESHelper {
     val cipher = Cipher.getInstance(AES_SUITE)
     val parameterSpec = new GCMParameterSpec(GCM_TAG_SIZE_BIT, bytes, 0, IV_GCM_SIZE_BYTE)
     cipher.init(Cipher.DECRYPT_MODE, new SecretKeySpec(key, SYMMETRIC_CIPHER), parameterSpec)
-    val plainText = cipher.doFinal(bytes, IV_GCM_SIZE_BYTE, bytes.length - IV_GCM_SIZE_BYTE)
-    CommonHelper.erase(secret, key)
-    plainText
+    cipher.doFinal(bytes, IV_GCM_SIZE_BYTE, bytes.length - IV_GCM_SIZE_BYTE)
   }
 
   private def deriveKey(source: Array[Byte]): Array[Byte] = util.Arrays.copyOf(HashHelper.hashRaw(source), AES_KEY_SIZE_BYTE)

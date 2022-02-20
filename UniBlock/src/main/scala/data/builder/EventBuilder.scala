@@ -1,7 +1,7 @@
 package it.unifi.nave.uniblock
 package data.builder
 
-import crypto.{AESHelper, CommonHelper, PKHelper}
+import crypto.{AESHelper, RandomHelper, PKHelper}
 import data.EventContainer
 import data.event.Event
 
@@ -40,10 +40,5 @@ class EventBuilder(var dhPair: KeyPair, var signPair: KeyPair, var container: Ev
   def encryptAndSign(key: Array[Byte], event: Event): Array[Byte] = {
     val unsignedPayload = AESHelper.encrypt(key, event.serialize, false)
     PKHelper.sign(unsignedPayload, signPair.getPrivate)
-  }
-
-  def getContainer: EventContainer = {
-    CommonHelper.erase(payloadKey)
-    container
   }
 }

@@ -18,7 +18,6 @@ object Main extends App {
   val confirm = PKHelper.verify(sign, keyPair.getPublic)
   System.out.println("Esito verifica: " + confirm)
 
-
   private def testMining(): Unit = {
     val blockHeader = new BlockHeader("temp", 10)
     val start = Instant.now

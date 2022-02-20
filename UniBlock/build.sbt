@@ -7,3 +7,5 @@ lazy val root = (project in file("."))
     name := "UniBlock",
     idePackagePrefix := Some("it.unifi.nave.uniblock")
   )
+
+libraryDependencies += "org.scalatest" %% "scalatest" % "3.2.11" % "test"
