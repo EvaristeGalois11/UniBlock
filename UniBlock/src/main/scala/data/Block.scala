@@ -11,6 +11,7 @@ class Block(var blockHeader: BlockHeader, var eventsNum: Int, var eventContainer
 
   def addEvent(eventContainer: EventContainer): Unit = {
     addEvents(eventContainer :: Nil)
+    updateRootHash()
   }
 
   def addEvents(eventContainers: List[EventContainer]): Unit = {
