@@ -8,6 +8,8 @@ trait Blockchain extends Iterable[Block] {
 
   def retrieveBlock(hash: String): Option[Block]
 
+  def retrieveGenesisBlock(): Block
+
   def retrieveLastBlock(): Block
 
   def saveEvent(event: EventContainer, blockHash: String): Unit

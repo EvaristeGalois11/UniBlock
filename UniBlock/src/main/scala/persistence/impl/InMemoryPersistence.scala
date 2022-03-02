@@ -9,6 +9,7 @@ import java.security.PrivateKey
 object InMemoryPersistence extends Blockchain with PrivateKeyManager {
   private var blockchain: Map[String, Block] = Map.empty
   private var events: Map[String, EventContainer] = Map.empty
+  private var genesisBlock: Block = _
   private var lastBlock: Block = _
   private var dhPk: PrivateKey = _
   private var signPk: PrivateKey = _
@@ -19,6 +20,8 @@ object InMemoryPersistence extends Blockchain with PrivateKeyManager {
   }
 
   override def retrieveBlock(hash: String): Option[Block] = blockchain.get(hash)
+
+  override def retrieveGenesisBlock(): Block = genesisBlock
 
   override def retrieveLastBlock(): Block = lastBlock
 

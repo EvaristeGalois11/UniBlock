@@ -6,7 +6,7 @@ import crypto.HashHelper
 import java.io.{ByteArrayOutputStream, ObjectOutputStream}
 
 trait Hashable extends Serializable {
-  def hash: String = HashHelper.hash(serialize)
+  def hash: String = HashHelper.hash(Left(serialize))
 
   def serialize: Array[Byte] = {
     val arrayOutputStream = new ByteArrayOutputStream

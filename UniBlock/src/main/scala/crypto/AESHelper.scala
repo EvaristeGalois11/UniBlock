@@ -3,7 +3,6 @@ package crypto
 
 import java.nio.ByteBuffer
 import java.nio.charset.StandardCharsets
-import java.util
 import java.util.Base64
 import javax.crypto.Cipher
 import javax.crypto.spec.{GCMParameterSpec, SecretKeySpec}
@@ -15,37 +14,33 @@ object AESHelper {
   private val SYMMETRIC_CIPHER = "AES"
   private val AES_SUITE = "AES/GCM/NoPadding"
 
-  def encryptEncoded(secret: Array[Byte], string: String, derive: Boolean): String = encryptEncoded(secret, string.getBytes(StandardCharsets.UTF_8), derive)
-
-  def encryptEncoded(secret: Array[Byte], bytes: Array[Byte], derive: Boolean): String = Base64.getEncoder.encodeToString(encrypt(secret, bytes, derive))
-
-  def encrypt(secret: Array[Byte], string: String, derive: Boolean): Array[Byte] = encrypt(secret, string.getBytes(StandardCharsets.UTF_8), derive)
-
-  def encrypt(secret: Array[Byte], bytes: Array[Byte], derive: Boolean): Array[Byte] = {
+  def encrypt(secret: Array[Byte], plain: Either[Array[Byte], String], derive: Boolean = true): String = {
     val key = if (derive) deriveKey(secret) else secret
     val iv = RandomHelper.generateRandom(IV_GCM_SIZE_BYTE)
     val cipher = Cipher.getInstance(AES_SUITE)
     val parameterSpec = new GCMParameterSpec(GCM_TAG_SIZE_BIT, iv)
     cipher.init(Cipher.ENCRYPT_MODE, new SecretKeySpec(key, SYMMETRIC_CIPHER), parameterSpec)
-    val cipherText = cipher.doFinal(bytes)
-    ByteBuffer.allocate(iv.length + cipherText.length).put(iv).put(cipherText).array
+    val cipherText = cipher.doFinal(plain match {
+      case Left(value) => value
+      case Right(value) => value.getBytes(StandardCharsets.UTF_8)
+    })
+    val result = ByteBuffer.allocate(iv.length + cipherText.length).put(iv).put(cipherText).array
+    Base64.getEncoder.encodeToString(result)
   }
 
-  def decryptEncoded(secret: Array[Byte], string: String, derive: Boolean): String = decryptEncoded(secret, Base64.getDecoder.decode(string), derive)
-
-  def decryptEncoded(secret: Array[Byte], bytes: Array[Byte], derive: Boolean) = new String(decrypt(secret, bytes, derive), StandardCharsets.UTF_8)
-
-  def decrypt(secret: Array[Byte], string: String, derive: Boolean): Array[Byte] = decrypt(secret, Base64.getDecoder.decode(string), derive)
-
-  def decrypt(secret: Array[Byte], bytes: Array[Byte], derive: Boolean): Array[Byte] = {
-    val key = if (derive) deriveKey(secret)
-    else secret
+  def decrypt(secret: Array[Byte], encrypted: Either[Array[Byte], String], derive: Boolean = true): String = {
+    val key = if (derive) deriveKey(secret) else secret
     val cipher = Cipher.getInstance(AES_SUITE)
+    val bytes = encrypted match {
+      case Left(value) => value
+      case Right(value) => Base64.getDecoder.decode(value)
+    }
     val parameterSpec = new GCMParameterSpec(GCM_TAG_SIZE_BIT, bytes, 0, IV_GCM_SIZE_BYTE)
     cipher.init(Cipher.DECRYPT_MODE, new SecretKeySpec(key, SYMMETRIC_CIPHER), parameterSpec)
-    cipher.doFinal(bytes, IV_GCM_SIZE_BYTE, bytes.length - IV_GCM_SIZE_BYTE)
+    val result = cipher.doFinal(bytes, IV_GCM_SIZE_BYTE, bytes.length - IV_GCM_SIZE_BYTE)
+    new String(result, StandardCharsets.UTF_8)
   }
 
-  private def deriveKey(source: Array[Byte]): Array[Byte] = util.Arrays.copyOf(HashHelper.hashRaw(source), AES_KEY_SIZE_BYTE)
+  private def deriveKey(source: Array[Byte]): Array[Byte] = HashHelper.hashRaw(Left(source)).take(AES_KEY_SIZE_BYTE)
 
 }

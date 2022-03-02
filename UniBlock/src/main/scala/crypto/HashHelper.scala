@@ -8,11 +8,15 @@ import java.util.HexFormat
 object HashHelper {
   private val HASH_TYPE = "SHA3-256"
 
-  def hash(string: String): String = hash(string.getBytes(StandardCharsets.UTF_8))
+  def hash(toHash: Either[Array[Byte], String]): String = {
+    HexFormat.of.formatHex(hashRaw(toHash))
+  }
 
-  def hash(bytes: Array[Byte]): String = HexFormat.of.formatHex(hashRaw(bytes))
-
-  def hashRaw(string: String): Array[Byte] = hashRaw(string.getBytes(StandardCharsets.UTF_8))
-
-  def hashRaw(bytes: Array[Byte]): Array[Byte] = MessageDigest.getInstance(HASH_TYPE).digest(bytes)
+  def hashRaw(toHash: Either[Array[Byte], String]): Array[Byte] = {
+    val bytes = toHash match {
+      case Left(value) => value
+      case Right(value) => value.getBytes(StandardCharsets.UTF_8)
+    }
+    MessageDigest.getInstance(HASH_TYPE).digest(bytes)
+  }
 }

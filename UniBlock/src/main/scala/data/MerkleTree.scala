@@ -19,7 +19,7 @@ class MerkleTree(private var eventContainers: List[EventContainer]) {
   @tailrec
   private def reduceHash(hashes: List[String]): String = hashes match {
     case singleHash :: Nil => reduceHash(singleHash :: singleHash :: Nil)
-    case firstHash :: secondHash => HashHelper.hash(firstHash + secondHash)
+    case firstHash :: secondHash => HashHelper.hash(Right(firstHash + secondHash))
   }
 
 }

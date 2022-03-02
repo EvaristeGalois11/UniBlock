@@ -1,8 +1,9 @@
 package it.unifi.nave.uniblock
 package data.builder
 
-import crypto.{AESHelper, RandomHelper, PKHelper}
+import crypto.{AESHelper, PKHelper}
 import data.EventContainer
+import data.EventType.EventType
 import data.event.Event
 
 import java.security.{KeyPair, PublicKey}
@@ -18,10 +19,11 @@ class EventBuilder(var dhPair: KeyPair, var signPair: KeyPair, var container: Ev
 
   private def initKeyPair(): Unit = ???
 
-  private def encryptPayload(event: Event): Unit = {
+  private def encryptPayload(event: Event, eventType: EventType): Unit = {
     val idAuthor = retrieveIdUser
-    container = new EventContainer(idAuthor)
-    container.payload = encryptAndSign(payloadKey, event)
+    container = new EventContainer(idAuthor, eventType)
+    // TODO Cambiare payload
+//    container.payload = encryptAndSign(payloadKey, event)
     addKey(idAuthor, dhPair.getPublic)
   }
 
@@ -32,13 +34,14 @@ class EventBuilder(var dhPair: KeyPair, var signPair: KeyPair, var container: Ev
   }
 
   def addKey(id: String, pbk: PublicKey): Unit = {
-    container.addKey(id, PKHelper.encrypt(dhPair.getPrivate, pbk, payloadKey))
+    // TODO Cambiare mappa in stringhe
+//    container.addKey(id, PKHelper.encrypt(dhPair.getPrivate, pbk, Left(payloadKey)))
   }
 
   private def retrievePbk(id: String): PublicKey = ???
 
-  def encryptAndSign(key: Array[Byte], event: Event): Array[Byte] = {
-    val unsignedPayload = AESHelper.encrypt(key, event.serialize, false)
-    PKHelper.sign(unsignedPayload, signPair.getPrivate)
+  def encryptAndSign(key: Array[Byte], event: Event): String = {
+    val unsignedPayload = AESHelper.encrypt(key, Left(event.serialize), derive = false)
+    PKHelper.sign(Right(unsignedPayload), signPair.getPrivate) + unsignedPayload
   }
 }
