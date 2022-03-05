@@ -1,34 +1,24 @@
 package it.unifi.nave.uniblock
 package data
 
+class Block(previousHash: String, difficulty: Int) {
+  private val _blockHeader = new BlockHeader(previousHash, difficulty)
+  private var _eventContainers: List[EventContainer] = List.empty
 
-// TODO Rivedere classe
-class Block(var blockHeader: BlockHeader, var eventsNum: Int, var eventContainers: List[EventContainer]) {
+  def blockHeader: BlockHeader = _blockHeader
 
-  //  def this(previousHash: String, difficulty: Int) {
-  //    blockHeader = new BlockHeader(previousHash, difficulty)
-  //  }
+  def eventContainers: List[EventContainer] = _eventContainers
 
   def addEvent(eventContainer: EventContainer): Unit = {
     addEvents(eventContainer :: Nil)
-    updateRootHash()
   }
 
   def addEvents(eventContainers: List[EventContainer]): Unit = {
-    this.eventContainers ++= eventContainers
-    eventsNum = eventContainers.size
-    updateRootHash()
+    _eventContainers ++= eventContainers
+    _blockHeader.rootHash = MerkleTree.rootHash(_eventContainers)
   }
 
-  private def updateRootHash(): Unit = {
-    val merkleTree = new MerkleTree(eventContainers)
-    blockHeader.rootHash = merkleTree.rootHash
-  }
+  def mine(): Unit = while (!_blockHeader.isMined) _blockHeader.incrementNonce()
 
-  def mine(): Unit = {
-    while ( {
-      !blockHeader.isMined
-    }) blockHeader.incrementNonce()
-  }
-
+  override def toString = s"Block($blockHeader, $eventContainers)"
 }

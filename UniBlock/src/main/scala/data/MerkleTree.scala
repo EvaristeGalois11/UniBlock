@@ -5,10 +5,9 @@ import crypto.HashHelper
 
 import scala.annotation.tailrec
 
-// TODO Creare una vera struttura ad albero
-class MerkleTree(private var eventContainers: List[EventContainer]) {
+object MerkleTree {
 
-  def rootHash: String = getRootHash(eventContainers.map(_.hash))
+  def rootHash(eventContainers: List[EventContainer]): String = getRootHash(eventContainers.map(_.hash))
 
   @tailrec
   private def getRootHash(hashes: List[String]): String = hashes match {

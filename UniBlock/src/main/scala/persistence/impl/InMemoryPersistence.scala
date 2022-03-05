@@ -1,14 +1,13 @@
 package it.unifi.nave.uniblock
 package persistence.impl
 
-import data.{Block, EventContainer}
+import data.Block
 import persistence.{Blockchain, PrivateKeyManager}
 
 import java.security.PrivateKey
 
 object InMemoryPersistence extends Blockchain with PrivateKeyManager {
   private var blockchain: Map[String, Block] = Map.empty
-  private var events: Map[String, EventContainer] = Map.empty
   private var genesisBlock: Block = _
   private var lastBlock: Block = _
   private var dhPk: PrivateKey = _
@@ -25,16 +24,9 @@ object InMemoryPersistence extends Blockchain with PrivateKeyManager {
 
   override def retrieveLastBlock(): Block = lastBlock
 
-  override def saveEvent(event: EventContainer, blockHash: String): Unit = {
-    events += (event.hash -> event)
-    blockchain.get(blockHash).foreach(b => b.addEvent(event))
-  }
-
-  override def retrieveEvent(hash: String): Option[EventContainer] = events.get(hash)
-
   override def saveDhPk(pk: PrivateKey): Unit = dhPk = pk
 
-  override def saveSign(pk: PrivateKey): Unit = signPk = pk
+  override def saveSignPk(pk: PrivateKey): Unit = signPk = pk
 
   override def retrieveDhPk(): PrivateKey = dhPk
 

@@ -43,4 +43,6 @@ object AESHelper {
 
   private def deriveKey(source: Array[Byte]): Array[Byte] = HashHelper.hashRaw(Left(source)).take(AES_KEY_SIZE_BYTE)
 
+  def randomKey(): Array[Byte] = RandomHelper.generateRandom(AES_KEY_SIZE_BYTE)
+
 }
