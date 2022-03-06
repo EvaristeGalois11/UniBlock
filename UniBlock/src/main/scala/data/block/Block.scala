@@ -2,6 +2,7 @@ package it.unifi.nave.uniblock
 package data.block
 
 import data.event.Event
+import helper.StringHelper
 
 class Block(previousHash: String, difficulty: Int) {
   private val _blockHeader = new BlockHeader(previousHash, difficulty)
@@ -23,16 +24,12 @@ class Block(previousHash: String, difficulty: Int) {
   def mine(): Unit = while (!_blockHeader.isMined) _blockHeader.incrementNonce()
 
   override def toString: String = {
-    s"""------------------------------------------------------------------------
-       |------------------------------Block Header------------------------------
-       |------------------------------------------------------------------------
+    s"""${StringHelper.formatTitle("Block Header")}
        |$blockHeader
-       |------------------------------------------------------------------------
-       |---------------------------------Events---------------------------------
-       |------------------------------------------------------------------------
+       |${StringHelper.formatTitle("Event")}
        |$eventsToString
-       |------------------------------------------------------------------------""".stripMargin
+       |${StringHelper.emptyLine}""".stripMargin
   }
 
-  private def eventsToString: String = events.map(_.toString).mkString("\n------------------------------------------------------------------------\n")
+  private def eventsToString: String = events.map(_.toString).mkString(s"\n${StringHelper.emptyLine}\n")
 }

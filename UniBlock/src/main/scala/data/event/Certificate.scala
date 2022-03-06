@@ -3,26 +3,28 @@ package data.event
 
 import crypto.{HashHelper, PKHelper}
 import data.event.Certificate.CertificateType
+import helper.StringHelper
 import persistence.PersistenceManager
 
 import java.security.PublicKey
 import java.util.Base64
 
 case class Certificate(userId: String, name: String, certificateType: CertificateType, signPbk: PublicKey, dhPbk: PublicKey, sign: String) extends Event {
+
   override def toString: String = {
-    s"""hash = $hash
-       |userId = $userId
-       |name = $name
-       |certificateType = $certificateType
+    s"""${StringHelper.formatLeft(hash, "hash")}
+       |${StringHelper.formatLeft(userId, "userId")}
+       |${StringHelper.formatLeft(name, "name")}
+       |${StringHelper.formatLeft(certificateType, "certificateType")}
        |${keyToString(signPbk, "SIGNING")}
        |${keyToString(dhPbk, "DIFFIE-HELLMAN")}
-       |sign = $sign""".stripMargin
+       |${StringHelper.formatLeft(sign, "sign")}""".stripMargin
   }
 
   private def keyToString(pbk: PublicKey, label: String): String = {
-    s"""-----BEGIN $label PUBLIC KEY-----
-       |${Base64.getEncoder.encodeToString(pbk.getEncoded)}
-       |-----END $label PUBLIC KEY-----""".stripMargin
+    s"""${StringHelper.formatLeft(s"BEGIN $label PUBLIC KEY")}
+       |${StringHelper.formatString(Base64.getEncoder.encodeToString(pbk.getEncoded))}
+       |${StringHelper.formatLeft(s"END $label PUBLIC KEY")}""".stripMargin
   }
 }
 
