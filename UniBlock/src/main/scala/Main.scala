@@ -9,7 +9,10 @@ import java.security.PrivateKey
 import java.time.{LocalDate, Month}
 
 object Main extends App {
-  private val difficulty = 6
+  val difficulty = args match {
+    case Array(difficulty) => difficulty.toInt
+    case _ => 5
+  }
 
   println("Generazione blocco di genesi")
   val genesisHash = initGenesis
