@@ -10,12 +10,12 @@ import persistence.impl.InMemoryPersistence
 import java.io.{ByteArrayInputStream, ObjectInputStream}
 import java.util.Base64
 
-object PersistenceFactory {
-  private val persistenceFactory = InMemoryPersistence
+object PersistenceManager {
+  private val persistenceManager = InMemoryPersistence
 
-  def blockchain: Blockchain = persistenceFactory
+  def blockchain: Blockchain = persistenceManager
 
-  def keyManager: PrivateKeyManager = persistenceFactory
+  def keyManager: KeyManager = persistenceManager
 
   def searchCertificate(id: String): Certificate = searchCertificate(id, Event.Certificate)
 

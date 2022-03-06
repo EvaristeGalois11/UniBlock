@@ -20,5 +20,17 @@ class Block(previousHash: String, difficulty: Int) {
 
   def mine(): Unit = while (!_blockHeader.isMined) _blockHeader.incrementNonce()
 
-  override def toString = s"Block($blockHeader, $eventContainers)"
+  override def toString: String = {
+    s"""------------------------------------------------------------------------
+       |------------------------------Block Header------------------------------
+       |------------------------------------------------------------------------
+       |$blockHeader
+       |------------------------------------------------------------------------
+       |---------------------------------Events---------------------------------
+       |------------------------------------------------------------------------
+       |$eventsToString
+       |------------------------------------------------------------------------""".stripMargin
+  }
+
+  private def eventsToString: String = eventContainers.map(_.toString).mkString("------------------------------------------------------------------------\n")
 }

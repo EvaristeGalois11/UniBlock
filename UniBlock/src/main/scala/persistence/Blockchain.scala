@@ -8,7 +8,6 @@ trait Blockchain extends Iterable[Block] {
 
   def retrieveBlock(hash: String): Option[Block]
 
-  // TODO Rivedere questo metodo
   def retrieveGenesisBlock(): Block
 
   def retrieveLastBlock(): Block
