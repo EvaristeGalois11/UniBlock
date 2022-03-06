@@ -1,5 +1,7 @@
 package it.unifi.nave.uniblock
-package data
+package data.block
+
+import data.Hashable
 
 import java.time.Instant
 

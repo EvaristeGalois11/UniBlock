@@ -2,13 +2,10 @@ package it.unifi.nave.uniblock
 package persistence
 
 import crypto.PKHelper
-import data.EventContainer
-import data.event.Event.EventType
-import data.event.{Certificate, Event}
+import data.event.Certificate
 import persistence.impl.InMemoryPersistence
 
-import java.io.{ByteArrayInputStream, ObjectInputStream}
-import java.util.Base64
+import java.security.PublicKey
 
 object PersistenceManager {
   private val persistenceManager = InMemoryPersistence
@@ -17,24 +14,24 @@ object PersistenceManager {
 
   def keyManager: KeyManager = persistenceManager
 
-  def searchCertificate(id: String): Certificate = searchCertificate(id, Event.Certificate)
-
-  private def searchCertificate(id: String, eventType: EventType): Certificate = blockchain
-    .flatMap(_.eventContainers)
-    .find(e => e.eventType == eventType && e.author == id)
-    .map(deserializeCertificate)
+  def searchCertificate(userId: String): Certificate = blockchain
+    .flatMap(_.events)
+    .flatMap {
+      case certificate: Certificate => Some(certificate)
+      case _ => None
+    }
+    .find(_.userId == userId)
+    .filter(verifyCertificate)
     .get
 
-  private def deserializeCertificate(eventContainer: EventContainer): Certificate = {
-    if (!verifyCertificate(eventContainer)) throw new IllegalArgumentException("Can't verify certificate")
-    val ois = new ObjectInputStream(new ByteArrayInputStream(Base64.getDecoder.decode(eventContainer.payload)))
-    ois.readObject.asInstanceOf[Certificate]
+  private def verifyCertificate(certificate: Certificate): Boolean = certificate match {
+    case Certificate(_, _, Certificate.Genesis, _, _, _) => true
+    case Certificate(_, _, _, signPbk, dhPbk, sign) => verify(signPbk, dhPbk, sign)
   }
 
-  private def verifyCertificate(eventContainer: EventContainer): Boolean = eventContainer match {
-    case EventContainer(_, Event.Genesis, _, _) => true
-    case EventContainer(_, _, payload, sign) => PKHelper.verify(Right(payload), sign, searchGenesisCertificate.signPbk)
+  private def verify(signPbk: PublicKey, dhPbk: PublicKey, sign: String): Boolean = {
+    PKHelper.verify(Left(signPbk.getEncoded ++ dhPbk.getEncoded), sign, searchGenesisCertificate.signPbk)
   }
 
-  def searchGenesisCertificate: Certificate = searchCertificate("", Event.Genesis)
+  def searchGenesisCertificate: Certificate = searchCertificate(Certificate.GENESIS)
 }

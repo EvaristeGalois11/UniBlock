@@ -1,7 +1,7 @@
 package it.unifi.nave.uniblock
 package persistence
 
-import data.Block
+import data.block.Block
 
 trait Blockchain extends Iterable[Block] {
   def saveBlock(block: Block): Unit

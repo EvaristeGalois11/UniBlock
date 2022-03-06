@@ -1,21 +1,23 @@
 package it.unifi.nave.uniblock
-package data
+package data.block
+
+import data.event.Event
 
 class Block(previousHash: String, difficulty: Int) {
   private val _blockHeader = new BlockHeader(previousHash, difficulty)
-  private var _eventContainers: List[EventContainer] = List.empty
+  private var _events: List[Event] = List.empty
 
   def blockHeader: BlockHeader = _blockHeader
 
-  def eventContainers: List[EventContainer] = _eventContainers
+  def events: List[Event] = _events
 
-  def addEvent(eventContainer: EventContainer): Unit = {
-    addEvents(eventContainer :: Nil)
+  def addEvent(event: Event): Unit = {
+    addEvents(event :: Nil)
   }
 
-  def addEvents(eventContainers: List[EventContainer]): Unit = {
-    _eventContainers ++= eventContainers
-    _blockHeader.rootHash = MerkleTree.rootHash(_eventContainers)
+  def addEvents(events: List[Event]): Unit = {
+    _events ++= events
+    _blockHeader.rootHash = MerkleTree.rootHash(_events)
   }
 
   def mine(): Unit = while (!_blockHeader.isMined) _blockHeader.incrementNonce()
@@ -32,5 +34,5 @@ class Block(previousHash: String, difficulty: Int) {
        |------------------------------------------------------------------------""".stripMargin
   }
 
-  private def eventsToString: String = eventContainers.map(_.toString).mkString("------------------------------------------------------------------------\n")
+  private def eventsToString: String = events.map(_.toString).mkString("\n------------------------------------------------------------------------\n")
 }

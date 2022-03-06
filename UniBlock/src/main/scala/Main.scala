@@ -1,8 +1,8 @@
 package it.unifi.nave.uniblock
 
 import crypto.PKHelper
-import data.event.{Certificate, EventBuilder, ExamResult}
-import data.{Block, EventContainer}
+import data.block.Block
+import data.event.{Certificate, EncryptedEvent, ExamResult}
 import persistence.PersistenceManager
 
 import java.security.PrivateKey
@@ -13,8 +13,10 @@ object Main extends App {
 
   println("Generazione blocco di genesi")
   val genesisHash = initGenesis
+  println()
   println("Generazione di professore e studente")
   val certificateHash = createUsers(genesisHash)
+  println()
   println("Pubblicazione voto appello")
   publishResult(certificateHash._1, certificateHash._2, certificateHash._3)
 
@@ -22,9 +24,9 @@ object Main extends App {
     val block = new Block("GENESIS_BLOCK", difficulty)
     val genesisDhPk = PKHelper.generateDhKeyPair
     val genesisSignPk = PKHelper.generateSignKeyPair
-    val genesisEventContainer = Certificate.build(genesisSignPk.getPublic, genesisDhPk.getPublic, genesis = true)
-    registerPk(genesisSignPk.getPrivate, genesisDhPk.getPrivate, "")
-    block.addEvent(genesisEventContainer)
+    val genesisCertificate = Certificate("", genesisSignPk.getPublic, genesisDhPk.getPublic, Certificate.Genesis)
+    registerPk(genesisSignPk.getPrivate, genesisDhPk.getPrivate, Certificate.GENESIS)
+    block.addEvent(genesisCertificate)
     block.mine()
     PersistenceManager.blockchain.saveBlock(block)
     println(block)
@@ -39,22 +41,22 @@ object Main extends App {
     block.mine()
     PersistenceManager.blockchain.saveBlock(block)
     println(block)
-    (professorEvent.author, studentEvent.author, block.blockHeader.hash)
+    (professorEvent.userId, studentEvent.userId, block.blockHeader.hash)
   }
 
-  private def createProfessor: EventContainer = {
+  private def createProfessor: Certificate = {
     val professorDhPk = PKHelper.generateDhKeyPair
     val professorSignPk = PKHelper.generateSignKeyPair
-    val professorCertificate = Certificate.build(professorSignPk.getPublic, professorDhPk.getPublic)
-    registerPk(professorSignPk.getPrivate, professorDhPk.getPrivate, professorCertificate.author)
+    val professorCertificate = Certificate("Lorenzo Bettini", professorSignPk.getPublic, professorDhPk.getPublic, Certificate.Professor)
+    registerPk(professorSignPk.getPrivate, professorDhPk.getPrivate, professorCertificate.userId)
     professorCertificate
   }
 
-  private def createStudent: EventContainer = {
+  private def createStudent: Certificate = {
     val studentDhPk = PKHelper.generateDhKeyPair
     val studentSignPk = PKHelper.generateSignKeyPair
-    val studentCertificate = Certificate.build(studentSignPk.getPublic, studentDhPk.getPublic)
-    registerPk(studentSignPk.getPrivate, studentDhPk.getPrivate, studentCertificate.author)
+    val studentCertificate = Certificate("Claudio Nave", studentSignPk.getPublic, studentDhPk.getPublic, Certificate.Student)
+    registerPk(studentSignPk.getPrivate, studentDhPk.getPrivate, studentCertificate.userId)
     studentCertificate
   }
 
@@ -63,10 +65,10 @@ object Main extends App {
     PersistenceManager.keyManager.saveDhPk(id, dhPk)
   }
 
-  def publishResult(professor: String, student: String, certificateHash: String): Unit = {
+  private def publishResult(professor: String, student: String, certificateHash: String): Unit = {
     val event = ExamResult(professor, student, "PROGRAMMAZIONE", LocalDate.of(2017, Month.JUNE, 29), 30)
     val block = new Block(certificateHash, difficulty)
-    val eventContainer = EventBuilder.buildContainer(event, professor, student :: Nil)
+    val eventContainer = EncryptedEvent(event, professor, student :: Nil)
     block.addEvent(eventContainer)
     block.mine()
     PersistenceManager.blockchain.saveBlock(block)

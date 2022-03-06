@@ -1,13 +1,14 @@
 package it.unifi.nave.uniblock
-package data
+package data.block
 
 import crypto.HashHelper
+import data.event.Event
 
 import scala.annotation.tailrec
 
 object MerkleTree {
 
-  def rootHash(eventContainers: List[EventContainer]): String = getRootHash(eventContainers.map(_.hash))
+  def rootHash(events: List[Event]): String = getRootHash(events.map(_.hash))
 
   @tailrec
   private def getRootHash(hashes: List[String]): String = hashes match {

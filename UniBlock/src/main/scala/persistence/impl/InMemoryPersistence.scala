@@ -1,8 +1,9 @@
 package it.unifi.nave.uniblock
 package persistence.impl
 
-import data.Block
 import persistence.{Blockchain, KeyManager}
+
+import it.unifi.nave.uniblock.data.block.Block
 
 import java.security.PrivateKey
 
