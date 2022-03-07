@@ -3,6 +3,7 @@ package data.event
 
 import crypto.{AESHelper, PKHelper}
 import data.event.Encryptable.EventType
+import helper.StringHelper
 import persistence.PersistenceManager
 
 case class EncryptedEvent(author: String, eventType: EventType, payload: String, sign: String) extends Event {
@@ -19,20 +20,16 @@ case class EncryptedEvent(author: String, eventType: EventType, payload: String,
   def mapOfKeys: Map[String, String] = _mapOfKeys
 
   override def toString: String = {
-    s"""hash = $hash
-       |author = $author
-       |eventType = $eventType
+    s"""${StringHelper.formatLeft(hash, "hash")}
+       |${StringHelper.formatLeft(author, "author")}
+       |${StringHelper.formatLeft(eventType, "eventType")}
        |$mapOfKeysToString
-       |$payloadToString
-       |sign = $sign""".stripMargin
+       |${StringHelper.formatLeft(payload, "encrypted event")}
+       |${StringHelper.formatLeft(sign, "signature")}""".stripMargin
   }
 
-  private def mapOfKeysToString: String = mapOfKeys.map(f => s"Receiver = ${f._1} -> Key = ${f._2}").mkString("\n")
-
-  private def payloadToString: String = {
-    s"""-----BEGIN ENCRYPTED EVENT-----
-       |${payload.grouped(72).mkString("\n")}
-       |-----END ENCRYPTED EVENT-----""".stripMargin
+  private def mapOfKeysToString: String = {
+    mapOfKeys.map(f => StringHelper.formatLeft(f._1, "receiver") + "\n" + StringHelper.formatLeft(f._2,"key")).mkString("\n")
   }
 }
 

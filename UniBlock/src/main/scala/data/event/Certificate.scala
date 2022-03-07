@@ -16,15 +16,13 @@ case class Certificate(userId: String, name: String, certificateType: Certificat
        |${StringHelper.formatLeft(userId, "userId")}
        |${StringHelper.formatLeft(name, "name")}
        |${StringHelper.formatLeft(certificateType, "certificateType")}
-       |${keyToString(signPbk, "SIGNING")}
-       |${keyToString(dhPbk, "DIFFIE-HELLMAN")}
-       |${StringHelper.formatLeft(sign, "sign")}""".stripMargin
+       |${keyToString(signPbk, "sign")}
+       |${keyToString(dhPbk, "dh")}
+       |${StringHelper.formatLeft(sign, "signature")}""".stripMargin
   }
 
   private def keyToString(pbk: PublicKey, label: String): String = {
-    s"""${StringHelper.formatLeft(s"BEGIN $label PUBLIC KEY")}
-       |${StringHelper.formatString(Base64.getEncoder.encodeToString(pbk.getEncoded))}
-       |${StringHelper.formatLeft(s"END $label PUBLIC KEY")}""".stripMargin
+    s"""${StringHelper.formatLeft(Base64.getEncoder.encodeToString(pbk.getEncoded), s"$label public key")}""".stripMargin
   }
 }
 

@@ -2,38 +2,37 @@ package it.unifi.nave.uniblock
 package helper
 
 object StringHelper {
-  val LINE_LENGHT = 100
+  val LINE_LENGTH = 100
   val PADDING = "-"
-  val LEFT_MARGIN = 5
+  val MARGIN = 5
+  val FIELD_LENGTH = 20
 
   def emptyLine: String = {
-    PADDING.repeat(LINE_LENGHT)
+    PADDING.repeat(LINE_LENGTH)
   }
 
   def formatCenter(string: String): String = {
     val normalized = if (string.length % 2 == 0) string else string + PADDING
-    val toFill = LINE_LENGHT - string.length
+    val toFill = LINE_LENGTH - string.length
     PADDING.repeat(toFill / 2) + normalized + PADDING.repeat(toFill / 2)
   }
 
   def formatTitle(title: String): String = {
     s"""$emptyLine
-       |${formatCenter(title)}
+       |${formatCenter(s" $title ")}
        |$emptyLine""".stripMargin
   }
 
-  def formatLeft(any: Any, name: String): String = {
-    formatLeft(s"$name = $any")
+  def formatLeft(any: Any, label: String): String = {
+    formatLeft(any.toString, label)
   }
 
-  def formatLeft(string: String): String = {
-    PADDING.repeat(LEFT_MARGIN) + string + PADDING.repeat(LINE_LENGHT - LEFT_MARGIN - string.length)
-  }
-
-  def formatString(string: String): String = {
-    val leftMargin = PADDING.repeat(LEFT_MARGIN)
-    val realLine = LINE_LENGHT - LEFT_MARGIN
-    val rightMargin = PADDING.repeat(realLine - string.length % realLine)
-    string.grouped(LINE_LENGHT - LEFT_MARGIN).mkString(leftMargin, s"\n$leftMargin", rightMargin)
+  def formatLeft(string: String, label: String): String = {
+    val margin = PADDING.repeat(MARGIN)
+    val fieldName = s"$margin${(" " + label + " ").padTo(FIELD_LENGTH, PADDING(0))} = "
+    val leftMargin = PADDING.repeat(fieldName.length - 1) + " "
+    val realLine = LINE_LENGTH - fieldName.length - MARGIN - 1
+    val rightMargin = " " + PADDING.repeat(realLine - string.length % realLine) + margin
+    string.grouped(realLine).mkString(fieldName, s" $margin\n$leftMargin", rightMargin)
   }
 }
