@@ -1,8 +1,9 @@
 package it.unifi.nave.uniblock
 package data.block
 
-import crypto.HashHelper
 import data.event.Event
+
+import it.unifi.nave.uniblock.helper.crypto.HashHelper
 
 import scala.annotation.tailrec
 

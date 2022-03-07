@@ -1,9 +1,10 @@
 package it.unifi.nave.uniblock
 package persistence
 
-import crypto.PKHelper
 import data.event.Certificate
 import persistence.impl.InMemoryPersistence
+
+import it.unifi.nave.uniblock.helper.crypto.PKHelper
 
 import java.security.PublicKey
 

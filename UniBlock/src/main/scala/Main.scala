@@ -1,9 +1,10 @@
 package it.unifi.nave.uniblock
 
-import crypto.PKHelper
 import data.block.Block
 import data.event.{Certificate, EncryptedEvent, ExamResult}
 import persistence.PersistenceManager
+
+import it.unifi.nave.uniblock.helper.crypto.PKHelper
 
 import java.security.PrivateKey
 import java.time.{LocalDate, Month}

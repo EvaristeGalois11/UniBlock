@@ -1,7 +1,7 @@
 package it.unifi.nave.uniblock
 package data
 
-import crypto.HashHelper
+import it.unifi.nave.uniblock.helper.crypto.HashHelper
 
 import java.io.{ByteArrayOutputStream, ObjectOutputStream}
 

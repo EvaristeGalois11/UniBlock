@@ -1,5 +1,5 @@
 package it.unifi.nave.uniblock
-package crypto
+package helper.crypto
 
 import java.nio.charset.StandardCharsets
 import java.security.MessageDigest

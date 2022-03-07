@@ -1,10 +1,11 @@
 package it.unifi.nave.uniblock
 package data.event
 
-import crypto.{AESHelper, PKHelper}
 import data.event.Encryptable.EventType
 import helper.StringHelper
 import persistence.PersistenceManager
+
+import it.unifi.nave.uniblock.helper.crypto.{AESHelper, PKHelper}
 
 case class EncryptedEvent(author: String, eventType: EventType, payload: String, sign: String) extends Event {
   private var _mapOfKeys: Map[String, String] = Map.empty

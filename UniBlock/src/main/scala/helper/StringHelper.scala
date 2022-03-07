@@ -7,9 +7,7 @@ object StringHelper {
   val MARGIN = 5
   val FIELD_LENGTH = 20
 
-  def emptyLine: String = {
-    PADDING.repeat(LINE_LENGTH)
-  }
+  def emptyLine: String = PADDING.repeat(LINE_LENGTH)
 
   def formatCenter(string: String): String = {
     val normalized = if (string.length % 2 == 0) string else string + PADDING
@@ -23,9 +21,7 @@ object StringHelper {
        |$emptyLine""".stripMargin
   }
 
-  def formatLeft(any: Any, label: String): String = {
-    formatLeft(any.toString, label)
-  }
+  def formatLeft(any: Any, label: String): String = formatLeft(any.toString, label)
 
   def formatLeft(string: String, label: String): String = {
     val margin = PADDING.repeat(MARGIN)

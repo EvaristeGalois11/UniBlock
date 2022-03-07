@@ -1,10 +1,11 @@
 package it.unifi.nave.uniblock
 package data.event
 
-import crypto.{HashHelper, PKHelper}
 import data.event.Certificate.CertificateType
 import helper.StringHelper
 import persistence.PersistenceManager
+
+import it.unifi.nave.uniblock.helper.crypto.{HashHelper, PKHelper}
 
 import java.security.PublicKey
 import java.util.Base64
