@@ -26,7 +26,7 @@ class Block(previousHash: String, difficulty: Int) {
   override def toString: String = {
     s"""${StringHelper.formatTitle("Block Header")}
        |$blockHeader
-       |${StringHelper.formatTitle("Event")}
+       |${StringHelper.formatTitle("Events")}
        |$eventsToString
        |${StringHelper.emptyLine}""".stripMargin
   }

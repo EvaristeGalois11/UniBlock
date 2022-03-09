@@ -17,7 +17,7 @@ object StringHelper {
 
   def formatTitle(title: String): String = {
     s"""$emptyLine
-       |${formatCenter(s" $title ")}
+       |${formatCenter(s" ${title.toUpperCase} ")}
        |$emptyLine""".stripMargin
   }
 

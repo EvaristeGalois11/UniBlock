@@ -20,7 +20,6 @@ class BlockHeader(val previousHash: String, val difficulty: Int, var rootHash: S
       _nonce = 0
     } else {
       _nonce += 1
-      if (nonce % 1000000 == 0) println(nonce)
     }
 
   def isMined: Boolean = hash.startsWith("0".repeat(difficulty))

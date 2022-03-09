@@ -15,13 +15,13 @@ object Main extends App {
     case _ => 5
   }
 
-  println("Generazione blocco di genesi")
+  println("Generazione blocco di genesi...")
   val genesisHash = initGenesis
   println()
-  println("Generazione di professore e studente")
+  println("Generazione di professore e studente...")
   val certificateHash = createUsers(genesisHash)
   println()
-  println("Pubblicazione voto appello")
+  println("Pubblicazione voto appello...")
   publishResult(certificateHash._1, certificateHash._2, certificateHash._3)
 
   private def initGenesis: String = {
