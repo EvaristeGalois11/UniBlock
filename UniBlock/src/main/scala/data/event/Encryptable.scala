@@ -23,11 +23,10 @@ case class ExamBooking(student: String, codeExam: String, date: LocalDate) exten
   override def getType: EventType = Encryptable.ExamBooking
 }
 
-case class ExamResult(professor: String, student: String, codeExam: String,
-                      date: LocalDate, result: Int) extends Encryptable {
+case class ExamResult(professor: String, student: String, codeExam: String, date: LocalDate, result: Int) extends Encryptable {
   override def getType: EventType = Encryptable.ExamResult
 }
 
-case class ExamConfirm(student: String, codeExam: String, confirm: Boolean) extends Encryptable {
+case class ExamConfirm(student: String, codeExam: String, date: LocalDate, confirm: Boolean) extends Encryptable {
   override def getType: EventType = Encryptable.ExamConfirm
 }
