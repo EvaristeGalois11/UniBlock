@@ -10,6 +10,8 @@ class Block(previousHash: String, difficulty: Int) {
 
   def blockHeader: BlockHeader = _blockHeader
 
+//  def blockHeader_=(blockHeader: BlockHeader): Unit = _blockHeader = blockHeader
+
   def events: List[Event] = _events
 
   def addEvent(event: Event): Unit = {

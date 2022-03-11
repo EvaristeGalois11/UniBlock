@@ -4,6 +4,7 @@ import data.block.Block
 import data.event._
 import helper.crypto.PKHelper
 import persistence.PersistenceManager
+import service.MinerService
 
 import java.security.PrivateKey
 import java.time.{LocalDate, Month}
@@ -11,7 +12,6 @@ import java.time.{LocalDate, Month}
 object Main extends App {
   val difficulty = args match {
     case Array(difficulty) => difficulty.toInt
-    case _ => 5
   }
 
   println("Generazione blocco di genesi...")
@@ -43,6 +43,7 @@ object Main extends App {
   println()
   println("Accettazione risultato...")
   val confirm = confirmExam(professor, students, result.blockHeader.hash)
+  MinerService.terminate()
 
   private def initGenesis: Block = {
     val genesisDhPk = PKHelper.generateDhKeyPair
@@ -105,7 +106,7 @@ object Main extends App {
   private def mineBlock(previousHash: String, events: Event*): Block = {
     val block = new Block(previousHash, difficulty)
     block.addEvents(events.toList)
-    block.mine()
+    MinerService(block)
     PersistenceManager.blockchain.saveBlock(block)
     println(block)
     block
