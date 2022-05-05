@@ -1,8 +1,6 @@
 package it.unifi.nave.uniblock
 package helper
 
-import helper.StringHelper.PADDING
-
 object StringHelper {
   val LINE_LENGTH = 100
   val PADDING = "-"
