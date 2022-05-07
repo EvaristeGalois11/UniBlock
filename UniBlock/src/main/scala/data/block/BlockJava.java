@@ -42,4 +42,8 @@ public class BlockJava {
     public BlockHeaderJava getBlockHeader() {
         return blockHeader;
     }
+
+    public List<EventJava> getEvents() {
+        return events;
+    }
 }

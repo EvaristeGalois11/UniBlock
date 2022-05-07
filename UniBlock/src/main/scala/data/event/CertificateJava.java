@@ -4,6 +4,7 @@ import it.unifi.nave.uniblock.helper.StringHelper;
 import it.unifi.nave.uniblock.helper.StringHelperJava;
 import it.unifi.nave.uniblock.helper.crypto.HashHelperJava;
 import it.unifi.nave.uniblock.helper.crypto.PKHelperJava;
+import it.unifi.nave.uniblock.persistence.PersistenceManagerJava;
 
 import java.nio.ByteBuffer;
 import java.security.PublicKey;
@@ -32,8 +33,7 @@ public record CertificateJava(String userId, String name, CertificateType certif
     }
 
     private static String authorizedKey(PublicKey signPbk, PublicKey dhPbk) {
-        // TODO Porting persistence manager
-        return PKHelperJava.sign(concatPbk(signPbk, dhPbk), null/*PersistenceManager.keyManager.retrieveSignPk(GENESIS).get*/);
+        return PKHelperJava.sign(concatPbk(signPbk, dhPbk), PersistenceManagerJava.getKeyManager().retrieveSignPk(GENESIS).orElseThrow());
     }
 
     @Override

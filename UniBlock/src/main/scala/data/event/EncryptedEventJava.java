@@ -4,6 +4,7 @@ import it.unifi.nave.uniblock.helper.StringHelper;
 import it.unifi.nave.uniblock.helper.crypto.AESHelperJava;
 import it.unifi.nave.uniblock.helper.crypto.HashHelperJava;
 import it.unifi.nave.uniblock.helper.crypto.PKHelperJava;
+import it.unifi.nave.uniblock.persistence.PersistenceManagerJava;
 
 import java.nio.charset.StandardCharsets;
 import java.security.PrivateKey;
@@ -86,11 +87,10 @@ public class EncryptedEventJava implements EventJava {
                 .collect(Collectors.joining("\n"));
     }
 
-    // TODO porting persistence manager
     public static EncryptedEventJava build(EncryptableJava event, String author, List<String> receivers) {
         var payloadKey = AESHelperJava.randomKey();
         var payload = AESHelperJava.encrypt(payloadKey, HashHelperJava.serialize(event), false);
-        var sign = PKHelperJava.sign(payload.getBytes(StandardCharsets.UTF_8), null /*PersistenceManager.keyManager.retrieveSignPk(author).get*/);
+        var sign = PKHelperJava.sign(payload.getBytes(StandardCharsets.UTF_8), PersistenceManagerJava.getKeyManager().retrieveSignPk(author).orElseThrow());
         var eventContainer = new EncryptedEventJava(author, event.getType(), payload, sign);
         Stream.concat(receivers.stream(), Stream.of(author))
                 .map(id -> encryptKey(id, payloadKey, author))
@@ -98,10 +98,9 @@ public class EncryptedEventJava implements EventJava {
         return eventContainer;
     }
 
-    // TODO porting persistence manager
     private static Map.Entry<String, String> encryptKey(String id, byte[] key, String author) {
-        PublicKey pbk = null/*PersistenceManager.searchCertificate(id).dhPbk*/;
-        PrivateKey dhPk = null/*PersistenceManager.keyManager.retrieveDhPk(author).get*/;
+        PublicKey pbk = PersistenceManagerJava.searchCertificate(id).dhPbk();
+        PrivateKey dhPk = PersistenceManagerJava.getKeyManager().retrieveDhPk(author).orElseThrow();
         return Map.entry(id, PKHelperJava.encrypt(dhPk, pbk, key));
     }
 
