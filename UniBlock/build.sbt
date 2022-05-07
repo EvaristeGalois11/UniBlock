@@ -8,4 +8,4 @@ lazy val root = (project in file("."))
     idePackagePrefix := Some("it.unifi.nave.uniblock")
   )
 
-libraryDependencies += "org.scalatest" %% "scalatest" % "3.2.11" % "test"
+libraryDependencies += "com.google.guava" % "guava" % "31.1-jre"
