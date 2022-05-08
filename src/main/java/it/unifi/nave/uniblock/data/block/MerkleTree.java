@@ -1,5 +1,6 @@
 package it.unifi.nave.uniblock.data.block;
 
+import com.google.common.collect.Lists;
 import it.unifi.nave.uniblock.data.event.Event;
 import it.unifi.nave.uniblock.helper.crypto.HashHelper;
 
@@ -14,8 +15,7 @@ public class MerkleTree {
         if (hashes.size() == 1) {
             return hashes.get(0);
         } else {
-            return null;
-//            return getRootHash(Lists.partition(hashes, 2).stream().map(MerkleTree::reduceHash).toList());
+            return getRootHash(Lists.partition(hashes, 2).stream().map(MerkleTree::reduceHash).toList());
         }
     }
 

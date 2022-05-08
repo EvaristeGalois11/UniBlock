@@ -1,6 +1,10 @@
 package it.unifi.nave.uniblock.helper;
 
-// TODO Rivedere con commons
+import com.google.common.base.Splitter;
+import com.google.common.base.Strings;
+
+import java.util.stream.Collectors;
+
 public class StringHelper {
     private static final int LINE_LENGTH = 100;
     private static final String PADDING = "-";
@@ -28,12 +32,11 @@ public class StringHelper {
     }
 
     public static String formatLeft(String string, String label) {
-        return null;
-//        var margin = PADDING.repeat(MARGIN);
-//        var fieldName = margin + Strings.padEnd(" " + label + " ", FIELD_LENGTH, PADDING.charAt(0)) + " = ";
-//        var leftMargin = PADDING.repeat(fieldName.length() - 1) + " ";
-//        var realLine = LINE_LENGTH - fieldName.length() - MARGIN - 1;
-//        var rightMargin = " " + ((string.length() % realLine != 0) ? PADDING.repeat(realLine - string.length() % realLine) : "") + margin;
-//        return Splitter.fixedLength(realLine).splitToStream(string).collect(Collectors.joining(" " + margin + "\n" + leftMargin, fieldName, rightMargin));
+        var margin = PADDING.repeat(MARGIN);
+        var fieldName = margin + Strings.padEnd(" " + label + " ", FIELD_LENGTH, PADDING.charAt(0)) + " = ";
+        var leftMargin = PADDING.repeat(fieldName.length() - 1) + " ";
+        var realLine = LINE_LENGTH - fieldName.length() - MARGIN - 1;
+        var rightMargin = " " + ((string.length() % realLine != 0) ? PADDING.repeat(realLine - string.length() % realLine) : "") + margin;
+        return Splitter.fixedLength(realLine).splitToStream(string).collect(Collectors.joining(" " + margin + "\n" + leftMargin, fieldName, rightMargin));
     }
 }
