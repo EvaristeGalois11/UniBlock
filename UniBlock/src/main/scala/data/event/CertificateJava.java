@@ -1,6 +1,5 @@
 package it.unifi.nave.uniblock.data.event;
 
-import it.unifi.nave.uniblock.helper.StringHelper;
 import it.unifi.nave.uniblock.helper.StringHelperJava;
 import it.unifi.nave.uniblock.helper.crypto.HashHelperJava;
 import it.unifi.nave.uniblock.helper.crypto.PKHelperJava;
@@ -38,13 +37,13 @@ public record CertificateJava(String userId, String name, CertificateType certif
 
     @Override
     public String toString() {
-        return StringHelper.formatLeft(HashHelperJava.hash(this), "hash")
-                + StringHelper.formatLeft(userId, "userId")
-                + StringHelper.formatLeft(name, "name")
-                + StringHelper.formatLeft(certificateType, "certificateType")
-                + keyToString(signPbk, "sign")
-                + keyToString(dhPbk, "dh")
-                + StringHelper.formatLeft(sign, "signature");
+        return StringHelperJava.formatLeft(HashHelperJava.hash(this), "hash") + "\n"
+                + StringHelperJava.formatLeft(userId, "userId") + "\n"
+                + StringHelperJava.formatLeft(name, "name") + "\n"
+                + StringHelperJava.formatLeft(certificateType, "certificateType") + "\n"
+                + keyToString(signPbk, "sign") + "\n"
+                + keyToString(dhPbk, "dh") + "\n"
+                + StringHelperJava.formatLeft(sign, "signature");
     }
 
     private String keyToString(PublicKey pbk, String label) {

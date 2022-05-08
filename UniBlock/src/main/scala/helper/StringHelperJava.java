@@ -1,5 +1,10 @@
 package it.unifi.nave.uniblock.helper;
 
+import com.google.common.base.Splitter;
+import com.google.common.base.Strings;
+
+import java.util.stream.Collectors;
+
 // TODO Rivedere con commons
 public class StringHelperJava {
     private static final int LINE_LENGTH = 100;
@@ -18,8 +23,8 @@ public class StringHelperJava {
     }
 
     public static String formatTitle(String title) {
-        return emptyLine()
-                + formatCenter(title.toUpperCase())
+        return emptyLine() + "\n"
+                + formatCenter(title.toUpperCase()) + "\n"
                 + emptyLine();
     }
 
@@ -29,10 +34,10 @@ public class StringHelperJava {
 
     public static String formatLeft(String string, String label) {
         var margin = PADDING.repeat(MARGIN);
-        var fieldName = margin + (" " + label + " ");
+        var fieldName = margin + Strings.padEnd(" " + label + " ", FIELD_LENGTH, PADDING.charAt(0)) + " = ";
         var leftMargin = PADDING.repeat(fieldName.length() - 1) + " ";
         var realLine = LINE_LENGTH - fieldName.length() - MARGIN - 1;
         var rightMargin = " " + ((string.length() % realLine != 0) ? PADDING.repeat(realLine - string.length() % realLine) : "") + margin;
-        return string;
+        return Splitter.fixedLength(realLine).splitToStream(string).collect(Collectors.joining(" " + margin + "\n" + leftMargin, fieldName, rightMargin));
     }
 }

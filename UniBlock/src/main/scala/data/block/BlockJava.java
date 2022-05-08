@@ -1,7 +1,7 @@
 package it.unifi.nave.uniblock.data.block;
 
 import it.unifi.nave.uniblock.data.event.EventJava;
-import it.unifi.nave.uniblock.helper.StringHelper;
+import it.unifi.nave.uniblock.helper.StringHelperJava;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -28,15 +28,15 @@ public class BlockJava {
 
     @Override
     public String toString() {
-        return StringHelper.formatTitle("Block Header")
-                + blockHeader
-                + StringHelper.formatTitle("Events")
-                + eventsToString()
-                + StringHelper.emptyLine();
+        return StringHelperJava.formatTitle("Block Header") + "\n"
+                + blockHeader + "\n"
+                + StringHelperJava.formatTitle("Events") + "\n"
+                + eventsToString() + "\n"
+                + StringHelperJava.emptyLine();
     }
 
     private String eventsToString() {
-        return events.stream().map(Object::toString).collect(Collectors.joining("\n" + StringHelper.emptyLine() + "\n"));
+        return events.stream().map(Object::toString).collect(Collectors.joining("\n" + StringHelperJava.emptyLine() + "\n"));
     }
 
     public BlockHeaderJava getBlockHeader() {

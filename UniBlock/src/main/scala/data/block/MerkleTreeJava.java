@@ -20,9 +20,8 @@ public class MerkleTreeJava {
     }
 
     private static String reduceHash(List<String> hashes) {
-        if (hashes.size() == 1) {
-            hashes.add(hashes.get(0));
-        }
-        return HashHelperJava.hash(String.join("", hashes));
+        var first = hashes.get(0);
+        var second = hashes.size() == 2 ? hashes.get(1) : first;
+        return HashHelperJava.hash(first + second);
     }
 }

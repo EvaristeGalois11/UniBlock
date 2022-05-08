@@ -28,7 +28,7 @@ public class InMemoryPersistenceJava implements BlockchainJava, KeyManagerJava {
 
     @Override
     public Optional<BlockJava> retrieveBlock(String hash) {
-        return Optional.of(blockchain.get(hash));
+        return Optional.ofNullable(blockchain.get(hash));
     }
 
     @Override

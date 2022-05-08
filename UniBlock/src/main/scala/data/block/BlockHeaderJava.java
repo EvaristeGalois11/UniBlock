@@ -1,13 +1,14 @@
 package it.unifi.nave.uniblock.data.block;
 
-import it.unifi.nave.uniblock.helper.StringHelper;
+import it.unifi.nave.uniblock.helper.StringHelperJava;
 import it.unifi.nave.uniblock.helper.crypto.HashHelperJava;
 
+import java.io.Serializable;
 import java.time.Instant;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 
-public class BlockHeaderJava implements Cloneable {
+public class BlockHeaderJava implements Serializable, Cloneable {
     private final String previousHash;
     private final int difficulty;
     private String rootHash = "";
@@ -19,27 +20,18 @@ public class BlockHeaderJava implements Cloneable {
         this.difficulty = difficulty;
     }
 
-    public void incrementNonce() {
-        if (Integer.MAX_VALUE == nonce) {
-            timestamp = Instant.now();
-            nonce = 0;
-        } else {
-            nonce += 1;
-        }
-    }
-
     public boolean isMined() {
         return HashHelperJava.hash(this).startsWith("0".repeat(difficulty));
     }
 
     @Override
     public String toString() {
-        return StringHelper.formatLeft(HashHelperJava.hash(this), "hash")
-                + StringHelper.formatLeft(previousHash, "previousHash")
-                + StringHelper.formatLeft(difficulty, "difficulty")
-                + StringHelper.formatLeft(rootHash, "rootHash")
-                + StringHelper.formatLeft(timestampToString(), "timestamp")
-                + StringHelper.formatLeft(nonce, "nonce");
+        return StringHelperJava.formatLeft(HashHelperJava.hash(this), "hash") + "\n"
+                + StringHelperJava.formatLeft(previousHash, "previousHash") + "\n"
+                + StringHelperJava.formatLeft(difficulty, "difficulty") + "\n"
+                + StringHelperJava.formatLeft(rootHash, "rootHash") + "\n"
+                + StringHelperJava.formatLeft(timestampToString(), "timestamp") + "\n"
+                + StringHelperJava.formatLeft(nonce, "nonce");
     }
 
     private String timestampToString() {

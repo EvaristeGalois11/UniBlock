@@ -13,6 +13,7 @@ public record MinerJava(BlockHeaderJava blockHeader, int start, int end) impleme
             blockHeader.setNonce(i);
             if (blockHeader.isMined()) {
                 result = i;
+                break;
             }
         }
         return Optional.ofNullable(result);

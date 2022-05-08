@@ -1,6 +1,6 @@
 package it.unifi.nave.uniblock.data.event;
 
-import it.unifi.nave.uniblock.helper.StringHelper;
+import it.unifi.nave.uniblock.helper.StringHelperJava;
 import it.unifi.nave.uniblock.helper.crypto.AESHelperJava;
 import it.unifi.nave.uniblock.helper.crypto.HashHelperJava;
 import it.unifi.nave.uniblock.helper.crypto.PKHelperJava;
@@ -9,6 +9,7 @@ import it.unifi.nave.uniblock.persistence.PersistenceManagerJava;
 import java.nio.charset.StandardCharsets;
 import java.security.PrivateKey;
 import java.security.PublicKey;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -26,6 +27,7 @@ public class EncryptedEventJava implements EventJava {
         this.eventType = eventType;
         this.payload = payload;
         this.sign = sign;
+        mapOfKeys = new HashMap<>();
     }
 
     public void addKey(String id, String key) {
@@ -73,17 +75,17 @@ public class EncryptedEventJava implements EventJava {
     }
 
     public String toString() {
-        return StringHelper.formatLeft(HashHelperJava.hash(this), "hash")
-                + StringHelper.formatLeft(author, "author")
-                + StringHelper.formatLeft(eventType, "eventType")
-                + mapOfKeysToString()
-                + StringHelper.formatLeft(payload, "encrypted event")
-                + StringHelper.formatLeft(sign, "signature");
+        return StringHelperJava.formatLeft(HashHelperJava.hash(this), "hash") + "\n"
+                + StringHelperJava.formatLeft(author, "author") + "\n"
+                + StringHelperJava.formatLeft(eventType, "eventType") + "\n"
+                + mapOfKeysToString() + "\n"
+                + StringHelperJava.formatLeft(payload, "encrypted event") + "\n"
+                + StringHelperJava.formatLeft(sign, "signature");
     }
 
     private String mapOfKeysToString() {
         return mapOfKeys.entrySet().stream()
-                .map(e -> StringHelper.formatLeft(e.getKey(), "receiver") + "\n" + StringHelper.formatLeft(e.getValue(), "key"))
+                .map(e -> StringHelperJava.formatLeft(e.getKey(), "receiver") + "\n" + StringHelperJava.formatLeft(e.getValue(), "key"))
                 .collect(Collectors.joining("\n"));
     }
 

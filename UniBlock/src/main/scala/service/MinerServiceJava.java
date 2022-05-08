@@ -40,7 +40,7 @@ public class MinerServiceJava {
 
     public void mine() {
         kickStart();
-        block.getBlockHeader().setNonce(IntStream.iterate(NUMBER_OF_CORE, i -> i++).mapToObj(this::checkResult).flatMap(Optional::stream).findAny().orElseThrow());
+        block.getBlockHeader().setNonce(IntStream.iterate(NUMBER_OF_CORE, i -> i + 1).mapToObj(this::checkResult).flatMap(Optional::stream).findAny().orElseThrow());
         miners.forEach(f -> f.cancel(true));
     }
 
