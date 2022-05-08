@@ -57,7 +57,7 @@ public class Main {
         var professorEvent = createUser("Lorenzo Bettini", Certificate.CertificateType.PROFESSOR);
         var studentEvent1 = createUser("Claudio Nave", Certificate.CertificateType.STUDENT);
         var studentEvent2 = createUser("Mario Rossi", Certificate.CertificateType.STUDENT);
-        return mineBlock(previousHash, "Generating professor and students certificate", professorEvent, studentEvent1, studentEvent2);
+        return mineBlock(previousHash, "Generating professor and students certificates", professorEvent, studentEvent1, studentEvent2);
     }
 
     private static Certificate createUser(String name, Certificate.CertificateType certificateType) {
@@ -87,7 +87,7 @@ public class Main {
     }
 
     private static Block confirmExam(String professor, List<String> students, String previousHash) {
-        return mineBlock(previousHash, "Booking exams", students.stream()
+        return mineBlock(previousHash, "Accepting exams", students.stream()
                 .map(s -> new Encryptable.ExamConfirm(s, "PROGRAMMAZIONE", LocalDate.of(2017, Month.JUNE, 29), true))
                 .map(e -> EncryptedEvent.build(e, e.student(), Collections.singletonList(professor))).toArray(Event[]::new));
     }

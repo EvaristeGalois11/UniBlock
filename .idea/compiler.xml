@@ -6,8 +6,11 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="uniblock" />
+        <module name="uni-block" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="uniblock" target="17" />
+    </bytecodeTargetLevel>
   </component>
 </project>
