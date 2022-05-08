@@ -18,6 +18,7 @@ import java.time.Month;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class Main {
     private static int difficulty;
@@ -82,7 +83,7 @@ public class Main {
 
     private static Block publishResult(String professor, List<String> students, String previousHash) {
         return mineBlock(previousHash, "Publishing results", students.stream()
-                .map(s -> new Encryptable.ExamResult(professor, s, "PROGRAMMAZIONE", LocalDate.of(2017, Month.JUNE, 29), 0))
+                .map(s -> new Encryptable.ExamResult(professor, s, "PROGRAMMAZIONE", LocalDate.of(2017, Month.JUNE, 29), ThreadLocalRandom.current().nextInt(18, 31)))
                 .map(e -> EncryptedEvent.build(e, professor, Collections.singletonList(e.student()))).toArray(Event[]::new));
     }
 
