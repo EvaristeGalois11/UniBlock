@@ -8,7 +8,7 @@ public interface KeyManager {
 
     void saveSignPk(String id, PrivateKey pk);
 
-    Optional<PrivateKey> retrieveDhPk(String id);
+    PrivateKey retrieveDhPk(String id);
 
-    Optional<PrivateKey> retrieveSignPk(String id);
+    PrivateKey retrieveSignPk(String id);
 }

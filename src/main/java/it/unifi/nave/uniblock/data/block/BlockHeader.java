@@ -1,7 +1,7 @@
 package it.unifi.nave.uniblock.data.block;
 
 import it.unifi.nave.uniblock.helper.StringHelper;
-import it.unifi.nave.uniblock.helper.crypto.HashHelper;
+import it.unifi.nave.uniblock.helper.HashHelper;
 
 import java.io.Serializable;
 import java.time.Instant;

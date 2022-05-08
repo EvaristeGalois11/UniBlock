@@ -1,4 +1,4 @@
-package it.unifi.nave.uniblock.helper.crypto;
+package it.unifi.nave.uniblock.helper;
 
 import java.io.ByteArrayOutputStream;
 import java.io.ObjectOutputStream;
@@ -11,15 +11,11 @@ public class HashHelper {
     private static final String HASH_TYPE = "SHA3-256";
 
     public static String hash(String toHash) {
-        return HexFormat.of().formatHex(hashRaw(toHash));
+        return hash(toHash.getBytes(StandardCharsets.UTF_8));
     }
 
     public static String hash(byte[] toHash) {
         return HexFormat.of().formatHex(hashRaw(toHash));
-    }
-
-    public static byte[] hashRaw(String toHash) {
-        return hashRaw(toHash.getBytes(StandardCharsets.UTF_8));
     }
 
     public static byte[] hashRaw(byte[] toHash) {

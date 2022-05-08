@@ -1,4 +1,4 @@
-package it.unifi.nave.uniblock.helper.crypto;
+package it.unifi.nave.uniblock.helper;
 
 import javax.crypto.KeyAgreement;
 import java.security.KeyPair;

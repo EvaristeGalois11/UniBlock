@@ -1,8 +1,8 @@
 package it.unifi.nave.uniblock.data.event;
 
 import it.unifi.nave.uniblock.helper.StringHelper;
-import it.unifi.nave.uniblock.helper.crypto.HashHelper;
-import it.unifi.nave.uniblock.helper.crypto.PKHelper;
+import it.unifi.nave.uniblock.helper.HashHelper;
+import it.unifi.nave.uniblock.helper.PKHelper;
 import it.unifi.nave.uniblock.persistence.PersistenceManager;
 
 import java.nio.ByteBuffer;
@@ -32,7 +32,7 @@ public record Certificate(String userId, String name, CertificateType certificat
     }
 
     private static String authorizedKey(PublicKey signPbk, PublicKey dhPbk) {
-        return PKHelper.sign(concatPbk(signPbk, dhPbk), PersistenceManager.getKeyManager().retrieveSignPk(GENESIS).orElseThrow());
+        return PKHelper.sign(concatPbk(signPbk, dhPbk), PersistenceManager.getKeyManager().retrieveSignPk(GENESIS));
     }
 
     @Override

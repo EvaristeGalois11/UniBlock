@@ -5,8 +5,8 @@ import it.unifi.nave.uniblock.data.event.Certificate;
 import it.unifi.nave.uniblock.data.event.Encryptable;
 import it.unifi.nave.uniblock.data.event.EncryptedEvent;
 import it.unifi.nave.uniblock.data.event.Event;
-import it.unifi.nave.uniblock.helper.crypto.HashHelper;
-import it.unifi.nave.uniblock.helper.crypto.PKHelper;
+import it.unifi.nave.uniblock.helper.HashHelper;
+import it.unifi.nave.uniblock.helper.PKHelper;
 import it.unifi.nave.uniblock.persistence.PersistenceManager;
 import it.unifi.nave.uniblock.service.MinerService;
 

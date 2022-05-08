@@ -1,9 +1,12 @@
 package it.unifi.nave.uniblock.data.block;
 
+import com.google.common.collect.Lists;
 import it.unifi.nave.uniblock.data.event.Event;
 import it.unifi.nave.uniblock.helper.StringHelper;
+import it.unifi.nave.uniblock.helper.HashHelper;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -17,13 +20,27 @@ public class Block {
         events = new ArrayList<>();
     }
 
-    public void addEvent(Event event) {
-        addEvents(Collections.singletonList(event));
-    }
-
     public void addEvents(List<Event> events) {
         this.events.addAll(events);
-        blockHeader.setRootHash(MerkleTree.rootHash(this.events));
+        blockHeader.setRootHash(calculateRootHash(this.events));
+    }
+
+    private String calculateRootHash(List<Event> events) {
+        return getRootHash(events.stream().map(HashHelper::hash).toList());
+    }
+
+    private String getRootHash(List<String> hashes) {
+        if (hashes.size() == 1) {
+            return hashes.get(0);
+        } else {
+            return getRootHash(Lists.partition(hashes, 2).stream().map(this::reduceHash).toList());
+        }
+    }
+
+    private String reduceHash(List<String> hashes) {
+        var first = hashes.get(0);
+        var second = hashes.size() == 2 ? hashes.get(1) : first;
+        return HashHelper.hash(first + second);
     }
 
     @Override
@@ -43,7 +60,7 @@ public class Block {
         return blockHeader;
     }
 
-    public List<Event> getEvents() {
-        return events;
+    public Collection<Event> getEvents() {
+        return Collections.unmodifiableCollection(events);
     }
 }

@@ -1,9 +1,9 @@
 package it.unifi.nave.uniblock.data.event;
 
 import it.unifi.nave.uniblock.helper.StringHelper;
-import it.unifi.nave.uniblock.helper.crypto.AESHelper;
-import it.unifi.nave.uniblock.helper.crypto.HashHelper;
-import it.unifi.nave.uniblock.helper.crypto.PKHelper;
+import it.unifi.nave.uniblock.helper.AESHelper;
+import it.unifi.nave.uniblock.helper.HashHelper;
+import it.unifi.nave.uniblock.helper.PKHelper;
 import it.unifi.nave.uniblock.persistence.PersistenceManager;
 
 import java.nio.charset.StandardCharsets;
@@ -92,7 +92,7 @@ public class EncryptedEvent implements Event {
     public static EncryptedEvent build(Encryptable event, String author, List<String> receivers) {
         var payloadKey = AESHelper.randomKey();
         var payload = AESHelper.encrypt(payloadKey, HashHelper.serialize(event), false);
-        var sign = PKHelper.sign(payload.getBytes(StandardCharsets.UTF_8), PersistenceManager.getKeyManager().retrieveSignPk(author).orElseThrow());
+        var sign = PKHelper.sign(payload.getBytes(StandardCharsets.UTF_8), PersistenceManager.getKeyManager().retrieveSignPk(author));
         var eventContainer = new EncryptedEvent(author, event.getType(), payload, sign);
         Stream.concat(receivers.stream(), Stream.of(author))
                 .map(id -> encryptKey(id, payloadKey, author))
@@ -101,8 +101,8 @@ public class EncryptedEvent implements Event {
     }
 
     private static Map.Entry<String, String> encryptKey(String id, byte[] key, String author) {
-        PublicKey pbk = PersistenceManager.searchCertificate(id).dhPbk();
-        PrivateKey dhPk = PersistenceManager.getKeyManager().retrieveDhPk(author).orElseThrow();
+        PublicKey pbk = PersistenceManager.getBlockchain().searchCertificate(id).dhPbk();
+        PrivateKey dhPk = PersistenceManager.getKeyManager().retrieveDhPk(author);
         return Map.entry(id, PKHelper.encrypt(dhPk, pbk, key));
     }
 

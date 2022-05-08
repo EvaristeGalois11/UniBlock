@@ -1,7 +1,7 @@
 package it.unifi.nave.uniblock.persistence.impl;
 
 import it.unifi.nave.uniblock.data.block.Block;
-import it.unifi.nave.uniblock.helper.crypto.HashHelper;
+import it.unifi.nave.uniblock.helper.HashHelper;
 import it.unifi.nave.uniblock.persistence.Blockchain;
 import it.unifi.nave.uniblock.persistence.KeyManager;
 
@@ -27,8 +27,8 @@ public class InMemoryPersistence implements Blockchain, KeyManager {
     }
 
     @Override
-    public Optional<Block> retrieveBlock(String hash) {
-        return Optional.ofNullable(blockchain.get(hash));
+    public Block retrieveBlock(String hash) {
+        return blockchain.get(hash);
     }
 
     @Override
@@ -52,12 +52,12 @@ public class InMemoryPersistence implements Blockchain, KeyManager {
     }
 
     @Override
-    public Optional<PrivateKey> retrieveDhPk(String id) {
-        return Optional.of(dhPk.get(id));
+    public PrivateKey retrieveDhPk(String id) {
+        return dhPk.get(id);
     }
 
     @Override
-    public Optional<PrivateKey> retrieveSignPk(String id) {
-        return Optional.of(signPk.get(id));
+    public PrivateKey retrieveSignPk(String id) {
+        return signPk.get(id);
     }
 }
