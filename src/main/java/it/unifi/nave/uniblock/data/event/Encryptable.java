@@ -8,7 +8,7 @@ public interface Encryptable extends Serializable {
     EventType getType();
 
     enum EventType {
-        GENESIS, CERTIFICATE, EXAM_PUBLISHING, EXAM_BOOKING, EXAM_RESULT, EXAM_CONFIRM
+        EXAM_PUBLISHING, EXAM_BOOKING, EXAM_RESULT, EXAM_CONFIRM
     }
 
     record ExamPublishing(String professor, String codeExam, LocalDate date) implements Encryptable {

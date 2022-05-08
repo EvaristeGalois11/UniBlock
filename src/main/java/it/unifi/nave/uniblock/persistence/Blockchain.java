@@ -9,7 +9,6 @@ import it.unifi.nave.uniblock.helper.PKHelper;
 import java.security.PublicKey;
 import java.util.Collection;
 import java.util.Iterator;
-import java.util.Optional;
 
 public interface Blockchain extends Iterable<Block> {
     void saveBlock(Block block);
@@ -50,28 +49,21 @@ public interface Blockchain extends Iterable<Block> {
 
     @Override
     default Iterator<Block> iterator() {
-        return new BlockchainIteratorJava(this);
-    }
+        return new Iterator<>() {
+            private final Blockchain blockchainPersistence = Blockchain.this;
+            private Block current = blockchainPersistence.retrieveLastBlock();
 
-    class BlockchainIteratorJava implements Iterator<Block> {
-        private final Blockchain blockchainPersistence;
-        private Block current;
+            @Override
+            public boolean hasNext() {
+                return current != null;
+            }
 
-        public BlockchainIteratorJava(Blockchain blockchainPersistence) {
-            this.blockchainPersistence = blockchainPersistence;
-            current = blockchainPersistence.retrieveLastBlock();
-        }
-
-        @Override
-        public boolean hasNext() {
-            return current != null;
-        }
-
-        @Override
-        public Block next() {
-            var buffer = current;
-            current = blockchainPersistence.retrieveBlock(current.getBlockHeader().getPreviousHash());
-            return buffer;
-        }
+            @Override
+            public Block next() {
+                var buffer = current;
+                current = blockchainPersistence.retrieveBlock(current.getBlockHeader().getPreviousHash());
+                return buffer;
+            }
+        };
     }
 }

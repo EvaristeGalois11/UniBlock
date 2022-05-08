@@ -18,7 +18,7 @@ public class MinerService {
     private static final int NUMBER_OF_HASH = 500000;
     private static final ExecutorService EXECUTOR = Executors.newFixedThreadPool(NUMBER_OF_CORE);
 
-    public static void mine(Block block){
+    public static void mine(Block block) {
         new MinerService(block, true).mine();
     }
 
@@ -40,8 +40,12 @@ public class MinerService {
 
     public void mine() {
         kickStart();
-        block.getBlockHeader().setNonce(IntStream.iterate(NUMBER_OF_CORE, i -> i + 1).mapToObj(this::checkResult).flatMap(Optional::stream).findAny().orElseThrow());
+        block.getBlockHeader().setNonce(mineNonce());
         miners.forEach(f -> f.cancel(true));
+    }
+
+    private int mineNonce() {
+        return IntStream.iterate(NUMBER_OF_CORE, i -> i + 1).mapToObj(this::checkResult).flatMap(Optional::stream).findAny().orElseThrow();
     }
 
     private Optional<Integer> checkResult(int offset) {
