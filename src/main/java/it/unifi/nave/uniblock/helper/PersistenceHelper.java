@@ -5,13 +5,13 @@ import it.unifi.nave.uniblock.persistence.KeyManager;
 import it.unifi.nave.uniblock.persistence.impl.InMemoryPersistence;
 
 public class PersistenceHelper {
-    private static final InMemoryPersistence IN_MEMORY_PERSISTENCE = new InMemoryPersistence();
+  private static final InMemoryPersistence IN_MEMORY_PERSISTENCE = new InMemoryPersistence();
 
-    public static Blockchain getBlockchain() {
-        return IN_MEMORY_PERSISTENCE;
-    }
+  public static Blockchain getBlockchain() {
+    return IN_MEMORY_PERSISTENCE;
+  }
 
-    public static KeyManager getKeyManager() {
-        return IN_MEMORY_PERSISTENCE;
-    }
+  public static KeyManager getKeyManager() {
+    return IN_MEMORY_PERSISTENCE;
+  }
 }

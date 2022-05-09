@@ -11,59 +11,62 @@ import java.util.Collection;
 import java.util.Iterator;
 
 public interface Blockchain extends Iterable<Block> {
-    void saveBlock(Block block);
+  void saveBlock(Block block);
 
-    Block retrieveBlock(String hash);
+  Block retrieveBlock(String hash);
 
-    Block retrieveGenesisBlock();
+  Block retrieveGenesisBlock();
 
-    Block retrieveLastBlock();
+  Block retrieveLastBlock();
 
-    default Certificate searchCertificate(String userId) {
-        return Streams.stream(this)
-                .map(Block::getEvents)
-                .flatMap(Collection::stream)
-                .filter(Certificate.class::isInstance)
-                .map(Certificate.class::cast)
-                .filter(c -> userId.equals(c.userId()))
-                .filter(this::verifyCertificate)
-                .findAny()
-                .orElseThrow();
+  default Certificate searchCertificate(String userId) {
+    return Streams.stream(this)
+        .map(Block::getEvents)
+        .flatMap(Collection::stream)
+        .filter(Certificate.class::isInstance)
+        .map(Certificate.class::cast)
+        .filter(c -> userId.equals(c.userId()))
+        .filter(this::verifyCertificate)
+        .findAny()
+        .orElseThrow();
+  }
+
+  private boolean verifyCertificate(Certificate certificate) {
+    if (certificate.certificateType() == Certificate.CertificateType.GENESIS) {
+      return true;
+    } else {
+      return verify(certificate.signPbk(), certificate.dhPbk(), certificate.sign());
     }
+  }
 
-    private boolean verifyCertificate(Certificate certificate) {
-        if (certificate.certificateType() == Certificate.CertificateType.GENESIS) {
-            return true;
-        } else {
-            return verify(certificate.signPbk(), certificate.dhPbk(), certificate.sign());
-        }
-    }
+  private boolean verify(PublicKey signPbk, PublicKey dhPbk, String sign) {
+    return PKHelper.verify(
+        Bytes.concat(signPbk.getEncoded(), dhPbk.getEncoded()),
+        sign,
+        searchGenesisCertificate().signPbk());
+  }
 
-    private boolean verify(PublicKey signPbk, PublicKey dhPbk, String sign) {
-        return PKHelper.verify(Bytes.concat(signPbk.getEncoded(), dhPbk.getEncoded()), sign, searchGenesisCertificate().signPbk());
-    }
+  default Certificate searchGenesisCertificate() {
+    return searchCertificate(Certificate.GENESIS);
+  }
 
-    default Certificate searchGenesisCertificate() {
-        return searchCertificate(Certificate.GENESIS);
-    }
+  @Override
+  default Iterator<Block> iterator() {
+    return new Iterator<>() {
+      private final Blockchain blockchainPersistence = Blockchain.this;
+      private Block current = blockchainPersistence.retrieveLastBlock();
 
-    @Override
-    default Iterator<Block> iterator() {
-        return new Iterator<>() {
-            private final Blockchain blockchainPersistence = Blockchain.this;
-            private Block current = blockchainPersistence.retrieveLastBlock();
+      @Override
+      public boolean hasNext() {
+        return current != null;
+      }
 
-            @Override
-            public boolean hasNext() {
-                return current != null;
-            }
-
-            @Override
-            public Block next() {
-                var buffer = current;
-                current = blockchainPersistence.retrieveBlock(current.getBlockHeader().getPreviousHash());
-                return buffer;
-            }
-        };
-    }
+      @Override
+      public Block next() {
+        var buffer = current;
+        current = blockchainPersistence.retrieveBlock(current.getBlockHeader().getPreviousHash());
+        return buffer;
+      }
+    };
+  }
 }
