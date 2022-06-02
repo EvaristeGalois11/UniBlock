@@ -45,6 +45,7 @@
 \usepackage{siunitx}
 %--------------------------------------------------------------
 \usepackage{lib/dia-classicthesis-ldpkg}
+\usepackage{hyperref}
 %--------------------------------------------------------------
 % Options for classicthesis.sty:
 % tocaligned eulerchapternumbers drafting linedheaders 
@@ -113,7 +114,9 @@ parts]{classicthesis}
 %\cleardoublepage
 \include{sezioni/chapter1}
 \include{sezioni/chapter2}
-\include{sezioni/bibliografia}
+%\include{sezioni/bibliografia}
+\bibliographystyle{plainnat}
+\bibliography{sezioni/bibliografia}
 %--------------------------------------------------------------
 \end{document}
 %--------------------------------------------------------------
