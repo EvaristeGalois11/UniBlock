@@ -14,31 +14,35 @@ Una prima differenza fondamentale delle blockchain è la modalità con cui i nuovi
 Un'altra differenza importante sono i permessi rilasciati a un nodo a seguito della sua entrata nella rete. Nelle blockchain pubbliche non viene generalmente assunta alcuna distinzione gerarchica tra i nodi, chiunque può sfruttare tutte le funzioni disponibili senza restrizioni. Per questo motivo le blockchain pubbliche sono spesso sinonimo di blockchain senza permesso (permissionless). D'altra parte nelle blockchain private è comune che la gerarchia dell'organizzazione proprietaria della rete si rifletta sui nodi stessi, essendo presenti responsabilità e permessi diversi a seconda dell'identità corrispondente a ciascun nodo, da qui la comune associazione tra blockchain private e blockchain con permesso (permissioned). Possiamo identificare inoltre un terzo tipo di blockchain emergente, quello ibrido, in cui vengono uniti le caratteristiche delle blockchain pubbliche con quelle permissioned. Si tratta di blockchain ad accesso libero, ma all'interno delle quali solo alcune funzionalità sono disponibili a tutti, mentre altre richiedono una preventiva autenticazione del nodo.
 
 \subsection{Algoritmo di consenso}
-Data la natura distribuita di una blockchain è di fondamentale importanza la ricerca del consenso tra i nodi, ovvero che ogni transazione generata venga validata e diffusa attraverso la rete rimanendo inalterata. Il primo algoritmo di consenso concepito è la proof of work: l'immutabilità dei dati è garantita dalla difficoltà di computare rapidamente un puzzle crittografico. Nella rete Bitcoin ad esempio un nuovo blocco è considerato valido quando viene trovato un numero tale che inserito nell'header del blocco stesso rende il suo hash inferiore a una certa quantità. Variando tale quantità è possibile modulare il carico dei blocchi generati dall'intera rete, dando il tempo ai blocchi di diffondersi tra i vari nodi. Ogni nodo dà la sua fiducia alla catena di blocchi in cui è stata spesa la maggior quantità di lavoro computazionale. Un algoritmo di consenso concepito più recentemente è la proof of stake: i nuovi blocchi vengono validati da nodi scelti casualmente in base a quanta valuta hanno investito nella rete. Pur ritenendo un certo livello di casualità, l'algoritmo di selezione del prossimo validatore privilegia i maggiori scommettitori. La legittimità della rete è garantita perciò dal fatto che chi ha investito maggiormente avrà interesse nel suo corretto funzionamento. La rete Ethereum prevede di effettuare il cambio da proof of work a proof of stake nei prossimi anni. Per un'analisi dettagliata sugli algoritmi di consenso fare riferimento a \cite{8632190}.
+Data la natura distribuita di una blockchain è di fondamentale importanza la ricerca del consenso tra i nodi, ovvero che ogni transazione generata venga validata e diffusa attraverso la rete rimanendo inalterata. Nasce quindi il bisogno di un procedimento rigoroso mediante il quale i singoli nodi possano scegliere quali blocchi aggiungere alla propria catena locale, sicuri che tutti gli altri nodi allungheranno le rispettive catene in modo identico. Il primo algoritmo di consenso concepito ad assolvere tale scopo è la proof of work: l'immutabilità dei dati è garantita dalla difficoltà di computare rapidamente un puzzle crittografico. Nella rete Bitcoin ad esempio un nuovo blocco è considerato valido quando viene trovato un numero tale che, inserito nell'header del blocco stesso, rende il suo hash inferiore a un certo numero. Variando tale numero è possibile modulare il carico dei blocchi generati dall'intera rete, dando così il tempo ai blocchi di diffondersi tra i vari nodi. Ogni nodo dà la sua fiducia alla catena di blocchi in cui è stata spesa la maggior quantità di lavoro computazionale. Un algoritmo di consenso concepito più recentemente è la proof of stake: i nuovi blocchi vengono validati da nodi scelti casualmente in base a quanta valuta hanno investito nella rete. Pur ritenendo un certo livello di casualità, l'algoritmo di selezione del prossimo validatore privilegia i maggiori scommettitori. La legittimità della rete è garantita perciò dal fatto che chi ha investito maggiormente avrà interesse nel suo corretto funzionamento. La rete Ethereum prevede di effettuare il cambio da proof of work a proof of stake nei prossimi anni. Per un'analisi dettagliata sugli algoritmi di consenso fare riferimento a \cite{8632190}.
 
 \subsection{Privacy e sicurezza}
 Nelle blockchain pubbliche il contenuto dei blocchi è disponibile a ogni nodo senza alcuna protezione. Assume grande importanza quindi avere sempre ben presente quali informazioni si stanno immettendo nella rete in chiaro e quali invece si cerca di proteggere. Nella rete Bitcoin tutto il contenuto di un blocco è presente completamente in chiaro tanto da poter ricostruire la storia di ogni singolo Bitcoin fino al momento della sua coniazione. In questo caso la privacy offerta agli utenti si limita alla loro anonimizzazione nella rete offrendo indirizzi usa e getta senza legami con l'identità legale del soggetto che li possiede. Anche la rete Ethereum non prevede di base alcuna forma di cifratura del contenuto dei blocchi, essendo tuttavia presenti delle forme di privacy a zero conoscenza implementabili come zk-SNARKS per nascondere integralmente il contenuto di una transazione \cite{snark}. Discorso diverso invece per le blockchain private in quanto la preventiva autenticazione dei nodi permette di garantire che le informazioni contenute nei blocchi siano consultabili solo da soggetti autorizzati, non rendendo necessari complessi sistemi di crittografia per garantire la riservatezza delle informazioni.
 
 \subsection{Confronto di alcune blockchain}
-Di seguito una comparazione di tre grandi blockchain moderne con UniBlock:
+Di seguito una comparazione di tre grandi blockchain moderne con \mbox{UniBlock}:
 \newline
 \newline
 \centerline{
 \begin{tabular}{ |c||c|c|c|c| } 
  \hline
- & \large{\textit{\textbf{Bitcoin}}} & \large{\textit{\textbf{Ethereum}}} & \large{\textit{\textbf{Hyperledger Fabric}}} & \large{\textit{\textbf{UniBlock}}} \\ 
+ & \large{\textit{\textbf{Accesso}}} & \large{\textit{\textbf{Permessi}}} & \large{\textit{\textbf{Consenso}}} & \large{\textit{\textbf{Privacy}}} \\ 
  \hline
  \hline
- \large{\textit{\textbf{Accesso}}} & Pubblica & Pubblica & Privata & Pubblica \\ 
+ \large{\textit{\textbf{Bitcoin}}} & Pubblica & Permissionless & Proof of work & Non crittografata \\ 
  \hline
- \large{\textit{\textbf{Permessi}}} & Permissionless & Permissionless & Permissioned & Permissioned \\ 
+ \large{\textit{\textbf{Ethereum}}} & Pubblica & Permissionless & Proof of work & Non crittografata \\ 
  \hline
- \large{\textit{\textbf{Consenso}}} & Proof of work & Proof of work & Crash Fault Tolerance & Proof of work \\ 
+ \large{\textit{\textbf{Hyperledger Fabric}}} & Privata & Permissioned & Crash Fault Tolerance & Non crittografata \\ 
  \hline
- \large{\textit{\textbf{Privacy}}} & Non crittografata & Non crittografata & Non crittografata & Crittografata \\
+ \large{\textit{\textbf{UniBlock}}} & Pubblica & Permissioned & Proof of work & Crittografata \\
  \hline
 \end{tabular}
 }
+\newline
+\newline
+\newline
+Bitcoin ed Ethereum sono blockchain pubbliche in cui il contenuto dei blocchi è completamente in chiaro e consultabile da chiunque, Hyperledger Fabric invece risulta essere una blockchain privata in cui la protezione dei dati contenuti all'interno dei blocchi è implicita nella natura privata della rete. UniBlock si propone come ibrido tra questi due approcci: una blockchain pubblica e liberamente consultabile, ma il cui contenuto dei blocchi è protetto e interpretabile solo da soggetti specifici.
 
 \section{Crittografia}
 
