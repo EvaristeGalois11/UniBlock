@@ -45,13 +45,14 @@ Di seguito una comparazione di tre grandi blockchain moderne con \mbox{UniBlock}
 Bitcoin ed Ethereum sono blockchain pubbliche in cui il contenuto dei blocchi è completamente in chiaro e consultabile da chiunque, Hyperledger Fabric invece risulta essere una blockchain privata in cui la protezione dei dati contenuti all'interno dei blocchi è implicita nella natura privata della rete. UniBlock si propone come ibrido tra questi due approcci: una blockchain pubblica e liberamente consultabile, ma il cui contenuto dei blocchi è protetto e interpretabile solo da soggetti specifici.
 
 \section{Crittografia}
+La crittografia è uno strumento che permette di garantire la riservatezza e confidenzialità di dati sensibili. Si basa generalmente sull'impiego di un qualche elemento segreto conosciuto solo dai soggetti autorizzati ad accedere alle informazioni crittografate. Di seguito sono descritti gli elementi più importanti utilizzati in UniBlock.
 
 \subsection{Hash crittografico} \label{hash}
 Una funzione hash è una funzione che trasforma un input di dimensione arbitraria in un output di dimensione fissa. Per poter essere impiegata in crittografia una funzione hash deve rispettare forti vincoli di sicurezza:
 \begin{description}
-  \item[Resistenza alla pre-immagine] Dato un particolare hash \(h\), dev'essere estremamente difficoltoso trovare un input che abbia come hash \(h\). La funzione di hash deve quindi risultare una funzione one-way, cioè una funzione la cui inversa è impossibile da costruire o computazionalmente non eseguibile in tempi accettabili.
+  \item[Resistenza alla pre-immagine] Dato un particolare hash \(h\), dev'essere estremamente difficoltoso trovare un input che abbia come hash \(h\). La funzione di hash deve quindi risultare una funzione one-way, cioè una funzione la cui inversa sia impossibile da costruire o computazionalmente non eseguibile in tempi accettabili.
   \item[Seconda resistenza alla pre-immagine] Dato un un particolare input \(a\), dev'essere estremamente difficoltoso trovare un altro input che abbia lo stesso hash di \(a\).
-  \item[Resistenza alle collisioni] Dev'essere estremamente difficoltoso trovare due input che abbiano lo stesso hash.
+  \item[Resistenza alle collisioni] Dev'essere estremamente difficoltoso trovare due input che abbiano lo stesso hash. Questa proprietà implica la precedente, risultando una condizione più forte sull'impossibilità in generale di trovare collisioni sugli hash della funzione.
 \end{description}
 
 \subsection{Crittografia simmetrica}
@@ -77,12 +78,12 @@ Gli algoritmi a chiave pubblica impiegano due chiavi diverse, una per cifrare e 
 La crittografia ellittica è una particolare famiglia di algoritmi a chiave pubblica che si basano sull'uso di curve ellittiche \(y^{2}=x^{3}+ax+b\) su campi finiti. La funzione one-way che protegge la relazione tra le due chiavi è quella del logaritmo discreto. Al contrario di altri algoritmi a chiave pubblica come RSA (basato sulla fattorizzazione in numeri primi) permettono di avere chiavi di dimensioni molto più contenute e un'efficienza di esecuzione molto elevata.
 
 \subsection{Scambio di chiavi tramite Diffie-Hellman}
-Lo scambio di chiavi tramite Diffie-Hellman permette a due soggetti di scambiarsi tramite un canale insicuro le proprie chiavi pubbliche, combinandole con le chiavi private in modo tale da giungere ognuno separatamente a una certa quantità. Tale quantità risulterà identica per entrambi grazie alle proprietà matematiche che collegano le chiavi in gioco. Un possibile attaccante in ascolto sul canale non potrà calcolare la stessa quantità in quanto le rispettive chiavi private non hanno mai transitato nel canale, risultando quindi ignote all'attaccante e impossibili da ottenere a partire da quelle pubbliche. La quantità comune ottenuta è tipicamente utilizzata come base per derivare una chiave simmetrica.
+Lo scambio di chiavi tramite Diffie-Hellman permette a due soggetti di stabilire tramite un canale insicuro una chiave segreta condivisa, tipicamente utilizzata come base per derivare una chiave simmetrica. Entrambi i soggetti devono essere in possesso di una coppia di chiavi, una pubblica e una privata. Tramite un apposito canale ciascuno invierà all'altro la propria chiave pubblica. La chiave segreta verrà ottenuta combinando la chiave pubblica ricevuta con la propria chiave privata. Tale chiave risulterà identica per entrambi grazie alle proprietà matematiche che collegano le chiavi in gioco. Un possibile attaccante in ascolto sul canale non potrà ottenere la stessa chiave in quanto le rispettive chiavi private non hanno mai transitato nel canale, risultando quindi ignote all'attaccante e impossibili da estrarre a partire da quelle pubbliche.
 
 \subsection{Algoritmi impiegati}
 \begin{description}
    \item[SHA-3] Algoritmo di hashing crittografico pensato come futuro successore della famiglia di algoritmi SHA-2 \cite{sha3}. Usato in UniBlock come puzzle crittografico alla base della proof of work.
    \item[AES] Algoritmo di cifratura simmetrica a blocchi diventato lo standard de facto per questo genere di algoritmi avendo supporto a livello di assembly nella maggior parte delle CPU moderne \cite{aes}. La dimensione dei blocchi è pari a 128 bit. Usato in UniBlock in modalità GCM per criptare il contenuto degli eventi.
-   \item[X25519] Algoritmo di scambio di una chiave tramite Diffie-Hellman basato sulla curva ellittica Curve25519 \cite{x25519}. Utilizzato in UniBlock per negoziare tra due utenti una chiave comune.
+   \item[X25519] Algoritmo di scambio di chiavi tramite Diffie-Hellman basato sulla curva ellittica Curve25519 \cite{x25519}. Utilizzato in UniBlock per negoziare tra due utenti una chiave comune.
    \item[Ed25519] Algoritmo di firma a chiave pubblica basato sulla curva ellittica Curve25519 \cite{ed25519}. Usato in UniBlock per firmare gli eventi generati da un utente.
 \end{description}
