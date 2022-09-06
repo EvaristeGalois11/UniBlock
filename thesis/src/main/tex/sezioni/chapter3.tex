@@ -1,0 +1,42 @@
+\myChapter{Struttura UniBlock}
+I dati all'interno di UniBlock sono organizzati in blocchi, ciascuno con un proprio header e una lista di eventi. L'header di un blocco contiene a sua volta le informazioni necessarie per identificare e validare il blocco all'interno della blockchain stessa: l'hash del blocco precedente, la difficoltà richiesta per minare il blocco attuale, l'hash di radice, ora e data di generazione del blocco, un numero variabile (nonce). L'hash del blocco precedente permette di collegare in sequenza i vari blocchi formando appunto una catena. Solo un blocco può dichiararsi successore di un altro, altrimenti la catena si spezzerebbe in due rami. Per evitare che ciò accada UniBlock impiega una versione semplificata della proof of work della rete Bitcoin utilizzando la difficoltà, espressa come un numero intero positivo, e il nonce, anch'esso un numero intero positivo. L'hash di radice, invece, viene impiegato come forma di ottimizzazione del calcolo e successiva verifica dell'hash di un blocco organizzando la lista di eventi in un albero di Merkle.
+
+Gli eventi sono il corrispettivo delle transazioni in una rete Bitcoin, ma avendo un contenuto di informazione arbitraria incapsulano un avvenimento successo all'interno della blockchain piuttosto che un mero movimento di denaro. Vengono previsti sostanzialmente due tipi di eventi: i certificati e gli eventi criptati. I certificati riguardano la registrazione sulla blockchain di un nuovo utente autorizzato, mentre gli eventi criptati contengono dati cifrati leggibili solo dai destinatari riportati nell'evento stesso.
+
+\section{Blocco}
+Ogni blocco contiene nel proprio header il riferimento al blocco che lo precede così da rendere estremamente difficoltosa la modifica di un blocco, dal momento che comporterebbe la riscrittura di ogni suo successore. Affinché il blocco sia ritenuto valido il suo hash, calcolato come l'hash SHA-3 della serializzazione dell'oggetto rappresentante il suo header, deve rispettare i criteri di difficoltà imposti, cioè deve iniziare con tanti zeri quanti riportati nel numero della difficoltà.
+\begin{lstlisting}
+public boolean isMined() {
+  return HashHelper.hash(this)
+          .startsWith("0".repeat(difficulty));
+}
+\end{lstlisting}
+In caso in cui l'hash non risultasse valido, il nonce verrebbe incrementato fino a trovare un hash corretto. Maggiori sono gli zeri iniziali da ricercare, minore è il numero di hash totali disponibili e di conseguenza minore è la probabilità di minare correttamente il blocco.
+
+Il calcolo di un hash è quindi un procedimento dispendioso che comporta prima la serializzazione di un oggetto in un flusso di byte e poi il calcolo dell'hash vero e proprio. Per evitare di serializzare un blocco intero ogni volta, l'hash è calcolato solo sull'header di un blocco. Per comprendere anche la lista di eventi nel calcolo dell'hash viene fatto uso di un albero di Merkle.
+\begin{lstlisting}
+private String calculateRootHash(List<Event> events) {
+  return getRootHash(events.stream()
+          .map(HashHelper::hash).toList());
+}
+
+private String getRootHash(List<String> hashes) {
+  if (hashes.size() == 1) {
+    return hashes.get(0);
+  } else {
+    return getRootHash(Lists.partition(hashes, 2)
+            .stream().map(this::reduceHash).toList());
+  }
+}
+
+private String reduceHash(List<String> hashes) {
+  var first = hashes.get(0);
+  var second = hashes.size() == 2 ? hashes.get(1) : first;
+  return HashHelper.hash(first + second);
+}
+\end{lstlisting}
+La lista di eventi viene prima convertita in una lista dei rispettivi hash. Successivamente la lista di hash viene partizionata in una lista di coppie di hash. Tali coppie vengono ridotte a un hash singolo calcolando l'hash della loro concatenazione. Nel caso sia presente un hash spaiato, verrà calcolato l'hash della sua concatenazione con se stesso. Tale procedimento si ripete fino ad ottenere un singolo hash, detto appunto hash di radice dell'albero.
+
+L'hash di radice inserito nell'header di un blocco permette di garantire l'integrità degli eventi senza dover calcolare ogni volta il loro hash. Una modifica a un evento di un blocco comporterebbe infatti una modifica in cascata a tutti gli hash dell'albero di Merkle fino alla radice.
+
+\section{Evento}

@@ -73,18 +73,26 @@ parts]{classicthesis}
 	tmargin       = 4cm    % top margin 
 }
 
-\lstset{
-  	frame=tb,
-	language=Matlab,
-  	aboveskip=3mm,
-  	belowskip=3mm,
-  	showstringspaces=false,
-  	columns=flexible,
-  	basicstyle={\small\ttfamily},
-  	numbers=none,
-  	breaklines=true,
-  	breakatwhitespace=true,
-  	tabsize=3
+\usepackage{color}
+
+\definecolor{pblue}{rgb}{0.13,0.13,1}
+\definecolor{pgreen}{rgb}{0,0.5,0}
+\definecolor{pred}{rgb}{0.9,0,0}
+\definecolor{pgrey}{rgb}{0.46,0.45,0.48}
+
+\usepackage{listings}
+\lstset{language=Java,
+  showspaces=false,
+  showtabs=false,
+  breaklines=true,
+  showstringspaces=false,
+  breakatwhitespace=true,
+  commentstyle=\color{pgreen},
+  keywordstyle=\color{pblue},
+  stringstyle=\color{pred},
+  basicstyle=\ttfamily,
+  moredelim=[il][\textcolor{pgrey}]{$$},
+  moredelim=[is][\textcolor{pgrey}]{\%\%}{\%\%}
 }
 %--------------------------------------------------------------
 \begin{document}
@@ -114,6 +122,7 @@ parts]{classicthesis}
 %\cleardoublepage
 \include{sezioni/chapter1}
 \include{sezioni/chapter2}
+\include{sezioni/chapter3}
 %\include{sezioni/bibliografia}
 \bibliographystyle{plainnat}
 \bibliography{sezioni/bibliografia}

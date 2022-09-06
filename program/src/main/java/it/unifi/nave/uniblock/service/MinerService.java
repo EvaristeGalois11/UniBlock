@@ -21,7 +21,8 @@ public class MinerService {
   private final boolean progress;
   private final CompletionService<Optional<Integer>> service;
   private final List<Future<Optional<Integer>>> miners;
-  public MinerService(Block block, boolean progress) {
+
+  private MinerService(Block block, boolean progress) {
     this.block = block;
     this.progress = progress;
     service = new ExecutorCompletionService<>(EXECUTOR);
