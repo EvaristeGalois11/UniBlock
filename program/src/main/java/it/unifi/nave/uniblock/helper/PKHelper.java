@@ -1,6 +1,8 @@
 package it.unifi.nave.uniblock.helper;
 
 import javax.crypto.KeyAgreement;
+import javax.inject.Inject;
+import javax.inject.Singleton;
 import java.security.KeyPair;
 import java.security.KeyPairGenerator;
 import java.security.NoSuchAlgorithmException;
@@ -9,20 +11,28 @@ import java.security.PublicKey;
 import java.security.Signature;
 import java.util.Base64;
 
+@Singleton
 public class PKHelper {
   private static final String PUBLIC_KEY_DH = "X25519";
   private static final String PUBLIC_KEY_AGREEMENT = "XDH";
   private static final String PUBLIC_KEY_SIGN = "Ed25519";
 
-  public static KeyPair generateDhKeyPair() {
+  private final AESHelper aesHelper;
+
+  @Inject
+  public PKHelper(AESHelper aesHelper) {
+    this.aesHelper = aesHelper;
+  }
+
+  public KeyPair generateDhKeyPair() {
     return generateKeyPair(PUBLIC_KEY_DH);
   }
 
-  public static KeyPair generateSignKeyPair() {
+  public KeyPair generateSignKeyPair() {
     return generateKeyPair(PUBLIC_KEY_SIGN);
   }
 
-  private static KeyPair generateKeyPair(String typeKp) {
+  private KeyPair generateKeyPair(String typeKp) {
     try {
       return KeyPairGenerator.getInstance(typeKp).generateKeyPair();
     } catch (NoSuchAlgorithmException e) {
@@ -30,17 +40,17 @@ public class PKHelper {
     }
   }
 
-  public static String encrypt(PrivateKey pk, PublicKey pbk, byte[] plain) {
+  public String encrypt(PrivateKey pk, PublicKey pbk, byte[] plain) {
     var secret = generateSecret(pk, pbk);
-    return AESHelper.encrypt(secret, plain, true);
+    return aesHelper.encrypt(secret, plain, true);
   }
 
-  public static String decrypt(PrivateKey pk, PublicKey pbk, byte[] encrypted) {
+  public String decrypt(PrivateKey pk, PublicKey pbk, byte[] encrypted) {
     var secret = generateSecret(pk, pbk);
-    return AESHelper.decrypt(secret, encrypted, true);
+    return aesHelper.decrypt(secret, encrypted, true);
   }
 
-  private static byte[] generateSecret(PrivateKey privateKey, PublicKey publicKey) {
+  private byte[] generateSecret(PrivateKey privateKey, PublicKey publicKey) {
     try {
       var agreement = KeyAgreement.getInstance(PUBLIC_KEY_AGREEMENT);
       agreement.init(privateKey);
@@ -51,7 +61,7 @@ public class PKHelper {
     }
   }
 
-  public static String sign(byte[] toSign, PrivateKey pk) {
+  public String sign(byte[] toSign, PrivateKey pk) {
     try {
       var signature = Signature.getInstance(PUBLIC_KEY_SIGN);
       signature.initSign(pk);
@@ -62,7 +72,7 @@ public class PKHelper {
     }
   }
 
-  public static boolean verify(byte[] toVerify, String sign, PublicKey pbk) {
+  public boolean verify(byte[] toVerify, String sign, PublicKey pbk) {
     try {
       var sig = Signature.getInstance(PUBLIC_KEY_SIGN);
       sig.initVerify(pbk);

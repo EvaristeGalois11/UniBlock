@@ -10,16 +10,23 @@ import java.security.PublicKey;
 import java.util.Collection;
 import java.util.Iterator;
 
-public interface Blockchain extends Iterable<Block> {
-  void saveBlock(Block block);
+public abstract class Blockchain implements Iterable<Block> {
 
-  Block retrieveBlock(String hash);
+  private final PKHelper pkHelper;
 
-  Block retrieveGenesisBlock();
+  public Blockchain(PKHelper pkHelper) {
+    this.pkHelper = pkHelper;
+  }
 
-  Block retrieveLastBlock();
+  public abstract void saveBlock(Block block);
 
-  default Certificate searchCertificate(String userId) {
+  public abstract Block retrieveBlock(String hash);
+
+  public abstract Block retrieveGenesisBlock();
+
+  public abstract Block retrieveLastBlock();
+
+  public Certificate searchCertificate(String userId) {
     return Streams.stream(this)
         .map(Block::getEvents)
         .flatMap(Collection::stream)
@@ -40,18 +47,18 @@ public interface Blockchain extends Iterable<Block> {
   }
 
   private boolean verify(PublicKey signPbk, PublicKey dhPbk, String sign) {
-    return PKHelper.verify(
+    return pkHelper.verify(
         Bytes.concat(signPbk.getEncoded(), dhPbk.getEncoded()),
         sign,
         searchGenesisCertificate().signPbk());
   }
 
-  default Certificate searchGenesisCertificate() {
+  public Certificate searchGenesisCertificate() {
     return searchCertificate(Certificate.GENESIS);
   }
 
   @Override
-  default Iterator<Block> iterator() {
+  public Iterator<Block> iterator() {
     return new Iterator<>() {
       private final Blockchain blockchainPersistence = Blockchain.this;
       private Block current = blockchainPersistence.retrieveLastBlock();

@@ -1,20 +1,29 @@
 package it.unifi.nave.uniblock.persistence.impl;
 
 import it.unifi.nave.uniblock.data.block.Block;
-import it.unifi.nave.uniblock.helper.HashHelper;
+import it.unifi.nave.uniblock.factory.DaggerHashFactory;
+import it.unifi.nave.uniblock.helper.PKHelper;
 import it.unifi.nave.uniblock.persistence.Blockchain;
 import it.unifi.nave.uniblock.persistence.KeyManager;
 
+import javax.inject.Inject;
+import javax.inject.Singleton;
 import java.security.PrivateKey;
 import java.util.HashMap;
 import java.util.Map;
 
-public class InMemoryPersistence implements Blockchain, KeyManager {
+@Singleton
+public class InMemoryPersistence extends Blockchain implements KeyManager {
   private final Map<String, Block> blockchain = new HashMap<>();
   private Block genesisBlock;
   private Block lastBlock;
   private final Map<String, PrivateKey> dhPk = new HashMap<>();
   private final Map<String, PrivateKey> signPk = new HashMap<>();
+
+  @Inject
+  public InMemoryPersistence(PKHelper pkHelper) {
+    super(pkHelper);
+  }
 
   @Override
   public void saveBlock(Block block) {
@@ -22,7 +31,7 @@ public class InMemoryPersistence implements Blockchain, KeyManager {
       genesisBlock = block;
     }
     lastBlock = block;
-    blockchain.put(HashHelper.hash(block.getBlockHeader()), block);
+    blockchain.put(DaggerHashFactory.create().get().hash(block.getBlockHeader()), block);
   }
 
   @Override

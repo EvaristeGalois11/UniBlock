@@ -2,7 +2,11 @@ package it.unifi.nave.uniblock.helper;
 
 import it.unifi.nave.uniblock.data.event.Encryptable;
 import it.unifi.nave.uniblock.data.event.EncryptedEvent;
+import it.unifi.nave.uniblock.persistence.Blockchain;
+import it.unifi.nave.uniblock.persistence.KeyManager;
 
+import javax.inject.Inject;
+import javax.inject.Singleton;
 import java.nio.charset.StandardCharsets;
 import java.security.PrivateKey;
 import java.security.PublicKey;
@@ -10,14 +14,31 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Stream;
 
+@Singleton
 public class EncryptedEventHelper {
-  public static EncryptedEvent build(Encryptable event, String author, List<String> receivers) {
-    var payloadKey = AESHelper.randomKey();
-    var payload = AESHelper.encrypt(payloadKey, HashHelper.serialize(event), false);
+
+  private final AESHelper aesHelper;
+  private final HashHelper hashHelper;
+  private final PKHelper pkHelper;
+  private final Blockchain blockchain;
+  private final KeyManager keyManager;
+
+  @Inject
+  public EncryptedEventHelper(AESHelper aesHelper, HashHelper hashHelper, PKHelper pkHelper, Blockchain blockchain, KeyManager keyManager) {
+    this.aesHelper = aesHelper;
+    this.hashHelper = hashHelper;
+    this.pkHelper = pkHelper;
+    this.blockchain = blockchain;
+    this.keyManager = keyManager;
+  }
+
+  public EncryptedEvent build(Encryptable event, String author, List<String> receivers) {
+    var payloadKey = aesHelper.randomKey();
+    var payload = aesHelper.encrypt(payloadKey, hashHelper.serialize(event), false);
     var sign =
-        PKHelper.sign(
+        pkHelper.sign(
             payload.getBytes(StandardCharsets.UTF_8),
-            PersistenceHelper.getKeyManager().retrieveSignPk(author));
+            keyManager.retrieveSignPk(author));
     var eventContainer = new EncryptedEvent(author, event.getType(), payload, sign);
     Stream.concat(receivers.stream(), Stream.of(author))
         .map(id -> encryptKey(id, payloadKey, author))
@@ -25,9 +46,9 @@ public class EncryptedEventHelper {
     return eventContainer;
   }
 
-  private static Map.Entry<String, String> encryptKey(String id, byte[] key, String author) {
-    PublicKey pbk = PersistenceHelper.getBlockchain().searchCertificate(id).dhPbk();
-    PrivateKey dhPk = PersistenceHelper.getKeyManager().retrieveDhPk(author);
-    return Map.entry(id, PKHelper.encrypt(dhPk, pbk, key));
+  private Map.Entry<String, String> encryptKey(String id, byte[] key, String author) {
+    PublicKey pbk = blockchain.searchCertificate(id).dhPbk();
+    PrivateKey dhPk = keyManager.retrieveDhPk(author);
+    return Map.entry(id, pkHelper.encrypt(dhPk, pbk, key));
   }
 }

@@ -1,6 +1,6 @@
 package it.unifi.nave.uniblock.data.block;
 
-import it.unifi.nave.uniblock.helper.HashHelper;
+import it.unifi.nave.uniblock.factory.DaggerHashFactory;
 import it.unifi.nave.uniblock.helper.StringHelper;
 
 import java.io.Serializable;
@@ -21,12 +21,12 @@ public class BlockHeader implements Serializable, Cloneable {
   }
 
   public boolean isMined() {
-    return HashHelper.hash(this).startsWith("0".repeat(difficulty));
+    return DaggerHashFactory.create().get().hash(this).startsWith("0".repeat(difficulty));
   }
 
   @Override
   public String toString() {
-    return StringHelper.formatLeft(HashHelper.hash(this), "hash")
+    return StringHelper.formatLeft(DaggerHashFactory.create().get().hash(this), "hash")
         + "\n"
         + StringHelper.formatLeft(previousHash, "previousHash")
         + "\n"

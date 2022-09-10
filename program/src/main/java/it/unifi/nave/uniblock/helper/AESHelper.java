@@ -5,11 +5,14 @@ import com.google.common.primitives.Bytes;
 import javax.crypto.Cipher;
 import javax.crypto.spec.GCMParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
+import javax.inject.Inject;
+import javax.inject.Singleton;
 import java.nio.charset.StandardCharsets;
 import java.security.SecureRandom;
 import java.util.Arrays;
 import java.util.Base64;
 
+@Singleton
 public class AESHelper {
   private static final int AES_KEY_SIZE_BYTE = 16;
   private static final int GCM_TAG_SIZE_BIT = 128;
@@ -18,7 +21,14 @@ public class AESHelper {
   private static final String AES_SUITE = "AES/GCM/NoPadding";
   private static final SecureRandom SECURE_RANDOM = new SecureRandom();
 
-  public static String encrypt(byte[] secret, byte[] plain, boolean derive) {
+  private final HashHelper hashHelper;
+
+  @Inject
+  public AESHelper(HashHelper hashHelper) {
+    this.hashHelper = hashHelper;
+  }
+
+  public String encrypt(byte[] secret, byte[] plain, boolean derive) {
     try {
       var key = derive ? deriveKey(secret) : secret;
       var iv = generateRandom(IV_GCM_SIZE_BYTE);
@@ -33,7 +43,7 @@ public class AESHelper {
     }
   }
 
-  public static String decrypt(byte[] secret, byte[] encrypted, boolean derive) {
+  public String decrypt(byte[] secret, byte[] encrypted, boolean derive) {
     try {
       var key = derive ? deriveKey(secret) : secret;
       var cipher = Cipher.getInstance(AES_SUITE);
@@ -46,15 +56,15 @@ public class AESHelper {
     }
   }
 
-  private static byte[] deriveKey(byte[] source) {
-    return Arrays.copyOf(HashHelper.hashRaw(source), AES_KEY_SIZE_BYTE);
+  private byte[] deriveKey(byte[] source) {
+    return Arrays.copyOf(hashHelper.hashRaw(source), AES_KEY_SIZE_BYTE);
   }
 
-  public static byte[] randomKey() {
+  public byte[] randomKey() {
     return generateRandom(AES_KEY_SIZE_BYTE);
   }
 
-  private static byte[] generateRandom(int length) {
+  private byte[] generateRandom(int length) {
     var random = new byte[length];
     SECURE_RANDOM.nextBytes(random);
     return random;
