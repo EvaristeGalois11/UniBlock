@@ -1,7 +1,9 @@
-package it.unifi.nave.uniblock.helper;
+package it.unifi.nave.uniblock.service.data;
 
 import it.unifi.nave.uniblock.data.event.Certificate;
 import it.unifi.nave.uniblock.persistence.KeyManager;
+import it.unifi.nave.uniblock.service.crypto.HashService;
+import it.unifi.nave.uniblock.service.crypto.PKService;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -11,16 +13,16 @@ import java.security.PublicKey;
 import static it.unifi.nave.uniblock.data.event.Certificate.GENESIS;
 
 @Singleton
-public class CertificateHelper {
+public class CertificateService {
 
-  private final HashHelper hashHelper;
-  private final PKHelper pkHelper;
+  private final HashService hashService;
+  private final PKService pkService;
   private final KeyManager keyManager;
 
   @Inject
-  public CertificateHelper(HashHelper hashHelper, PKHelper pkHelper, KeyManager keyManager) {
-    this.hashHelper = hashHelper;
-    this.pkHelper = pkHelper;
+  public CertificateService(HashService hashService, PKService pkService, KeyManager keyManager) {
+    this.hashService = hashService;
+    this.pkService = pkService;
     this.keyManager = keyManager;
   }
 
@@ -44,7 +46,7 @@ public class CertificateHelper {
   }
 
   private String calculateUserId(PublicKey signPbk, PublicKey dhPbk) {
-    return hashHelper.hash(concatPbk(signPbk, dhPbk));
+    return hashService.hash(concatPbk(signPbk, dhPbk));
   }
 
   private byte[] concatPbk(PublicKey signPbk, PublicKey dhPbk) {
@@ -57,6 +59,6 @@ public class CertificateHelper {
   }
 
   private String authorizedKey(PublicKey signPbk, PublicKey dhPbk) {
-    return pkHelper.sign(concatPbk(signPbk, dhPbk), keyManager.retrieveSignPk(GENESIS));
+    return pkService.sign(concatPbk(signPbk, dhPbk), keyManager.retrieveSignPk(GENESIS));
   }
 }

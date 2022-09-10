@@ -2,7 +2,7 @@ package it.unifi.nave.uniblock.persistence.impl;
 
 import it.unifi.nave.uniblock.data.block.Block;
 import it.unifi.nave.uniblock.factory.DaggerHashFactory;
-import it.unifi.nave.uniblock.helper.PKHelper;
+import it.unifi.nave.uniblock.service.crypto.PKService;
 import it.unifi.nave.uniblock.persistence.Blockchain;
 import it.unifi.nave.uniblock.persistence.KeyManager;
 
@@ -21,8 +21,8 @@ public class InMemoryPersistence extends Blockchain implements KeyManager {
   private final Map<String, PrivateKey> signPk = new HashMap<>();
 
   @Inject
-  public InMemoryPersistence(PKHelper pkHelper) {
-    super(pkHelper);
+  public InMemoryPersistence(PKService pkService) {
+    super(pkService);
   }
 
   @Override

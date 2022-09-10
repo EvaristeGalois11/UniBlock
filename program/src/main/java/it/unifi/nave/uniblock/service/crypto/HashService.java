@@ -1,4 +1,4 @@
-package it.unifi.nave.uniblock.helper;
+package it.unifi.nave.uniblock.service.crypto;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -10,11 +10,11 @@ import java.security.NoSuchAlgorithmException;
 import java.util.HexFormat;
 
 @Singleton
-public class HashHelper {
+public class HashService {
   private static final String HASH_TYPE = "SHA3-256";
 
   @Inject
-  public HashHelper() {}
+  public HashService() {}
 
   public String hash(String toHash) {
     return hash(toHash.getBytes(StandardCharsets.UTF_8));

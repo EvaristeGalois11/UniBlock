@@ -1,4 +1,4 @@
-package it.unifi.nave.uniblock.helper;
+package it.unifi.nave.uniblock.service.crypto;
 
 import javax.crypto.KeyAgreement;
 import javax.inject.Inject;
@@ -12,16 +12,16 @@ import java.security.Signature;
 import java.util.Base64;
 
 @Singleton
-public class PKHelper {
+public class PKService {
   private static final String PUBLIC_KEY_DH = "X25519";
   private static final String PUBLIC_KEY_AGREEMENT = "XDH";
   private static final String PUBLIC_KEY_SIGN = "Ed25519";
 
-  private final AESHelper aesHelper;
+  private final AESService aesService;
 
   @Inject
-  public PKHelper(AESHelper aesHelper) {
-    this.aesHelper = aesHelper;
+  public PKService(AESService aesService) {
+    this.aesService = aesService;
   }
 
   public KeyPair generateDhKeyPair() {
@@ -42,12 +42,12 @@ public class PKHelper {
 
   public String encrypt(PrivateKey pk, PublicKey pbk, byte[] plain) {
     var secret = generateSecret(pk, pbk);
-    return aesHelper.encrypt(secret, plain, true);
+    return aesService.encrypt(secret, plain, true);
   }
 
   public String decrypt(PrivateKey pk, PublicKey pbk, byte[] encrypted) {
     var secret = generateSecret(pk, pbk);
-    return aesHelper.decrypt(secret, encrypted, true);
+    return aesService.decrypt(secret, encrypted, true);
   }
 
   private byte[] generateSecret(PrivateKey privateKey, PublicKey publicKey) {

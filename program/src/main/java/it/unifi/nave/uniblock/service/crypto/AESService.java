@@ -1,4 +1,4 @@
-package it.unifi.nave.uniblock.helper;
+package it.unifi.nave.uniblock.service.crypto;
 
 import com.google.common.primitives.Bytes;
 
@@ -13,7 +13,7 @@ import java.util.Arrays;
 import java.util.Base64;
 
 @Singleton
-public class AESHelper {
+public class AESService {
   private static final int AES_KEY_SIZE_BYTE = 16;
   private static final int GCM_TAG_SIZE_BIT = 128;
   private static final int IV_GCM_SIZE_BYTE = 12;
@@ -21,11 +21,11 @@ public class AESHelper {
   private static final String AES_SUITE = "AES/GCM/NoPadding";
   private static final SecureRandom SECURE_RANDOM = new SecureRandom();
 
-  private final HashHelper hashHelper;
+  private final HashService hashService;
 
   @Inject
-  public AESHelper(HashHelper hashHelper) {
-    this.hashHelper = hashHelper;
+  public AESService(HashService hashService) {
+    this.hashService = hashService;
   }
 
   public String encrypt(byte[] secret, byte[] plain, boolean derive) {
@@ -57,7 +57,7 @@ public class AESHelper {
   }
 
   private byte[] deriveKey(byte[] source) {
-    return Arrays.copyOf(hashHelper.hashRaw(source), AES_KEY_SIZE_BYTE);
+    return Arrays.copyOf(hashService.hashRaw(source), AES_KEY_SIZE_BYTE);
   }
 
   public byte[] randomKey() {

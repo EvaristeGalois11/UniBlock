@@ -4,10 +4,10 @@ import it.unifi.nave.uniblock.data.block.Block;
 import it.unifi.nave.uniblock.data.event.Certificate;
 import it.unifi.nave.uniblock.data.event.Encryptable;
 import it.unifi.nave.uniblock.data.event.Event;
-import it.unifi.nave.uniblock.helper.CertificateHelper;
-import it.unifi.nave.uniblock.helper.EncryptedEventHelper;
-import it.unifi.nave.uniblock.helper.HashHelper;
-import it.unifi.nave.uniblock.helper.PKHelper;
+import it.unifi.nave.uniblock.service.data.CertificateService;
+import it.unifi.nave.uniblock.service.data.EncryptedEventService;
+import it.unifi.nave.uniblock.service.crypto.HashService;
+import it.unifi.nave.uniblock.service.crypto.PKService;
 import it.unifi.nave.uniblock.persistence.Blockchain;
 import it.unifi.nave.uniblock.persistence.KeyManager;
 import it.unifi.nave.uniblock.service.MinerService;
@@ -24,10 +24,10 @@ import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class Demo {
-  private final CertificateHelper certificateHelper;
-  private final EncryptedEventHelper encryptedEventHelper;
-  private final HashHelper hashHelper;
-  private final PKHelper pkHelper;
+  private final CertificateService certificateService;
+  private final EncryptedEventService encryptedEventService;
+  private final HashService hashService;
+  private final PKService pkService;
   private final Blockchain blockchain;
   private final KeyManager keyManager;
 
@@ -36,16 +36,16 @@ public class Demo {
 
   @Inject
   public Demo(
-      CertificateHelper certificateHelper,
-      EncryptedEventHelper encryptedEventHelper,
-      HashHelper hashHelper,
-      PKHelper pkHelper,
+      CertificateService certificateService,
+      EncryptedEventService encryptedEventService,
+      HashService hashService,
+      PKService pkService,
       Blockchain blockchain,
       KeyManager keyManager) {
-    this.certificateHelper = certificateHelper;
-    this.encryptedEventHelper = encryptedEventHelper;
-    this.hashHelper = hashHelper;
-    this.pkHelper = pkHelper;
+    this.certificateService = certificateService;
+    this.encryptedEventService = encryptedEventService;
+    this.hashService = hashService;
+    this.pkService = pkService;
     this.blockchain = blockchain;
     this.keyManager = keyManager;
   }
@@ -54,7 +54,7 @@ public class Demo {
     this.difficulty = difficulty;
     this.progress = progress;
     var genesis = initGenesis();
-    var certificates = createUsers(hashHelper.hash(genesis.getBlockHeader()));
+    var certificates = createUsers(hashService.hash(genesis.getBlockHeader()));
     var professor =
         certificates.getEvents().stream()
             .filter(Certificate.class::isInstance)
@@ -71,18 +71,18 @@ public class Demo {
             .map(Certificate::userId)
             .toList();
     var publishing =
-        publishExam(professor, students, hashHelper.hash(certificates.getBlockHeader()));
-    var booking = bookExam(professor, students, hashHelper.hash(publishing.getBlockHeader()));
-    var result = publishResult(professor, students, hashHelper.hash(booking.getBlockHeader()));
-    confirmExam(professor, students, hashHelper.hash(result.getBlockHeader()));
+        publishExam(professor, students, hashService.hash(certificates.getBlockHeader()));
+    var booking = bookExam(professor, students, hashService.hash(publishing.getBlockHeader()));
+    var result = publishResult(professor, students, hashService.hash(booking.getBlockHeader()));
+    confirmExam(professor, students, hashService.hash(result.getBlockHeader()));
     MinerService.terminate();
   }
 
   private Block initGenesis() {
-    var genesisDhPk = pkHelper.generateDhKeyPair();
-    var genesisSignPk = pkHelper.generateSignKeyPair();
+    var genesisDhPk = pkService.generateDhKeyPair();
+    var genesisSignPk = pkService.generateSignKeyPair();
     var genesisCertificate =
-        certificateHelper.build(
+        certificateService.build(
             "",
             genesisSignPk.getPublic(),
             genesisDhPk.getPublic(),
@@ -104,10 +104,10 @@ public class Demo {
   }
 
   private Certificate createUser(String name, Certificate.CertificateType certificateType) {
-    var professorDhPk = pkHelper.generateDhKeyPair();
-    var professorSignPk = pkHelper.generateSignKeyPair();
+    var professorDhPk = pkService.generateDhKeyPair();
+    var professorSignPk = pkService.generateSignKeyPair();
     var professorCertificate =
-        certificateHelper.build(
+        certificateService.build(
             name, professorSignPk.getPublic(), professorDhPk.getPublic(), certificateType);
     registerPk(
         professorSignPk.getPrivate(), professorDhPk.getPrivate(), professorCertificate.userId());
@@ -118,7 +118,7 @@ public class Demo {
     var event =
         new Encryptable.ExamPublishing(
             professor, "PROGRAMMAZIONE", LocalDate.of(2017, Month.JUNE, 29));
-    var eventContainer = encryptedEventHelper.build(event, professor, students);
+    var eventContainer = encryptedEventService.build(event, professor, students);
     return mineBlock(previousHash, "Publishing exam", eventContainer);
   }
 
@@ -133,7 +133,7 @@ public class Demo {
                         s, "PROGRAMMAZIONE", LocalDate.of(2017, Month.JUNE, 29)))
             .map(
                 e ->
-                    encryptedEventHelper.build(
+                    encryptedEventService.build(
                         e, e.student(), Collections.singletonList(professor)))
             .toArray(Event[]::new));
   }
@@ -153,7 +153,7 @@ public class Demo {
                         ThreadLocalRandom.current().nextInt(18, 31)))
             .map(
                 e ->
-                    encryptedEventHelper.build(
+                    encryptedEventService.build(
                         e, professor, Collections.singletonList(e.student())))
             .toArray(Event[]::new));
   }
@@ -170,7 +170,7 @@ public class Demo {
                         s, "PROGRAMMAZIONE", LocalDate.of(2017, Month.JUNE, 29), true))
             .map(
                 e ->
-                    encryptedEventHelper.build(
+                    encryptedEventService.build(
                         e, e.student(), Collections.singletonList(professor)))
             .toArray(Event[]::new));
   }

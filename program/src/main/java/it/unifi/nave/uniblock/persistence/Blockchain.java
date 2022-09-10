@@ -4,7 +4,7 @@ import com.google.common.collect.Streams;
 import com.google.common.primitives.Bytes;
 import it.unifi.nave.uniblock.data.block.Block;
 import it.unifi.nave.uniblock.data.event.Certificate;
-import it.unifi.nave.uniblock.helper.PKHelper;
+import it.unifi.nave.uniblock.service.crypto.PKService;
 
 import java.security.PublicKey;
 import java.util.Collection;
@@ -12,10 +12,10 @@ import java.util.Iterator;
 
 public abstract class Blockchain implements Iterable<Block> {
 
-  private final PKHelper pkHelper;
+  private final PKService pkService;
 
-  public Blockchain(PKHelper pkHelper) {
-    this.pkHelper = pkHelper;
+  public Blockchain(PKService pkService) {
+    this.pkService = pkService;
   }
 
   public abstract void saveBlock(Block block);
@@ -47,7 +47,7 @@ public abstract class Blockchain implements Iterable<Block> {
   }
 
   private boolean verify(PublicKey signPbk, PublicKey dhPbk, String sign) {
-    return pkHelper.verify(
+    return pkService.verify(
         Bytes.concat(signPbk.getEncoded(), dhPbk.getEncoded()),
         sign,
         searchGenesisCertificate().signPbk());
