@@ -1,4 +1,4 @@
-package it.unifi.nave.uniblock.service;
+package it.unifi.nave.uniblock.service.mining;
 
 import it.unifi.nave.uniblock.data.block.BlockHeader;
 

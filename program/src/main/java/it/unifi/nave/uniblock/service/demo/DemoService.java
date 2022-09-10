@@ -1,4 +1,4 @@
-package it.unifi.nave.uniblock;
+package it.unifi.nave.uniblock.service.demo;
 
 import it.unifi.nave.uniblock.data.block.Block;
 import it.unifi.nave.uniblock.data.event.Certificate;
@@ -10,7 +10,7 @@ import it.unifi.nave.uniblock.service.crypto.HashService;
 import it.unifi.nave.uniblock.service.crypto.PKService;
 import it.unifi.nave.uniblock.persistence.Blockchain;
 import it.unifi.nave.uniblock.persistence.KeyManager;
-import it.unifi.nave.uniblock.service.MinerService;
+import it.unifi.nave.uniblock.service.mining.MinerService;
 
 import javax.inject.Inject;
 import java.security.PrivateKey;
@@ -23,7 +23,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
-public class Demo {
+public class DemoService {
   private final CertificateService certificateService;
   private final EncryptedEventService encryptedEventService;
   private final HashService hashService;
@@ -35,7 +35,7 @@ public class Demo {
   private boolean progress;
 
   @Inject
-  public Demo(
+  public DemoService(
       CertificateService certificateService,
       EncryptedEventService encryptedEventService,
       HashService hashService,

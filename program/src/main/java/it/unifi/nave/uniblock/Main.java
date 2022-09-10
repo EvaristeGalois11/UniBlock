@@ -1,6 +1,7 @@
 package it.unifi.nave.uniblock;
 
-import it.unifi.nave.uniblock.factory.DaggerDemoFactory;
+import it.unifi.nave.uniblock.service.demo.DemoService;
+import it.unifi.nave.uniblock.service.factory.DaggerDemoServiceFactory;
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.DefaultParser;
 import org.apache.commons.cli.HelpFormatter;
@@ -33,7 +34,7 @@ public class Main {
   private static void startDemo(CommandLine cmd) {
     int difficulty = Integer.parseInt(cmd.getOptionValue("d", "5"));
     boolean progress = cmd.hasOption("p");
-    Demo demo = DaggerDemoFactory.create().get();
-    demo.startDemo(difficulty, progress);
+    DemoService demoService = DaggerDemoServiceFactory.create().get();
+    demoService.startDemo(difficulty, progress);
   }
 }

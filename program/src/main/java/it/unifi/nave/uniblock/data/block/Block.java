@@ -2,7 +2,7 @@ package it.unifi.nave.uniblock.data.block;
 
 import com.google.common.collect.Lists;
 import it.unifi.nave.uniblock.data.event.Event;
-import it.unifi.nave.uniblock.factory.DaggerHashFactory;
+import it.unifi.nave.uniblock.service.factory.DaggerHashServiceFactory;
 import it.unifi.nave.uniblock.helper.StringHelper;
 
 import java.util.ArrayList;
@@ -26,7 +26,7 @@ public class Block {
   }
 
   private String calculateRootHash(List<Event> events) {
-    return getRootHash(events.stream().map(DaggerHashFactory.create().get()::hash).toList());
+    return getRootHash(events.stream().map(DaggerHashServiceFactory.create().get()::hash).toList());
   }
 
   private String getRootHash(List<String> hashes) {
@@ -40,7 +40,7 @@ public class Block {
   private String reduceHash(List<String> hashes) {
     var first = hashes.get(0);
     var second = hashes.size() == 2 ? hashes.get(1) : first;
-    return DaggerHashFactory.create().get().hash(first + second);
+    return DaggerHashServiceFactory.create().get().hash(first + second);
   }
 
   @Override

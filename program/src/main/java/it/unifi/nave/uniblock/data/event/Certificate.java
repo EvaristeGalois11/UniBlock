@@ -1,6 +1,6 @@
 package it.unifi.nave.uniblock.data.event;
 
-import it.unifi.nave.uniblock.factory.DaggerHashFactory;
+import it.unifi.nave.uniblock.service.factory.DaggerHashServiceFactory;
 import it.unifi.nave.uniblock.helper.StringHelper;
 
 import java.security.PublicKey;
@@ -18,7 +18,7 @@ public record Certificate(
 
   @Override
   public String toString() {
-    return StringHelper.formatLeft(DaggerHashFactory.create().get().hash(this), "hash")
+    return StringHelper.formatLeft(DaggerHashServiceFactory.create().get().hash(this), "hash")
         + "\n"
         + StringHelper.formatLeft(userId, "userId")
         + "\n"
