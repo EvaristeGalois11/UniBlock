@@ -29,8 +29,8 @@ public class MinerService {
     miners = new ArrayList<>();
   }
 
-  public static void mine(Block block) {
-    new MinerService(block, true).mine();
+  public static void mine(Block block, boolean progress) {
+    new MinerService(block, progress).mine();
   }
 
   public static void terminate() {

@@ -32,6 +32,7 @@ public class Demo {
   private final KeyManager keyManager;
 
   private int difficulty;
+  private boolean progress;
 
   @Inject
   public Demo(
@@ -49,8 +50,9 @@ public class Demo {
     this.keyManager = keyManager;
   }
 
-  public void startDemo(int difficulty) {
+  public void startDemo(int difficulty, boolean progress) {
     this.difficulty = difficulty;
+    this.progress = progress;
     var genesis = initGenesis();
     var certificates = createUsers(hashHelper.hash(genesis.getBlockHeader()));
     var professor =
@@ -183,7 +185,7 @@ public class Demo {
     block.addEvents(Arrays.asList(events));
     System.out.print(message);
     var start = Instant.now();
-    MinerService.mine(block);
+    MinerService.mine(block, progress);
     var end = Instant.now();
     var duration = Duration.between(start, end);
     System.out.println(
