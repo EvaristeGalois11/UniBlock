@@ -31,6 +31,8 @@ public class Demo {
   private final Blockchain blockchain;
   private final KeyManager keyManager;
 
+  private int difficulty;
+
   @Inject
   public Demo(
       CertificateHelper certificateHelper,
@@ -47,7 +49,8 @@ public class Demo {
     this.keyManager = keyManager;
   }
 
-  public void startDemo() {
+  public void startDemo(int difficulty) {
+    this.difficulty = difficulty;
     var genesis = initGenesis();
     var certificates = createUsers(hashHelper.hash(genesis.getBlockHeader()));
     var professor =
@@ -153,6 +156,7 @@ public class Demo {
             .toArray(Event[]::new));
   }
 
+  @SuppressWarnings("UnusedReturnValue")
   private Block confirmExam(String professor, List<String> students, String previousHash) {
     return mineBlock(
         previousHash,
@@ -175,7 +179,7 @@ public class Demo {
   }
 
   private Block mineBlock(String previousHash, String message, Event... events) {
-    var block = new Block(previousHash, 5);
+    var block = new Block(previousHash, difficulty);
     block.addEvents(Arrays.asList(events));
     System.out.print(message);
     var start = Instant.now();

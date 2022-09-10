@@ -41,6 +41,6 @@ public record Certificate(
   public enum CertificateType {
     PROFESSOR,
     STUDENT,
-    GENESIS;
+    GENESIS
   }
 }
