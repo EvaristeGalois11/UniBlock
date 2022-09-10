@@ -24,7 +24,12 @@ public class EncryptedEventHelper {
   private final KeyManager keyManager;
 
   @Inject
-  public EncryptedEventHelper(AESHelper aesHelper, HashHelper hashHelper, PKHelper pkHelper, Blockchain blockchain, KeyManager keyManager) {
+  public EncryptedEventHelper(
+      AESHelper aesHelper,
+      HashHelper hashHelper,
+      PKHelper pkHelper,
+      Blockchain blockchain,
+      KeyManager keyManager) {
     this.aesHelper = aesHelper;
     this.hashHelper = hashHelper;
     this.pkHelper = pkHelper;
@@ -36,9 +41,7 @@ public class EncryptedEventHelper {
     var payloadKey = aesHelper.randomKey();
     var payload = aesHelper.encrypt(payloadKey, hashHelper.serialize(event), false);
     var sign =
-        pkHelper.sign(
-            payload.getBytes(StandardCharsets.UTF_8),
-            keyManager.retrieveSignPk(author));
+        pkHelper.sign(payload.getBytes(StandardCharsets.UTF_8), keyManager.retrieveSignPk(author));
     var eventContainer = new EncryptedEvent(author, event.getType(), payload, sign);
     Stream.concat(receivers.stream(), Stream.of(author))
         .map(id -> encryptKey(id, payloadKey, author))

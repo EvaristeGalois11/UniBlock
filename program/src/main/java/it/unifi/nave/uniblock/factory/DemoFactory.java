@@ -8,7 +8,5 @@ import javax.inject.Singleton;
 @Singleton
 @Component(modules = BlockchainModule.class)
 public interface DemoFactory {
-    Demo get();
+  Demo get();
 }
-
-

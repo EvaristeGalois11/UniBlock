@@ -7,11 +7,10 @@ import it.unifi.nave.uniblock.persistence.KeyManager;
 import it.unifi.nave.uniblock.persistence.impl.InMemoryPersistence;
 
 @Module
-public
-interface BlockchainModule {
-    @Binds
-    Blockchain blockchain(InMemoryPersistence inMemoryPersistence);
+public interface BlockchainModule {
+  @Binds
+  Blockchain blockchain(InMemoryPersistence inMemoryPersistence);
 
-    @Binds
-    KeyManager keyManager(InMemoryPersistence inMemoryPersistence);
+  @Binds
+  KeyManager keyManager(InMemoryPersistence inMemoryPersistence);
 }
