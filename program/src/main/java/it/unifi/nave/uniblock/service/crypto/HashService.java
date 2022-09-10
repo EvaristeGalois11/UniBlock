@@ -4,6 +4,7 @@ import javax.inject.Inject;
 import javax.inject.Singleton;
 import java.io.ByteArrayOutputStream;
 import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -32,11 +33,11 @@ public class HashService {
     }
   }
 
-  public String hash(Object obj) {
+  public String hash(Serializable obj) {
     return hash(serialize(obj));
   }
 
-  public byte[] serialize(Object obj) {
+  public byte[] serialize(Serializable obj) {
     try {
       var arrayOutputStream = new ByteArrayOutputStream();
       var objectOutputStream = new ObjectOutputStream(arrayOutputStream);

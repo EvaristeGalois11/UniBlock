@@ -4,12 +4,12 @@ import it.unifi.nave.uniblock.data.block.Block;
 import it.unifi.nave.uniblock.data.event.Certificate;
 import it.unifi.nave.uniblock.data.event.Encryptable;
 import it.unifi.nave.uniblock.data.event.Event;
-import it.unifi.nave.uniblock.service.data.CertificateService;
-import it.unifi.nave.uniblock.service.data.EncryptedEventService;
-import it.unifi.nave.uniblock.service.crypto.HashService;
-import it.unifi.nave.uniblock.service.crypto.PKService;
 import it.unifi.nave.uniblock.persistence.Blockchain;
 import it.unifi.nave.uniblock.persistence.KeyManager;
+import it.unifi.nave.uniblock.service.crypto.HashService;
+import it.unifi.nave.uniblock.service.crypto.PKService;
+import it.unifi.nave.uniblock.service.data.CertificateService;
+import it.unifi.nave.uniblock.service.data.EncryptedEventService;
 import it.unifi.nave.uniblock.service.mining.MinerService;
 
 import javax.inject.Inject;
@@ -30,6 +30,7 @@ public class DemoService {
   private final PKService pkService;
   private final Blockchain blockchain;
   private final KeyManager keyManager;
+  private final ToStringService toStringService;
 
   private int difficulty;
   private boolean progress;
@@ -41,13 +42,15 @@ public class DemoService {
       HashService hashService,
       PKService pkService,
       Blockchain blockchain,
-      KeyManager keyManager) {
+      KeyManager keyManager,
+      ToStringService toStringService) {
     this.certificateService = certificateService;
     this.encryptedEventService = encryptedEventService;
     this.hashService = hashService;
     this.pkService = pkService;
     this.blockchain = blockchain;
     this.keyManager = keyManager;
+    this.toStringService = toStringService;
   }
 
   public void startDemo(int difficulty, boolean progress) {
@@ -194,7 +197,7 @@ public class DemoService {
             + "m "
             + duration.toSecondsPart()
             + "s\n"
-            + block
+            + toStringService.blockToString(block)
             + "\n");
     blockchain.saveBlock(block);
     return block;

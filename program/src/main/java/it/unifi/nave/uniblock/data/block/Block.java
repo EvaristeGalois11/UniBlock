@@ -3,13 +3,11 @@ package it.unifi.nave.uniblock.data.block;
 import com.google.common.collect.Lists;
 import it.unifi.nave.uniblock.data.event.Event;
 import it.unifi.nave.uniblock.service.factory.DaggerHashServiceFactory;
-import it.unifi.nave.uniblock.helper.StringHelper;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class Block {
   private final BlockHeader blockHeader;
@@ -41,25 +39,6 @@ public class Block {
     var first = hashes.get(0);
     var second = hashes.size() == 2 ? hashes.get(1) : first;
     return DaggerHashServiceFactory.create().get().hash(first + second);
-  }
-
-  @Override
-  public String toString() {
-    return StringHelper.formatTitle("Block Header")
-        + "\n"
-        + blockHeader
-        + "\n"
-        + StringHelper.formatTitle("Events")
-        + "\n"
-        + eventsToString()
-        + "\n"
-        + StringHelper.emptyLine();
-  }
-
-  private String eventsToString() {
-    return events.stream()
-        .map(Object::toString)
-        .collect(Collectors.joining("\n" + StringHelper.emptyLine() + "\n"));
   }
 
   public BlockHeader getBlockHeader() {

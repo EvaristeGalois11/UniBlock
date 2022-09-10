@@ -1,12 +1,9 @@
 package it.unifi.nave.uniblock.data.block;
 
 import it.unifi.nave.uniblock.service.factory.DaggerHashServiceFactory;
-import it.unifi.nave.uniblock.helper.StringHelper;
 
 import java.io.Serializable;
 import java.time.Instant;
-import java.time.ZoneId;
-import java.time.format.DateTimeFormatter;
 
 public class BlockHeader implements Serializable, Cloneable {
   private final String previousHash;
@@ -22,27 +19,6 @@ public class BlockHeader implements Serializable, Cloneable {
 
   public boolean isMined() {
     return DaggerHashServiceFactory.create().get().hash(this).startsWith("0".repeat(difficulty));
-  }
-
-  @Override
-  public String toString() {
-    return StringHelper.formatLeft(DaggerHashServiceFactory.create().get().hash(this), "hash")
-        + "\n"
-        + StringHelper.formatLeft(previousHash, "previousHash")
-        + "\n"
-        + StringHelper.formatLeft(difficulty, "difficulty")
-        + "\n"
-        + StringHelper.formatLeft(rootHash, "rootHash")
-        + "\n"
-        + StringHelper.formatLeft(timestampToString(), "timestamp")
-        + "\n"
-        + StringHelper.formatLeft(nonce, "nonce");
-  }
-
-  private String timestampToString() {
-    return timestamp
-        .atZone(ZoneId.systemDefault())
-        .format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss"));
   }
 
   @Override
