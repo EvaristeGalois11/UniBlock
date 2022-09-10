@@ -12,6 +12,7 @@ import it.unifi.nave.uniblock.service.crypto.HashService;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 import java.security.PublicKey;
+import java.time.Instant;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.Base64;
@@ -35,14 +36,14 @@ public class ToStringService {
 
   public String blockToString(Block block) {
     return formatTitle("Block Header")
-            + "\n"
-            + blockHeaderToString(block.getBlockHeader())
-            + "\n"
-            + formatTitle("Events")
-            + "\n"
-            + eventsToString(block.getEvents())
-            + "\n"
-            + emptyLine();
+        + "\n"
+        + blockHeaderToString(block.getBlockHeader())
+        + "\n"
+        + formatTitle("Events")
+        + "\n"
+        + eventsToString(block.getEvents())
+        + "\n"
+        + emptyLine();
   }
 
   public String blockHeaderToString(BlockHeader blockHeader) {
@@ -54,14 +55,13 @@ public class ToStringService {
         + "\n"
         + formatLeft(blockHeader.getRootHash(), "rootHash")
         + "\n"
-        + formatLeft(timestampToString(blockHeader), "timestamp")
+        + formatLeft(timestampToString(blockHeader.getTimestamp()), "timestamp")
         + "\n"
         + formatLeft(blockHeader.getNonce(), "nonce");
   }
 
-  private String timestampToString(BlockHeader blockHeader) {
-    return blockHeader
-        .getTimestamp()
+  private String timestampToString(Instant timestamp) {
+    return timestamp
         .atZone(ZoneId.systemDefault())
         .format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss"));
   }

@@ -17,6 +17,7 @@ public class MinerService {
   private static final int NUMBER_OF_CORE = Runtime.getRuntime().availableProcessors();
   private static final int NUMBER_OF_HASH = 500000;
   private static final ExecutorService EXECUTOR = Executors.newFixedThreadPool(NUMBER_OF_CORE);
+
   private final Block block;
   private final boolean progress;
   private final CompletionService<Optional<Integer>> service;

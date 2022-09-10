@@ -9,26 +9,24 @@ import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
 
 public class Main {
+  private static final Options OPTIONS =
+      new Options()
+          .addOption("d", "difficulty", true, "Choose the difficulty of the mining")
+          .addOption("p", "progress", false, "Show progress of mining")
+          .addOption("h", "help", false, "Print this message");
+
   public static void main(String[] args) throws ParseException {
-    Options options = buildOptions();
-    CommandLine cmd = new DefaultParser().parse(options, args);
+    CommandLine cmd = new DefaultParser().parse(OPTIONS, args);
     if (cmd.hasOption("h")) {
-      printHelp(options);
+      printHelp();
     } else {
       startDemo(cmd);
     }
   }
 
-  private static Options buildOptions() {
-    return new Options()
-        .addOption("d", "difficulty", true, "Choose the difficulty of the mining")
-        .addOption("p", "progress", false, "Show progress of mining")
-        .addOption("h", "help", false, "Print this message");
-  }
-
-  private static void printHelp(Options options) {
+  private static void printHelp() {
     HelpFormatter formatter = new HelpFormatter();
-    formatter.printHelp("uniblock", options, true);
+    formatter.printHelp("uniblock", OPTIONS, true);
   }
 
   private static void startDemo(CommandLine cmd) {
