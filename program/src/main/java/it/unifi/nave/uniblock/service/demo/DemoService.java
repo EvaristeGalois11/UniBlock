@@ -10,6 +10,7 @@ import it.unifi.nave.uniblock.service.crypto.HashService;
 import it.unifi.nave.uniblock.service.crypto.PKService;
 import it.unifi.nave.uniblock.service.data.CertificateService;
 import it.unifi.nave.uniblock.service.data.EncryptedEventService;
+import it.unifi.nave.uniblock.service.data.MerkleTreeService;
 
 import javax.inject.Inject;
 import java.security.PrivateKey;
@@ -17,7 +18,6 @@ import java.time.Duration;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.Month;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
@@ -25,6 +25,7 @@ import java.util.concurrent.ThreadLocalRandom;
 public class DemoService {
   private final CertificateService certificateService;
   private final EncryptedEventService encryptedEventService;
+  private final MerkleTreeService merkleTreeService;
   private final HashService hashService;
   private final PKService pkService;
   private final Blockchain blockchain;
@@ -39,6 +40,7 @@ public class DemoService {
   public DemoService(
       CertificateService certificateService,
       EncryptedEventService encryptedEventService,
+      MerkleTreeService merkleTreeService,
       HashService hashService,
       PKService pkService,
       Blockchain blockchain,
@@ -47,6 +49,7 @@ public class DemoService {
       ToStringService toStringService) {
     this.certificateService = certificateService;
     this.encryptedEventService = encryptedEventService;
+    this.merkleTreeService = merkleTreeService;
     this.hashService = hashService;
     this.pkService = pkService;
     this.blockchain = blockchain;
@@ -92,7 +95,8 @@ public class DemoService {
             genesisDhPk.getPublic(),
             Certificate.CertificateType.GENESIS);
     registerPk(genesisSignPk.getPrivate(), genesisDhPk.getPrivate(), Certificate.GENESIS);
-    return mineBlock("GENESIS_BLOCK", "Generating genesis block", genesisCertificate);
+    return mineBlock(
+        "GENESIS_BLOCK", "Generating genesis block", Collections.singletonList(genesisCertificate));
   }
 
   private Block createUsers(String previousHash) {
@@ -102,9 +106,7 @@ public class DemoService {
     return mineBlock(
         previousHash,
         "Generating professor and students certificates",
-        professorEvent,
-        studentEvent1,
-        studentEvent2);
+        List.of(professorEvent, studentEvent1, studentEvent2));
   }
 
   private Certificate createUser(String name, Certificate.CertificateType certificateType) {
@@ -123,7 +125,7 @@ public class DemoService {
         new Encryptable.ExamPublishing(
             professor, "PROGRAMMAZIONE", LocalDate.of(2017, Month.JUNE, 29));
     var eventContainer = encryptedEventService.build(event, professor, students);
-    return mineBlock(previousHash, "Publishing exam", eventContainer);
+    return mineBlock(previousHash, "Publishing exam", Collections.singletonList(eventContainer));
   }
 
   private Block bookExam(String professor, List<String> students, String previousHash) {
@@ -139,7 +141,7 @@ public class DemoService {
                 e ->
                     encryptedEventService.build(
                         e, e.student(), Collections.singletonList(professor)))
-            .toArray(Event[]::new));
+            .toList());
   }
 
   private Block publishResult(String professor, List<String> students, String previousHash) {
@@ -159,7 +161,7 @@ public class DemoService {
                 e ->
                     encryptedEventService.build(
                         e, professor, Collections.singletonList(e.student())))
-            .toArray(Event[]::new));
+            .toList());
   }
 
   @SuppressWarnings("UnusedReturnValue")
@@ -176,7 +178,7 @@ public class DemoService {
                 e ->
                     encryptedEventService.build(
                         e, e.student(), Collections.singletonList(professor)))
-            .toArray(Event[]::new));
+            .toList());
   }
 
   private void registerPk(PrivateKey signPk, PrivateKey dhPk, String id) {
@@ -184,9 +186,9 @@ public class DemoService {
     keyManager.saveDhPk(id, dhPk);
   }
 
-  private Block mineBlock(String previousHash, String message, Event... events) {
-    var block = new Block(previousHash, difficulty);
-    block.addEvents(Arrays.asList(events));
+  private Block mineBlock(String previousHash, String message, List<? extends Event> events) {
+    var block =
+        new Block(previousHash, difficulty, events, merkleTreeService.calculateRootHash(events));
     System.out.print(message);
     var start = Instant.now();
     minerService.mine(block, progress);

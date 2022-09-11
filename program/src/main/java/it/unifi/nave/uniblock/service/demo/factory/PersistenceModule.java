@@ -1,4 +1,4 @@
-package it.unifi.nave.uniblock.service.factory;
+package it.unifi.nave.uniblock.service.demo.factory;
 
 import dagger.Binds;
 import dagger.Module;

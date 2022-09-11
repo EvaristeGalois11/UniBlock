@@ -1,7 +1,7 @@
 package it.unifi.nave.uniblock;
 
 import it.unifi.nave.uniblock.service.demo.DemoService;
-import it.unifi.nave.uniblock.service.factory.DaggerDemoServiceFactory;
+import it.unifi.nave.uniblock.service.demo.factory.DaggerDemoServiceFactory;
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.DefaultParser;
 import org.apache.commons.cli.HelpFormatter;

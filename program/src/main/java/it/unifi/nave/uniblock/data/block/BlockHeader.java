@@ -6,13 +6,15 @@ import java.time.Instant;
 public class BlockHeader implements Serializable, Cloneable {
   private final String previousHash;
   private final int difficulty;
-  private String rootHash = "";
-  private Instant timestamp = Instant.now();
+  private final String rootHash;
+  private final Instant timestamp = Instant.now();
+
   private int nonce = 0;
 
-  public BlockHeader(String previousHash, int difficulty) {
+  public BlockHeader(String previousHash, int difficulty, String rootHash) {
     this.previousHash = previousHash;
     this.difficulty = difficulty;
+    this.rootHash = rootHash;
   }
 
   @Override
@@ -36,16 +38,8 @@ public class BlockHeader implements Serializable, Cloneable {
     return rootHash;
   }
 
-  public void setRootHash(String rootHash) {
-    this.rootHash = rootHash;
-  }
-
   public Instant getTimestamp() {
     return timestamp;
-  }
-
-  public void setTimestamp(Instant timestamp) {
-    this.timestamp = timestamp;
   }
 
   public int getNonce() {
