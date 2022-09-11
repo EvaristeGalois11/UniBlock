@@ -1,7 +1,5 @@
 package it.unifi.nave.uniblock.data.block;
 
-import it.unifi.nave.uniblock.service.factory.DaggerHashServiceFactory;
-
 import java.io.Serializable;
 import java.time.Instant;
 

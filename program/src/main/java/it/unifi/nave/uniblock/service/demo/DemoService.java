@@ -80,7 +80,6 @@ public class DemoService {
     var booking = bookExam(professor, students, hashService.hash(publishing.getBlockHeader()));
     var result = publishResult(professor, students, hashService.hash(booking.getBlockHeader()));
     confirmExam(professor, students, hashService.hash(result.getBlockHeader()));
-    minerService.terminate();
   }
 
   private Block initGenesis() {
