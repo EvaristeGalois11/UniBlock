@@ -12,7 +12,7 @@ public class Main {
   private static final Options OPTIONS =
       new Options()
           .addOption("d", "difficulty", true, "Choose the difficulty of the mining")
-          .addOption("p", "progress", false, "Show progress of mining")
+          .addOption("p", "progress", false, "Show the progress of the mining")
           .addOption("h", "help", false, "Print this message");
 
   public static void main(String[] args) throws ParseException {
