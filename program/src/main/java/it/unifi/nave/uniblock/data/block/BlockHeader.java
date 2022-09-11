@@ -17,10 +17,6 @@ public class BlockHeader implements Serializable, Cloneable {
     this.difficulty = difficulty;
   }
 
-  public boolean isMined() {
-    return DaggerHashServiceFactory.create().get().hash(this).startsWith("0".repeat(difficulty));
-  }
-
   @Override
   public BlockHeader clone() {
     try {

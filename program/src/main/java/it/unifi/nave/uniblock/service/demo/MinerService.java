@@ -2,12 +2,13 @@ package it.unifi.nave.uniblock.service.demo;
 
 import it.unifi.nave.uniblock.data.block.Block;
 import it.unifi.nave.uniblock.data.block.BlockHeader;
+import it.unifi.nave.uniblock.service.crypto.HashService;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
+import java.util.OptionalInt;
 import java.util.concurrent.Callable;
 import java.util.concurrent.CompletionService;
 import java.util.concurrent.ExecutorCompletionService;
@@ -23,15 +24,18 @@ public class MinerService {
   private static final int NUMBER_OF_HASH = 500000;
 
   private final ExecutorService EXECUTOR = Executors.newFixedThreadPool(NUMBER_OF_CORE);
+  private final HashService hashService;
 
-  private CompletionService<Optional<Integer>> service;
-  private List<Future<Optional<Integer>>> miners;
+  private CompletionService<OptionalInt> service;
+  private List<Future<OptionalInt>> miners;
 
   private Block block;
   private boolean progress;
 
   @Inject
-  public MinerService() {}
+  public MinerService(HashService hashService) {
+    this.hashService = hashService;
+  }
 
   public void mine(Block block, boolean progress) {
     setUp(block, progress);
@@ -62,14 +66,14 @@ public class MinerService {
   private int mineNonce() {
     return IntStream.iterate(NUMBER_OF_CORE, i -> i + 1)
         .mapToObj(this::checkResult)
-        .flatMap(Optional::stream)
+        .flatMapToInt(OptionalInt::stream)
         .findAny()
         .orElseThrow();
   }
 
-  private Optional<Integer> checkResult(int offset) {
+  private OptionalInt checkResult(int offset) {
     try {
-      Optional<Integer> result = service.take().get();
+      OptionalInt result = service.take().get();
       if (progress && offset % 2 == 0) {
         System.out.print(PROGRESS);
       }
@@ -90,23 +94,26 @@ public class MinerService {
   }
 
   private Miner createMiner(int offset) {
-    return new Miner(
-        block.getBlockHeader().clone(), offset * NUMBER_OF_HASH, (offset + 1) * NUMBER_OF_HASH);
+    return new Miner(block.getBlockHeader().clone(), offset, hashService);
   }
 
-  private record Miner(BlockHeader blockHeader, int start, int end)
-      implements Callable<Optional<Integer>> {
+  private record Miner(BlockHeader blockHeader, int offset, HashService hashService)
+      implements Callable<OptionalInt> {
     @Override
-    public Optional<Integer> call() {
-      Integer result = null;
-      for (int i = start; i < end && !Thread.interrupted(); i++) {
-        blockHeader.setNonce(i);
-        if (blockHeader.isMined()) {
-          result = i;
-          break;
-        }
-      }
-      return Optional.ofNullable(result);
+    public OptionalInt call() {
+      return IntStream.range(offset * NUMBER_OF_HASH, (offset + 1) * NUMBER_OF_HASH)
+          .filter(i -> !Thread.interrupted())
+          .filter(this::checkNonce)
+          .findAny();
+    }
+
+    private boolean checkNonce(int i) {
+      blockHeader.setNonce(i);
+      return isMined();
+    }
+
+    private boolean isMined() {
+      return hashService.hash(blockHeader).startsWith("0".repeat(blockHeader.getDifficulty()));
     }
   }
 }
