@@ -10,7 +10,6 @@ import it.unifi.nave.uniblock.service.crypto.HashService;
 import it.unifi.nave.uniblock.service.crypto.PKService;
 import it.unifi.nave.uniblock.service.data.CertificateService;
 import it.unifi.nave.uniblock.service.data.EncryptedEventService;
-import it.unifi.nave.uniblock.service.mining.MinerService;
 
 import javax.inject.Inject;
 import java.security.PrivateKey;
@@ -30,6 +29,7 @@ public class DemoService {
   private final PKService pkService;
   private final Blockchain blockchain;
   private final KeyManager keyManager;
+  private final MinerService minerService;
   private final ToStringService toStringService;
 
   private int difficulty;
@@ -43,6 +43,7 @@ public class DemoService {
       PKService pkService,
       Blockchain blockchain,
       KeyManager keyManager,
+      MinerService minerService,
       ToStringService toStringService) {
     this.certificateService = certificateService;
     this.encryptedEventService = encryptedEventService;
@@ -50,6 +51,7 @@ public class DemoService {
     this.pkService = pkService;
     this.blockchain = blockchain;
     this.keyManager = keyManager;
+    this.minerService = minerService;
     this.toStringService = toStringService;
   }
 
@@ -78,7 +80,7 @@ public class DemoService {
     var booking = bookExam(professor, students, hashService.hash(publishing.getBlockHeader()));
     var result = publishResult(professor, students, hashService.hash(booking.getBlockHeader()));
     confirmExam(professor, students, hashService.hash(result.getBlockHeader()));
-    MinerService.terminate();
+    minerService.terminate();
   }
 
   private Block initGenesis() {
@@ -188,7 +190,7 @@ public class DemoService {
     block.addEvents(Arrays.asList(events));
     System.out.print(message);
     var start = Instant.now();
-    MinerService.mine(block, progress);
+    minerService.mine(block, progress);
     var end = Instant.now();
     var duration = Duration.between(start, end);
     System.out.println(
