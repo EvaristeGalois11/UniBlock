@@ -15,13 +15,15 @@ public class MinerService {
   private static final int NUMBER_OF_HASH = 500000;
 
   private final HashService hashService;
+  private final PrintService printService;
 
   private Block block;
   private boolean progress;
 
   @Inject
-  public MinerService(HashService hashService) {
+  public MinerService(HashService hashService, PrintService printService) {
     this.hashService = hashService;
+    this.printService = printService;
   }
 
   public void mine(Block block, boolean progress) {
@@ -41,7 +43,7 @@ public class MinerService {
 
   private void printProgress() {
     if (progress) {
-      System.out.print(PROGRESS);
+      printService.print(PROGRESS);
     }
   }
 

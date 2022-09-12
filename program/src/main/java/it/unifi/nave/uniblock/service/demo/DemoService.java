@@ -32,6 +32,7 @@ public class DemoService {
   private final KeyManager keyManager;
   private final MinerService minerService;
   private final ToStringService toStringService;
+  private final PrintService printService;
 
   private int difficulty;
   private boolean progress;
@@ -46,7 +47,8 @@ public class DemoService {
       Blockchain blockchain,
       KeyManager keyManager,
       MinerService minerService,
-      ToStringService toStringService) {
+      ToStringService toStringService,
+      PrintService printService) {
     this.certificateService = certificateService;
     this.encryptedEventService = encryptedEventService;
     this.merkleTreeService = merkleTreeService;
@@ -56,6 +58,7 @@ public class DemoService {
     this.keyManager = keyManager;
     this.minerService = minerService;
     this.toStringService = toStringService;
+    this.printService = printService;
   }
 
   public void startDemo(int difficulty, boolean progress) {
@@ -189,12 +192,12 @@ public class DemoService {
   private Block mineBlock(String previousHash, String message, List<? extends Event> events) {
     var block =
         new Block(previousHash, difficulty, events, merkleTreeService.calculateRootHash(events));
-    System.out.print(message);
+    printService.print(message);
     var start = Instant.now();
     minerService.mine(block, progress);
     var end = Instant.now();
     var duration = Duration.between(start, end);
-    System.out.println(
+    printService.println(
         "\nBlock mined in "
             + duration.toMinutes()
             + "m "
