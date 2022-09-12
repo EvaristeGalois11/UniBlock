@@ -167,9 +167,8 @@ public class DemoService {
             .toList());
   }
 
-  @SuppressWarnings("UnusedReturnValue")
-  private Block confirmExam(String professor, List<String> students, String previousHash) {
-    return mineBlock(
+  private void confirmExam(String professor, List<String> students, String previousHash) {
+    mineBlock(
         previousHash,
         "Accepting exams",
         students.stream()
