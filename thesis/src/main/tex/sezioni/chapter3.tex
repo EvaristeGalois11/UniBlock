@@ -1,23 +1,22 @@
 \myChapter{Struttura UniBlock}
-I dati all'interno di UniBlock sono organizzati in blocchi, ciascuno con un proprio header e una lista di eventi. L'header di un blocco contiene a sua volta le informazioni necessarie per identificare e validare il blocco all'interno della blockchain stessa: l'hash del blocco precedente, la difficoltà richiesta per minare il blocco attuale, l'hash di radice, ora e data di generazione del blocco, un numero variabile (nonce). L'hash del blocco precedente permette di collegare in sequenza i vari blocchi formando appunto una catena. Solo un blocco può dichiararsi successore di un altro, altrimenti la catena si spezzerebbe in due rami. Per evitare che ciò accada UniBlock impiega una versione semplificata della proof of work della rete Bitcoin utilizzando la difficoltà, espressa come un numero intero positivo, e il nonce, anch'esso un numero intero positivo. L'hash di radice, invece, viene impiegato come forma di ottimizzazione del calcolo e successiva verifica dell'hash di un blocco organizzando la lista di eventi in un albero di Merkle.
+I dati all'interno di UniBlock sono organizzati in blocchi, ciascuno con un proprio header e una lista di eventi. L'header di un blocco contiene a sua volta le informazioni necessarie per identificare e validare il blocco all'interno della blockchain stessa: l'hash del blocco precedente, la difficoltà richiesta per minare il blocco attuale, l'hash di radice, ora e data di generazione del blocco, un numero variabile (nonce). L'hash del blocco precedente permette di collegare in sequenza i vari blocchi formando una catena. Solo un blocco può dichiararsi successore di un altro, altrimenti la catena si spezzerebbe in due rami. Per evitare che ciò accada UniBlock impiega una versione semplificata della proof of work della rete Bitcoin utilizzando la difficoltà, espressa come un numero intero positivo, e il nonce, anch'esso un numero intero positivo. L'hash di radice, invece, viene impiegato come forma di ottimizzazione del calcolo e successiva verifica dell'hash di un blocco organizzando la lista di eventi in un albero di Merkle.
 
 Gli eventi sono il corrispettivo delle transazioni in una rete Bitcoin, ma avendo un contenuto di informazione arbitraria incapsulano un avvenimento successo all'interno della blockchain piuttosto che un mero movimento di denaro. Vengono previsti sostanzialmente due tipi di eventi: i certificati e gli eventi criptati. I certificati riguardano la registrazione sulla blockchain di un nuovo utente autorizzato, mentre gli eventi criptati contengono dati cifrati leggibili solo dai destinatari riportati nell'evento stesso.
 
 \section{Blocco}
 Ogni blocco contiene nel proprio header il riferimento al blocco che lo precede così da rendere estremamente difficoltosa la modifica di un blocco, dal momento che comporterebbe la riscrittura di ogni suo successore. Affinché il blocco sia ritenuto valido il suo hash, calcolato come l'hash SHA-3 della serializzazione dell'oggetto rappresentante il suo header, deve rispettare i criteri di difficoltà imposti, cioè deve iniziare con tanti zeri quanti riportati nel numero della difficoltà.
 \begin{lstlisting}
-public boolean isMined() {
-  return HashHelper.hash(this)
-          .startsWith("0".repeat(difficulty));
+private boolean isMined(BlockHeader blockHeader) {
+  return hashService.hash(blockHeader)
+          .startsWith("0".repeat(blockHeader.getDifficulty()));
 }
 \end{lstlisting}
 In caso in cui l'hash non risultasse valido, il nonce verrebbe incrementato fino a trovare un hash corretto. Maggiori sono gli zeri iniziali da ricercare, minore è il numero di hash totali disponibili e di conseguenza minore è la probabilità di minare correttamente il blocco.
 
 Il calcolo di un hash è quindi un procedimento dispendioso che comporta prima la serializzazione di un oggetto in un flusso di byte e poi il calcolo dell'hash vero e proprio. Per evitare di serializzare un blocco intero ogni volta, l'hash è calcolato solo sull'header di un blocco. Per comprendere anche la lista di eventi nel calcolo dell'hash viene fatto uso di un albero di Merkle.
 \begin{lstlisting}
-private String calculateRootHash(List<Event> events) {
-  return getRootHash(events.stream()
-          .map(HashHelper::hash).toList());
+public String calculateRootHash(List<? extends Event> events) {
+  return getRootHash(events.stream().map(hashService::hash).toList());
 }
 
 private String getRootHash(List<String> hashes) {
@@ -32,7 +31,7 @@ private String getRootHash(List<String> hashes) {
 private String reduceHash(List<String> hashes) {
   var first = hashes.get(0);
   var second = hashes.size() == 2 ? hashes.get(1) : first;
-  return HashHelper.hash(first + second);
+  return hashService.hash(first + second);
 }
 \end{lstlisting}
 La lista di eventi viene prima convertita in una lista dei rispettivi hash. Successivamente la lista di hash viene partizionata in una lista di coppie di hash. Tali coppie vengono ridotte a un hash singolo calcolando l'hash della loro concatenazione. Nel caso sia presente un hash spaiato, verrà calcolato l'hash della sua concatenazione con se stesso. Tale procedimento si ripete fino ad ottenere un singolo hash, detto appunto hash di radice dell'albero.
@@ -40,3 +39,55 @@ La lista di eventi viene prima convertita in una lista dei rispettivi hash. Succ
 L'hash di radice inserito nell'header di un blocco permette di garantire l'integrità degli eventi senza dover calcolare ogni volta il loro hash. Una modifica a un evento di un blocco comporterebbe infatti una modifica in cascata a tutti gli hash dell'albero di Merkle fino alla radice.
 
 \section{Evento}
+Un evento rappresenta qualsiasi avvenimento avvenuto all'interno di UniBlock. Tali avvenimenti sono categorizzati in due tipi. I certificati identificano l'ingresso nella rete di un nuovo utente autorizzato, mentre gli eventi criptati sono un contenitore standard che incapsulano l'evento vero e proprio aggiungendo uno strato di crittografia. Solo gli utenti autorizzati possono produrre eventi criptati, mentre solo ed esclusivamente un ente centrale può registrare un nuovo utente rilasciando un certificato.
+
+\subsection{Certificato}
+I certificati sono eventi che identificano un utente all'interno della rete tramite un ID, un ruolo e una coppia di chiavi pubbliche. L'ID di un nuovo utente è generato come l'hash della concatenazione delle sue due chiavi pubbliche.
+\begin{lstlisting}
+private String calculateUserId(PublicKey signPbk, PublicKey dhPbk) {
+  return hashService.hash(concatPbk(signPbk, dhPbk));
+}
+
+private byte[] concatPbk(PublicKey signPbk, PublicKey dhPbk) {
+  byte[] signPbkEncoded = signPbk.getEncoded();
+  byte[] dhPbkEncoded = dhPbk.getEncoded();
+  return ByteBuffer.allocate(signPbkEncoded.length + dhPbkEncoded.length)
+      .put(signPbkEncoded)
+      .put(dhPbkEncoded)
+      .array();
+}
+\end{lstlisting}
+Il ruolo invece consente di controllare finemente i permessi degli utenti, ad esempio permettendo solo ad alcuni ruoli di generare determinati tipi di eventi criptati. Le due chiavi pubbliche permettono all'utente di generare o ricevere eventi. Nel certificato inoltre è presente la firma dell'entità centrale che garantisce la legittimità dello stesso.
+
+Anche l'entità centrale possiede un proprio certificato contenuto nel blocco di genesi, cioè il primo blocco della catena. Tale certificato è gestito in modo particolare in quanto assunto come verificato senza però presentare una firma. Le due coppie di chiavi del certificato di genesi consentono quindi all'entità centrale di produrre nuovi certificati, in quanto qualunque altro evento non in possesso di una chiave valida verrà rigettato dalla catena.
+
+\subsection{Evento criptato}
+Un evento criptato è un evento che fa da contenitore a informazioni riservate. Nonostante possa racchiudere informazioni di natura arbitraria la sua struttura è costante: l'ID dell'utente che ha prodotto l'evento, il tipo di dati contenuti al suo interno, una lista di destinatari autorizzati alla lettura, il payload criptato e una firma che ne prova l'autenticità. E' possibile verificare quindi l'autenticità di un evento criptato verificando la firma al suo interno grazie al certificato di chi l'ha prodotto. La lista di destinatari invece è riportata grazie ai loro rispettivi ID e per ognuno viene generata una specifica chiave con cui poter accedere al contenuto del payload.
+
+\subsection{Meccanismo di crittografia}
+Ad ogni utente viene assegnata una doppia coppia di chiavi pubbliche e private, per un totale di quattro chiavi. Una coppia permette di firmare gli eventi pubblicati, mentre l'altra permette di ricevere eventi criptati. Le due chiavi pubbliche sono salvate nella blockchain nel rispettivo evento di certificato dell'utente, mentre le due chiavi private sono salvate sui dispositivi personali dell'utente non potendo venire pubblicate sulla rete.
+
+Quando un utente vuole produrre un evento dal contenuto riservato può indicare un numero arbitrario di destinatari a cui permettere l'accesso alle informazioni contenute.
+\begin{lstlisting}
+public EncryptedEvent build(Encryptable event, String author, List<String> receivers) {
+  var payloadKey = aesService.randomKey();
+  var payload = aesService.encrypt(payloadKey, hashService.serialize(event), false);
+  var sign =
+      pkService.sign(payload.getBytes(StandardCharsets.UTF_8), keyManager.retrieveSignPk(author));
+  var eventContainer = new EncryptedEvent(author, event.getType(), payload, sign);
+  Stream.concat(receivers.stream(), Stream.of(author))
+      .map(id -> encryptKey(id, payloadKey, author))
+      .forEach(e -> eventContainer.addKey(e.getKey(), e.getValue()));
+  return eventContainer;
+}
+
+private Map.Entry<String, String> encryptKey(String id, byte[] key, String author) {
+  PublicKey pbk = blockchain.searchCertificate(id).dhPbk();
+  PrivateKey dhPk = keyManager.retrieveDhPk(author);
+  return Map.entry(id, pkService.encrypt(dhPk, pbk, key));
+}
+\end{lstlisting}
+Viene generata un'unica chiave casuale \(payloadKey\) con cui cifrare tramite AES l'intero contenuto dell'evento. Per ogni destinatario viene effettuato uno scambio di DH combinando la chiave pubblica del destinatario con la chiave privata dell'autore dell'evento, giungendo a una chiave segreta condivisa. Tramite tale chiave condivisa viene cifrata tramite AES la chiave \(payloadKey\) e inserita in una mappa insieme a tutte le altre chiavi dei destinatari. Viene inoltre applicata tramite la chiave personale dell'autore una firma all'evento.
+
+Quando un destinatario autorizzato vuole accedere al contenuto dell'evento svolge a ritroso i passi dell'algoritmo. Effettua uno scambio di DH combinando la propria chiave personale con quella pubblica dell'autore, giungendo alla stessa chiave segreta condivisa ottenuta dall'autore. Tramite tale chiave condivisa può ottenere \(payloadKey\), decifrando la propria chiave dalla mappa dei destinatari. Tramite \(payloadKey\) può infine decifrare e leggere il contenuto dell'evento. Inoltre tramite la chiave pubblica dell'autore può verificare la legittimità dell'intero processo.
+
