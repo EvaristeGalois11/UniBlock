@@ -1,0 +1,15 @@
+\myChapter{Applicazione UniBlock}
+Benché la struttura descritta nel capitolo precedente sia agnostica nella sua applicazione, UniBlock è stata realizzata specificatamente per un ambiente universitario. I suoi utenti sono per tanto i vari componenti accademici che interagiscono tra di loro tramite la produzione di eventi.
+\begin{description}
+  \item[Professori] Utenti in possesso di un certificato di ruolo PROFESSOR. Possono generare eventi come la pubblicazione di una data di appello o l'esito di un esame sostenuto da uno studente.
+  \item[Studenti] Utenti in possesso di un certificato di ruolo STUDENT. Possono generate eventi come l'iscrizione a un appello o l'accettazione di un esito di un esame.
+  \item[Segreteria] L'entità centrale che controlla i certificati dei vari utenti viene identificata dalla segreteria didattica e organi analoghi. Il suo compito infatti è quello di verificare i dati di un nuovo immatricolato e generare il nuovo certificato. Similmente alla nuova assunzione di un membro del corpo docenti a seguito dei debiti controlli genererà il certificato per il neo assunto.
+\end{description}
+
+Attualmente l'infrastruttura tipica di un'università è prettamente centralizzata, sia per quanto riguarda la parte burocratica sia quella informatizzata. Tutti i dati vengono salvati per tanto in appositi database, accessibili solo agli organi interni autorizzati. Una struttura dati centralizzata tuttavia può essere causa di una paralisi completa del servizio a seguito della perdita di informazioni. Incidenti come incendi o cortocircuiti o attacchi malevoli come ransomware o DOS sono solo alcuni esempi di eventi che rappresentano una minaccia all'integrità dei dati conservati. Sono necessari quindi costosi processi di backup multi livello per assicurare la continuità di servizio a fronte di problematiche. UniBlock si propone come soluzione a tutto ciò decentralizzato la struttura informatizzata accademica, pur ritenendo la gestione burocratica a pochi organi centrali. La ridondanza delle informazioni offerta dalla tecnologia blockchain su cui UniBlock si basa risulta immune alla perdita di dati, in quanto ogni nodo della rete possiede una copia esatta di tutti gli eventi. Si dovrebbero verificare incidenti simultanei su ogni singolo dispositivo della rete o un attacco mirato a ogni nodo per portare offline il sistema, in quanto anche una sola copia della blockchain rimasta è sufficiente per ricreare l'intera rete.
+
+UniBlock permetterebbe di trasformare qualunque dispositivo in un nodo della rete universitaria. I PC di segreteria o quelli di laboratorio potrebbero venire usati per mantenere in background il servizio di gestione della rete blockchain, sfruttando l'inattività di tali dispositivi per minare i nuovi blocchi. Questo permetterebbe di evitare l'acquisto e il mantenimento di grossi server, riguadagnando l'inutilizzo di macchine già operanti all'interno dell'università.
+
+\section{Analisi Demo}
+Una PoC di implementazione del progetto UniBlock è disponibile al seguente link \url{https://github.com/Errore418/UniBlock}
+
