@@ -9,7 +9,7 @@
     <version>0.1.0</version>
     <packaging>pom</packaging>
     <modules>
-       <module>program</module>
-       <module>thesis</module>
+       <module>uniblock-poc</module>
+       <module>uniblock-thesis</module>
     </modules>
 </project>
