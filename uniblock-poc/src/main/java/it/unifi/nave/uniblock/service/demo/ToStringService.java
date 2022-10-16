@@ -1,13 +1,13 @@
 package it.unifi.nave.uniblock.service.demo;
 
 import com.google.common.base.Splitter;
-import com.google.common.base.Strings;
 import it.unifi.nave.uniblock.data.block.Block;
 import it.unifi.nave.uniblock.data.block.BlockHeader;
 import it.unifi.nave.uniblock.data.event.Certificate;
 import it.unifi.nave.uniblock.data.event.EncryptedEvent;
 import it.unifi.nave.uniblock.data.event.Event;
 import it.unifi.nave.uniblock.service.crypto.HashService;
+import org.apache.commons.lang3.StringUtils;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -24,8 +24,8 @@ import java.util.stream.Collectors;
 public class ToStringService {
   private static final int LINE_LENGTH = 100;
   private static final String PADDING = "-";
-  private static final int MARGIN = 5;
-  private static final int FIELD_LENGTH = 20;
+  private static final int MARGIN_LENGTH = 5;
+  private static final int FIELD_LENGTH = 25;
 
   private final HashService hashService;
 
@@ -126,14 +126,12 @@ public class ToStringService {
     return PADDING.repeat(LINE_LENGTH);
   }
 
-  private String formatCenter(String string) {
-    var normalized = (string.length() % 2 == 0) ? string : string + PADDING;
-    var toFill = LINE_LENGTH - string.length();
-    return PADDING.repeat(toFill / 2) + normalized + PADDING.repeat(toFill / 2);
-  }
-
   private String formatTitle(String title) {
-    return emptyLine() + "\n" + formatCenter(title.toUpperCase()) + "\n" + emptyLine();
+    return emptyLine()
+        + "\n"
+        + StringUtils.center(title.toUpperCase(), LINE_LENGTH, PADDING)
+        + "\n"
+        + emptyLine();
   }
 
   private String formatLeft(Object object, String label) {
@@ -141,18 +139,12 @@ public class ToStringService {
   }
 
   private String formatLeft(String string, String label) {
-    var margin = PADDING.repeat(MARGIN);
-    var fieldName =
-        margin + Strings.padEnd(" " + label + " ", FIELD_LENGTH, PADDING.charAt(0)) + " = ";
-    var leftMargin = PADDING.repeat(fieldName.length() - 1) + " ";
-    var realLine = LINE_LENGTH - fieldName.length() - MARGIN - 1;
-    var rightMargin =
-        " "
-            + ((string.length() % realLine != 0)
-                ? PADDING.repeat(realLine - string.length() % realLine)
-                : "")
-            + margin;
-    return Splitter.fixedLength(realLine).splitToList(string).stream()
-        .collect(Collectors.joining(" " + margin + "\n" + leftMargin, fieldName, rightMargin));
+    var margin = PADDING.repeat(MARGIN_LENGTH);
+    var fieldName = StringUtils.rightPad(margin + " " + label + " ", FIELD_LENGTH, PADDING) + " =";
+    var contentLine = LINE_LENGTH - fieldName.length() - MARGIN_LENGTH;
+    return Splitter.fixedLength(contentLine - 2).splitToList(string).stream()
+        .map(s -> " " + s + " ")
+        .map(s -> StringUtils.rightPad(s, contentLine + MARGIN_LENGTH, PADDING))
+        .collect(Collectors.joining("\n" + PADDING.repeat(fieldName.length()), fieldName, ""));
   }
 }
