@@ -103,7 +103,7 @@ public class DemoService {
   }
 
   private Block createUsers(String previousHash) {
-    var professorEvent = createUser("Lorenzo Bettini", Certificate.CertificateType.PROFESSOR);
+    var professorEvent = createUser("Francesco Tiezzi", Certificate.CertificateType.PROFESSOR);
     var studentEvent1 = createUser("Claudio Nave", Certificate.CertificateType.STUDENT);
     var studentEvent2 = createUser("Mario Rossi", Certificate.CertificateType.STUDENT);
     return mineBlock(

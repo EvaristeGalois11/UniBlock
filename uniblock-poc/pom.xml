@@ -5,11 +5,11 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>it.unifi.nave</groupId>
     <artifactId>uniblock-poc</artifactId>
-    <name>UniBlock program</name>
-    <version>1.1.1</version>
+    <name>UniBlock PoC</name>
+    <version>1.2.0</version>
     <properties>
-        <maven.compiler.source>17</maven.compiler.source>
-        <maven.compiler.target>17</maven.compiler.target>
+        <maven.compiler.source>19</maven.compiler.source>
+        <maven.compiler.target>19</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
     <dependencies>
@@ -81,8 +81,11 @@
             <plugin>
                 <groupId>com.google.cloud.tools</groupId>
                 <artifactId>jib-maven-plugin</artifactId>
-                <version>3.3.0</version>
+                <version>3.3.1</version>
                 <configuration>
+                    <from>
+                        <image>eclipse-temurin:19-jre-alpine</image>
+                    </from>
                     <to>
                         <image>docker.io/evaristegalois/uniblock</image>
                         <tags>

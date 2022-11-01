@@ -8,7 +8,7 @@
         <outputRelativeToContentRoot value="true" />
         <module name="uni-block" />
       </profile>
-      <profile name="Annotation profile for UniBlock program" enabled="true">
+      <profile name="Annotation profile for UniBlock poc" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
