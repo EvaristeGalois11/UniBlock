@@ -3,9 +3,283 @@ Benché la struttura descritta nel capitolo precedente sia agnostica nella sua ap
 \begin{description}
   \item[Professori] Utenti in possesso di un certificato di ruolo PROFESSOR. Possono generare eventi come la pubblicazione di una data di appello o l'esito di un esame sostenuto da uno studente.
   \item[Studenti] Utenti in possesso di un certificato di ruolo STUDENT. Possono generate eventi come l'iscrizione a un appello o l'accettazione di un esito di un esame.
-  \item[Segreteria] L'entità centrale che controlla i certificati dei vari utenti viene identificata dalla segreteria didattica e organi analoghi. Il suo compito infatti è quello di verificare i dati di un nuovo immatricolato e generare il nuovo certificato. Similmente alla nuova assunzione di un membro del corpo docenti a seguito dei debiti controlli genererà il certificato per il neo assunto.
+  \item[Entità centrale] L'entità centrale che controlla i certificati dei vari utenti viene identificata nella segreteria didattica e organi analoghi. Il suo compito infatti è quello di verificare i dati di un nuovo immatricolato e generarne il suo certificato. Similmente alla nuova assunzione di un membro del corpo docenti a seguito dei debiti controlli genererà il certificato per il neo assunto.
 \end{description}
 
-\section{Analisi Demo}
-Una demo del progetto è disponibile al seguente link \url{https://hub.docker.com/r/evaristegalois/uniblock}. E' necessario un sistema OCI runtime qualunque per poterla eseguire come ad esempio docker o podman.
+Attualmente l'infrastruttura tipica di un'università è prettamente centralizzata, sia per quanto riguarda la parte burocratica sia quella informatizzata. Tutti i dati vengono salvati per tanto in appositi database, accessibili solo dagli organi interni autorizzati. Una struttura dati centralizzata tuttavia può essere causa di una paralisi completa del servizio a seguito della perdita di informazioni. Incidenti come incendi o cortocircuiti o attacchi malevoli come ransomware o DoS sono solo alcuni esempi di eventi che rappresentano una minaccia all'integrità dei dati conservati. Sono necessari quindi costosi processi di backup multi livello per assicurare la continuità di servizio a fronte di problematiche. UniBlock si propone come soluzione a tutto ciò decentralizzando la struttura informatizzata accademica, pur ritenendo la gestione burocratica a pochi organi centrali. La ridondanza delle informazioni offerta dalla tecnologia blockchain su cui UniBlock si basa risulta immune alla perdita di dati, in quanto ogni nodo della rete possiede una copia esatta di tutti gli eventi. Si dovrebbero verificare incidenti simultanei su ogni singolo dispositivo della rete o un attacco mirato a ogni nodo per portare offline il sistema, in quanto anche una sola copia della blockchain rimasta sarebbe sufficiente a ricreare l'intera rete.
+
+UniBlock permetterebbe inoltre di trasformare qualunque dispositivo in un nodo della rete universitaria. I PC di segreteria o quelli di laboratorio potrebbero venire usati per mantenere in background il servizio di gestione della rete blockchain, sfruttando l'inattività di tali dispositivi per minare i nuovi blocchi. Questo permetterebbe di evitare l'acquisto e il mantenimento di grossi server, riguadagnando l'inutilizzo di macchine già operanti all'interno dell'università.
+
+Di seguito è descritta una PoC di implementazione di UniBlock volta a considerare solo gli aspetti base necessari a realizzarla. Il codice sorgente incluso del presente documento di tesi è liberamente consultabile a \url{https://github.com/Errore418/UniBlock}. Una demo già compilata e pronta all'uso del progetto è disponibile invece al seguente link \url{https://hub.docker.com/r/evaristegalois/uniblock}. E' necessario un sistema OCI runtime qualunque per poterla eseguire come ad esempio docker o podman.
+
+\section{Analisi PoC}
+La PoC di UniBlock è realizzata in Java e si presenta come un progetto Maven con due moduli al suo interno. Il modulo uniblock-thesis contiene i file necessari a compilare la presente tesi e necessita di un sistema \LaTeX correttamente installato affinché il plugin Maven possa generare correttamente il PDF. Il modulo uniblock-poc contiene invece i sorgenti Java dell'implementazione di UniBlock e necessita di una versione di Java pari o superiore a 17 per poter essere compilato ed eseguito. Per mantenere sotto controllo la complessità dei vari componenti del progetto è stato impiegato Dagger, una framework Java che permette l'iniezione delle dipendenze risolvendole durante la compilazione. Varie altre librerie come Guava e Apache Commons sono state utilizzate per semplificare alcune parti del programma,  come la formattazione di stringhe o la gestione dei parametri a riga di comando. Quando si avvia il programma DemoService è la classe principale deputata alla generazione di una piccola catena di blocchi a fini dimostrativi. E' possibile inoltre regolare i parametri della demo come la difficoltà dei blocchi generati (utilizzare il parametro -h/--help per stampare a schermo la lista di parametri supportati).
+
+\begin{verbatim}
+Generating genesis block
+Block mined in 0m 15s
+----------------------------------------------------------------------------------------------------
+--------------------------------------------BLOCK HEADER--------------------------------------------
+----------------------------------------------------------------------------------------------------
+----- hash -------------- = 000000ccb874a653f99ebca05e4a7f47ead1c0093720d2f366670ed434895279 -------
+----- previousHash ------ = GENESIS_BLOCK ----------------------------------------------------------
+----- difficulty -------- = 6 ----------------------------------------------------------------------
+----- rootHash ---------- = 85df0fd94e8c7ccb6d11844c29a7bc0213af5f99e6f4abb43e48d30bb519ab6b -------
+----- timestamp --------- = 01/11/2022 17:33:40 ----------------------------------------------------
+----- nonce ------------- = 11578670 ---------------------------------------------------------------
+----------------------------------------------------------------------------------------------------
+-----------------------------------------------EVENTS-----------------------------------------------
+----------------------------------------------------------------------------------------------------
+----- hash -------------- = 85df0fd94e8c7ccb6d11844c29a7bc0213af5f99e6f4abb43e48d30bb519ab6b -------
+----- userId ------------ = GENESIS ----------------------------------------------------------------
+----- name -------------- = GENESIS ----------------------------------------------------------------
+----- certificateType --- = GENESIS ----------------------------------------------------------------
+----- sign public key --- = MCowBQYDK2VwAyEALBWPJ5HiF4BsjWpsGPoUjZAUYOLLDbOt7sMjOTJ0hik= -----------
+----- dh public key ----- = MCowBQYDK2VuAyEAG9t3ElVl+R/lSyGcmxG66CWaOMNfDlzh649ba484Czw= -----------
+----- signature --------- = GENESIS ----------------------------------------------------------------
+----------------------------------------------------------------------------------------------------
+\end{verbatim}
+Il primo blocco generato è il certificato di genesi dell'entità centrale. In uno scenario realistico tale blocco verrebbe generato una sola volta e usato come base della catena da tutti i nodi della rete. Nel caso di Bitcoin il blocco di genesi è inserito nel codice sorgente di ogni versione del programma. Per motivi di semplicità la PoC UniBlock genera un nuovo certificato di genesi ad ogni avvio. Possiamo notare inoltre le due chiavi pubbliche codificate in Base64 che permettono a chiunque di verificare le firme di tutti gli altri certificati. Come già discusso nel capitolo precedente il certificato di genesi non presenta firma venendo considerato legittimo a priori.
+
+\begin{verbatim}
+Generating professor and students certificates
+Block mined in 0m 18s
+----------------------------------------------------------------------------------------------------
+--------------------------------------------BLOCK HEADER--------------------------------------------
+----------------------------------------------------------------------------------------------------
+----- hash -------------- = 0000000d364f4e66bd4976924c5d8d95df9a4a7998de8106e01704cb1e32ed20 -------
+----- previousHash ------ = 000000ccb874a653f99ebca05e4a7f47ead1c0093720d2f366670ed434895279 -------
+----- difficulty -------- = 6 ----------------------------------------------------------------------
+----- rootHash ---------- = d5c47c86e66f812bf30b8a2936264c5a00ceba3e21d87e12c30a61d90993f856 -------
+----- timestamp --------- = 01/11/2022 17:33:56 ----------------------------------------------------
+----- nonce ------------- = 11320188 ---------------------------------------------------------------
+----------------------------------------------------------------------------------------------------
+-----------------------------------------------EVENTS-----------------------------------------------
+----------------------------------------------------------------------------------------------------
+----- hash -------------- = f1f6575a1426d2a6152dc3d90223887bca4ee63533c76ab53d82276c938181b3 -------
+----- userId ------------ = 70bbb91a8abbc9ca28eccae60c2226514425e47ad69651ad5e79c18296424acf -------
+----- name -------------- = Francesco Tiezzi -------------------------------------------------------
+----- certificateType --- = PROFESSOR --------------------------------------------------------------
+----- sign public key --- = MCowBQYDK2VwAyEArm1/DnTIh3PxqUPDCf4vtfg2BeOf0JgJWZOFjkhmdlw= -----------
+----- dh public key ----- = MCowBQYDK2VuAyEA2zA7spdSANPazMIWALOeI2fzbMfdJgdQRknXssT3hhc= -----------
+----- signature --------- = edPHMlldyK0Y5b5IBccSD9kq+2ej7IjYL8SzdV4BR6C4tAccuJpA1ezyqJQ7Wz3NZm -----
+--------------------------- gvPemLLxoKg+Hm9RnxCg== -------------------------------------------------
+----------------------------------------------------------------------------------------------------
+----- hash -------------- = f9cac1b9aa7a7e331622c980f4ecf64a36c3fa5b89ab96e054d433af5180e095 -------
+----- userId ------------ = ca8deed37a3228c829974c6fc6364302901d9ba374d5a564b5d245c25f994d3e -------
+----- name -------------- = Claudio Nave -----------------------------------------------------------
+----- certificateType --- = STUDENT ----------------------------------------------------------------
+----- sign public key --- = MCowBQYDK2VwAyEAIkMbPnH86SbNL9kdm5Y9jCe8ZZo9HscCAkb1R3wKXp4= -----------
+----- dh public key ----- = MCowBQYDK2VuAyEAZWxAmTuDA+tg6TShBGS3Biu+oxuS5Ct7XmTO/FKncAU= -----------
+----- signature --------- = 7hdzaNy/NW70iqLEAFDdrDE7s0QKXZJ2i9DDJ2+BaeTkt7oMHs4qhFSHd5lqFuPF38 -----
+--------------------------- FijJobmK225rBaZwI+CA== -------------------------------------------------
+----------------------------------------------------------------------------------------------------
+----- hash -------------- = 7bf0b63f4d37066486216dc2f291eebeee9053eece617947c92c045460fd62ab -------
+----- userId ------------ = 60a63c803c0f8c7fcbe316d15c7298ddabf5f2eff96f42690159cb100bffb8e2 -------
+----- name -------------- = Mario Rossi ------------------------------------------------------------
+----- certificateType --- = STUDENT ----------------------------------------------------------------
+----- sign public key --- = MCowBQYDK2VwAyEAqhAlL5WgewXAZRlpC60CcCb5Eii8y3++73/PkTrpwk0= -----------
+----- dh public key ----- = MCowBQYDK2VuAyEAOGM/JJxs4xPQRDGWjAbVCmKncp4QANtG3jL95NyyckQ= -----------
+----- signature --------- = FIGL8DQuKfFyGkEcH1gd9Vu7JbaUNs9M+UmIvYyaZ+todnUTu4m2C6HtJeYQhsbDz2 -----
+--------------------------- I7g6pf4lF79+lpv2sZBg== -------------------------------------------------
+----------------------------------------------------------------------------------------------------
+\end{verbatim}
+Viene successivamente simulata la generazione di tre certficati diversi, uno per un professore e gli altri per due studenti. Possiamo notare le chiavi pubbliche dei tre utenti, ciascuna coppia con la rispettiva firma che ne prova l'emissione da parte dell'entità centrale. Per verificarne la legittimà basterebbe infatti usare le chiavi pubbliche presenti nel blocco precedente. Questo blocco permette inoltre di vedere come gli hash dei tre certificati siano stati ridotti nell'hash di radice presente nell'header del blocco.
+
+\begin{verbatim}
+Publishing exam
+Block mined in 0m 41s
+----------------------------------------------------------------------------------------------------
+--------------------------------------------BLOCK HEADER--------------------------------------------
+----------------------------------------------------------------------------------------------------
+----- hash -------------- = 00000098dd321df71be325d9465757fc9905bfa99b426afba6051e3d2c67bdae -------
+----- previousHash ------ = 0000000d364f4e66bd4976924c5d8d95df9a4a7998de8106e01704cb1e32ed20 -------
+----- difficulty -------- = 6 ----------------------------------------------------------------------
+----- rootHash ---------- = 382f9c396ae03dd1cc3af2b5ffe5d731a35cf52b5daf7edf78ced24746d308cc -------
+----- timestamp --------- = 01/11/2022 17:34:15 ----------------------------------------------------
+----- nonce ------------- = 26843721 ---------------------------------------------------------------
+----------------------------------------------------------------------------------------------------
+-----------------------------------------------EVENTS-----------------------------------------------
+----------------------------------------------------------------------------------------------------
+----- hash -------------- = 382f9c396ae03dd1cc3af2b5ffe5d731a35cf52b5daf7edf78ced24746d308cc -------
+----- author ------------ = 70bbb91a8abbc9ca28eccae60c2226514425e47ad69651ad5e79c18296424acf -------
+----- eventType --------- = EXAM_PUBLISHING --------------------------------------------------------
+----- receiver ---------- = ca8deed37a3228c829974c6fc6364302901d9ba374d5a564b5d245c25f994d3e -------
+----- key --------------- = Xp4lmyBQgRv/uzmZ0SgWLGYuMgrl9hMKzlpqy4hMszyYCZksdvCYLtgNQmk= -----------
+----- receiver ---------- = 60a63c803c0f8c7fcbe316d15c7298ddabf5f2eff96f42690159cb100bffb8e2 -------
+----- key --------------- = bNlOyyv9BCwqbImG3XnQe/KJEsJRo5sFqraAdlu5ZAYqW6Z9nxsppbRtryQ= -----------
+----- receiver ---------- = 70bbb91a8abbc9ca28eccae60c2226514425e47ad69651ad5e79c18296424acf -------
+----- key --------------- = OoehLzKNKBmY3whtVdAodSzkzHi1EkqyQyiFzpMZ1hFEtpsokDm+ZLgO33U= -----------
+----- encrypted event --- = gg5ufGFkIHYI8ki7xNlvZi1Xvf6f1mIvRDRG8gGLP7IXMHCkri3JWjUGXVuxMCKyvz -----
+--------------------------- n8NsznxGt1yg5H6BnvsQet/qGHfiRIpVyuAsIxhcx+7kil7zIM1NhMp7OTDM83HY09 -----
+--------------------------- rHNvydaWbAEpGrhvvmcoabuzE1Aqvz2j27wkic6Hr0MGgoxOQ+eBvxXO0dW9dq+bDk -----
+--------------------------- Kz7W2l5Ajeid70EFMTVJ3tJeXjZzZ8QrpzBaeaOb42PLAUx8gYWwhVxEgKZq5fi1vD -----
+--------------------------- mFBlZXyZP2RaufI4KIC2IslaDadF5nuPLlY7Jo4K8AlfUpk3EVoKlnUrCwlOyFqL5/ -----
+--------------------------- GoFEbreNKj6GKViJQm7hlb+z35H0sXd6/jkoDCc7xgBu3GwZ7wJhbk+ocYR55dcNwO -----
+--------------------------- Wbvf3cEyq5BaXQd2abrKFQ== -----------------------------------------------
+----- signature --------- = ogTgGx3wjh/XKh+S17zSHW5YNEZ8rjqOHBnenZxOIB0kRaFm7jkkHC8G+LHpTE6FYW -----
+--------------------------- rp5QEbZ4vc3D26M/ptAg== -------------------------------------------------
+----------------------------------------------------------------------------------------------------
+\end{verbatim}
+In questo blocco il professore ha pubblicato un appello di esame apponendo la sua firma all'evento. Possiamo notare che il contenuto vero e proprio dell'evento sia illegibile senza prima decriptarlo, ma solo le tre persone riportare come receiver possono leggerlo. Confrontando gli ID con quelli dei certificati del blocco precedente possiamo accorgerci che il professore ha indirizzato tale evento ai due studenti aggiungendosi in copia.
+
+\begin{verbatim}
+Booking exams
+Block mined in 0m 18s
+----------------------------------------------------------------------------------------------------
+--------------------------------------------BLOCK HEADER--------------------------------------------
+----------------------------------------------------------------------------------------------------
+----- hash -------------- = 000000d87f158a24e0191325e1517990062216be297d5f29f9aa3a83458e661a -------
+----- previousHash ------ = 00000098dd321df71be325d9465757fc9905bfa99b426afba6051e3d2c67bdae -------
+----- difficulty -------- = 6 ----------------------------------------------------------------------
+----- rootHash ---------- = 0be14cece04993a91aaf8bdc6318c19da6b66beed4ae7330c99a24ef7702f614 -------
+----- timestamp --------- = 01/11/2022 17:34:56 ----------------------------------------------------
+----- nonce ------------- = 11866426 ---------------------------------------------------------------
+----------------------------------------------------------------------------------------------------
+-----------------------------------------------EVENTS-----------------------------------------------
+----------------------------------------------------------------------------------------------------
+----- hash -------------- = a8e3e690febbd2c8872185aed429baea65fc06842a8974bfa13865e4a168c5a1 -------
+----- author ------------ = ca8deed37a3228c829974c6fc6364302901d9ba374d5a564b5d245c25f994d3e -------
+----- eventType --------- = EXAM_BOOKING -----------------------------------------------------------
+----- receiver ---------- = ca8deed37a3228c829974c6fc6364302901d9ba374d5a564b5d245c25f994d3e -------
+----- key --------------- = 6oceTVV95tAzxPqPXId7g5QU2MQPCXXVyOVDlCqy9ONMNK6ptuDZyBjTyMQ= -----------
+----- receiver ---------- = 70bbb91a8abbc9ca28eccae60c2226514425e47ad69651ad5e79c18296424acf -------
+----- key --------------- = CITtXVgOB4t7CuPSjFjMa5RnIxyizt+yxTueFw1BW1+1WaYidOfanhlPNyE= -----------
+----- encrypted event --- = J+nPF+1VwChey51Y8aRsU8APqkhqyO10M15KW9gtRFruZU3HoZN2KsiVu2p31Btfx/ -----
+--------------------------- laIApZb3Wyaq9FRgQY0rtvqIbDD1P+1WVGuAAgwUMFOwu2dn3iinZ6fzdxrE2IlVLJ -----
+--------------------------- 2VILanfGfSQis3ifu2NhXRIMiDIi4Imy/qZ0JNL5y3vpJ7eHikGh0hfVCTjOvjUK+4 -----
+--------------------------- rixGHFUlwduvXyTY9F+3xerf+E0eadnxO/grDdpfFUDdNfh/4d7AmSgQ9fAXllYjl5 -----
+--------------------------- D9YH1calvW4xu7VoM+2d54dF84+g5ZSu0tkluMq2x+V5no0dGot5p39pXTKnGWevBh -----
+--------------------------- 4i/oYutlR3lii8AoEe4X01KdZZn7nMbho4+hThyfLFnPSf6nVH3NmdnYgLyE3uVA0R -----
+--------------------------- Aq/d5syFiVKNGXU= -------------------------------------------------------
+----- signature --------- = oQUHhfCRXPMVR2qP0gdsuLYEcTpi5UKDA//ML2dS9LkPjNBMb36Sl5Qx44c1tUGy82 -----
+--------------------------- /pZsglBcPkBX6XXcEGBA== -------------------------------------------------
+----------------------------------------------------------------------------------------------------
+----- hash -------------- = bed7f9ba18606fb5f671aecd23bdfb8016e89528d64e76a1c2f8737ed19b41b6 -------
+----- author ------------ = 60a63c803c0f8c7fcbe316d15c7298ddabf5f2eff96f42690159cb100bffb8e2 -------
+----- eventType --------- = EXAM_BOOKING -----------------------------------------------------------
+----- receiver ---------- = 60a63c803c0f8c7fcbe316d15c7298ddabf5f2eff96f42690159cb100bffb8e2 -------
+----- key --------------- = /djftlIuNnJJSamccqugpHN9qmKEdAYVQ84caBA8oXjWXTqC19hq6CPckuI= -----------
+----- receiver ---------- = 70bbb91a8abbc9ca28eccae60c2226514425e47ad69651ad5e79c18296424acf -------
+----- key --------------- = c0dNrXquxuVPmFcmZdBd1oOF6us2szrpx7v5OmyArcacSbe/X16M8dWhu6Q= -----------
+----- encrypted event --- = kS5WPLQhXYArl26oNw8VmydYyyEh3dBUTmvaq2Moa+5o1Cjbm+iCnGIdGANE+b6yk1 -----
+--------------------------- fGWeu84qoVRjvaaormM6MnGj4R4QlFy8HUjC1K43Luufsqi7SZ/aVU5BnIBzyzxaND -----
+--------------------------- 3EXwItnaZ3QEnrHEe7A59YWE0je0AXUfPa7AU01RsrYrn2uHbDKDRseiJljJKW+rTB -----
+--------------------------- T84o/Or8tTBd4T67pm8Dj3ptlO7l//dbPZftOAJC4Rb8d7eDNhgPbATSrYVtPVx6Uj -----
+--------------------------- X+xMSWzw7nxdu7cQcU2FRYJFyXc2JPvdq0r0DN/oIU+8YqIhcpiz4am628cS7QEwII -----
+--------------------------- fDWDydS12O3oGZQUpHxXl4dLSHGifnKAdDuc0kqCDBTZ+SSr9r+dBpHspTQDv7ztHS -----
+--------------------------- CA2gwaGZMKgV3qA= -------------------------------------------------------
+----- signature --------- = fJyhzRR4QeplXE0bbMcjBUR8xJAhZ9bwwB4xWqOi87iR1l+O1LnPYzt1WYXgXdgiLp -----
+--------------------------- SRZQ7YQvsn8+nbolzSDQ== -------------------------------------------------
+----------------------------------------------------------------------------------------------------
+\end{verbatim}
+I due studenti si iscrivono all'esame apponendo ciascuno la propria firma al relativo evento.
+
+\begin{verbatim}
+Publishing results
+Block mined in 0m 18s
+----------------------------------------------------------------------------------------------------
+--------------------------------------------BLOCK HEADER--------------------------------------------
+----------------------------------------------------------------------------------------------------
+----- hash -------------- = 000000447906675727e1fe5bc0c64d1538bb7e558dae3a3d7ec52a74aa258743 -------
+----- previousHash ------ = 000000d87f158a24e0191325e1517990062216be297d5f29f9aa3a83458e661a -------
+----- difficulty -------- = 6 ----------------------------------------------------------------------
+----- rootHash ---------- = 6d656a57fe90bfb6a3ac759ca31722d6697ab45da3971e9f8829f60c394f9b1c -------
+----- timestamp --------- = 01/11/2022 17:35:15 ----------------------------------------------------
+----- nonce ------------- = 12344335 ---------------------------------------------------------------
+----------------------------------------------------------------------------------------------------
+-----------------------------------------------EVENTS-----------------------------------------------
+----------------------------------------------------------------------------------------------------
+----- hash -------------- = 2e5a559b48069725fd9714a5f5db92d7b603bc575e87e808f0b86e68cc1cfde2 -------
+----- author ------------ = 70bbb91a8abbc9ca28eccae60c2226514425e47ad69651ad5e79c18296424acf -------
+----- eventType --------- = EXAM_RESULT ------------------------------------------------------------
+----- receiver ---------- = ca8deed37a3228c829974c6fc6364302901d9ba374d5a564b5d245c25f994d3e -------
+----- key --------------- = 6rCl1V7LFm+C+xqe0l/7xeit26AJ7sgKWC/0VCkx1wgXKuhp6Ydzo/aifoI= -----------
+----- receiver ---------- = 70bbb91a8abbc9ca28eccae60c2226514425e47ad69651ad5e79c18296424acf -------
+----- key --------------- = bwMnBK1V6rEBqcrW8xBpokAjs8fpeJURUKa5V53cjyJwdDn6EqhGkntb0Po= -----------
+----- encrypted event --- = ERX9mwWmeRvxWEqUkucb4CI/i4L/U46GasjJI2X0fxetyJ952/qbSCnGtq7+I/fDa1 -----
+--------------------------- 04oVSbA8PqzbrBoNyIIrba/FSzE3IGfDmX1KqzmndE9BR09GXZtkaV0WP18hqbRK6O -----
+--------------------------- 3TQt+RysZ8aLRJZz4mT6QdwzfQwNexPurk40YeDrMIpQALOhnjvGcsqgflkHHPTVLz -----
+--------------------------- XHUyufLINU+4jbJjtdzCd4C5CB3cHKybgMI8BjKNNPKJoVrry35Q2qPrnVEii8lGBm -----
+--------------------------- WwFjq4y8hZK2prfgbLaIpq7DMEYHpeviKCDr4HqVjH6xxVI8tBBQeaUJWTx4nv24tG -----
+--------------------------- +wmGApzU3kOuhbl/mSi0x7GurIa6e3z3+Z3E+UMiK34C+bfXtojIMxgpaD9nLDv8oD -----
+--------------------------- kSoZAnbLL+aLlvrKln84n8/4BN4RwNpj5JKFsz9Y458v6kNJwiyRh59KP3OrcB3J2y -----
+--------------------------- gHHsufAdhdWqCwBgeiy7rHQKn2Huehy9aS6zNx5QyjTvhl7lMIs6KHR1oh5LJ7h6uU -----
+--------------------------- 5pKEKPzxXm0= -----------------------------------------------------------
+----- signature --------- = uQpEIj1q0cEqCBX1DmrYih4pysbnzrK0xzeAnYRA83bQw6gIkrE9JxSTjS8Y9ZQ637 -----
+--------------------------- T0Ws7Oofeofg0ioVxhCQ== -------------------------------------------------
+----------------------------------------------------------------------------------------------------
+----- hash -------------- = 0afab7d5d0b15445915a9959390e7c468909c747fdd27c7da16fbdac78fc2bb2 -------
+----- author ------------ = 70bbb91a8abbc9ca28eccae60c2226514425e47ad69651ad5e79c18296424acf -------
+----- eventType --------- = EXAM_RESULT ------------------------------------------------------------
+----- receiver ---------- = 60a63c803c0f8c7fcbe316d15c7298ddabf5f2eff96f42690159cb100bffb8e2 -------
+----- key --------------- = GXZX89SP95DsjvVYRKfhkeoCs2y9FeZTAzvEF/M9W4VZYEb2MzNUgKcWcds= -----------
+----- receiver ---------- = 70bbb91a8abbc9ca28eccae60c2226514425e47ad69651ad5e79c18296424acf -------
+----- key --------------- = jJ+xtAwFxTAvjcIe7rxpJmuhp787XxfFDluLHcGyHisINtNpibs+Hh9qPiQ= -----------
+----- encrypted event --- = g4vvm4yvctsyTbDnzJcC7pSF/8kFypIE3srtmed2PFBxVXLXyc8Bw2h0dYs0JD15nm -----
+--------------------------- qVs2W23atPiMqutOM99MmEtkYx+UJVFmaUBHafKSW5RZuLbLFs1o0UGGkSUDT3ORyc -----
+--------------------------- A6gWeVcyKaRuuOmWKhoQG386QfIycXA5YKeNdW7+J5ThNs7dPEAMDuhYk4Zo2wByDQ -----
+--------------------------- Z7EaO+gElqihY1WzzmqgV7gxhx55VKF22O5g0E04OVzC+VkSYBKf2vqhqBxFhYcpDT -----
+--------------------------- f2jksLJNw/KA3XSmK+GAhvdaY5B8wMBYC7TxSD0YYKIyXrJb/znUYCp3z8nrmHUAyD -----
+--------------------------- 6xrC0kD2Ar+YpLLb01BVDB8vcfyjDCJf39rRfaL6oPAQ4RVR2mV2MVzdEp8bxEjCwY -----
+--------------------------- QeUz2kzxrc0OVzjIXMKblLXaOo7otHuZpXwN6Xk5Dp+IOseWxVFDJ/EkNIH1xnyrhp -----
+--------------------------- IB1UdyfY81B1q1aKhT0sr2d/PZdxk/if8cHewWn5m5Ev/khNpEkGj25IrgmxI0a4Ds -----
+--------------------------- HRPwLsnP+EU= -----------------------------------------------------------
+----- signature --------- = g8/C0Opb0TE3UolXeOYxPOam12y05dLXgmpwTPRn9eJgPq3H0GwExHNI1U/Bv5LO0U -----
+--------------------------- jGvRyYrUWCedcKlQLSCA== -------------------------------------------------
+----------------------------------------------------------------------------------------------------
+\end{verbatim}
+Il professore pubblica i risultati dell'esame. Possiamo notare inoltre che entrambi gli studenti sono segnati come destinatari solo per l'evento che gli riguarda personalmente. Così facendo quindi nessuno di loro due può venire a conoscenza dell'esito dell'altro.
+
+\begin{verbatim}
+Accepting exams
+Block mined in 0m 20s
+----------------------------------------------------------------------------------------------------
+--------------------------------------------BLOCK HEADER--------------------------------------------
+----------------------------------------------------------------------------------------------------
+----- hash -------------- = 00000075fda420500ef3f37effc5dc109de85025bc2253339573e1d9e94ac717 -------
+----- previousHash ------ = 000000447906675727e1fe5bc0c64d1538bb7e558dae3a3d7ec52a74aa258743 -------
+----- difficulty -------- = 6 ----------------------------------------------------------------------
+----- rootHash ---------- = 2961fa026d5a780dece5a20c6b2638fe15070ea0f1f9691bcac196287d7e0acf -------
+----- timestamp --------- = 01/11/2022 17:35:33 ----------------------------------------------------
+----- nonce ------------- = 13912352 ---------------------------------------------------------------
+----------------------------------------------------------------------------------------------------
+-----------------------------------------------EVENTS-----------------------------------------------
+----------------------------------------------------------------------------------------------------
+----- hash -------------- = 089e8fee46a0e1850742f64d034bf9de962e05536734686a04d38568c52539d5 -------
+----- author ------------ = ca8deed37a3228c829974c6fc6364302901d9ba374d5a564b5d245c25f994d3e -------
+----- eventType --------- = EXAM_CONFIRM -----------------------------------------------------------
+----- receiver ---------- = ca8deed37a3228c829974c6fc6364302901d9ba374d5a564b5d245c25f994d3e -------
+----- key --------------- = V5Rnidx5ySJwn6l1lwv/LkhPrnFYI619U1/H2mNr6SPhwteIVrBDnZ5VDcs= -----------
+----- receiver ---------- = 70bbb91a8abbc9ca28eccae60c2226514425e47ad69651ad5e79c18296424acf -------
+----- key --------------- = TKA+owAxInrIZ483MpO4YLQCfwl+Zp3Xo67ZFtQxWhcBYZk7hsTSP1F/UIQ= -----------
+----- encrypted event --- = yjfIAmSuRuxCoPFSI/llbKAGr5fxuWp9kiM8XO4ej+vSjl9gP3Ylgje1tPQvJLcH1z -----
+--------------------------- ujuwhB5PJ89zEzEjv0YyE524hKlAmewwHTMyFwAv0ZZZ4VqSu7+6u7SXZu41UpvLTS -----
+--------------------------- fIVmJClCkL8sXRWUStV7M8e1SMWwtQfz+v8+9zMZIn+kcK8a4rQpTT85RS8lqoV4Du -----
+--------------------------- Xk9qAVINwkgrq1GlknCEG4Czcy687XIyJRRNfStllWzSiDwhoSW6WGKIcwiT65uMcO -----
+--------------------------- wJTIL8EigN3aJ8Jh6plEQGpcjXdo4JdX+NvAHNMXbqMbjZK5TgxMevQkil6vB+FNwx -----
+--------------------------- tKbSMmpDjq/eN91Hi7QvQAzeSuPvJJ+SRdPxEPYwPJ6bQR3J8rptBoiwwNEOQdVXGR -----
+--------------------------- NDm0CONgRZsOXrQ88HBUB8dBFis/rw== ---------------------------------------
+----- signature --------- = NN5UggFZBsLAupmVv7QOOPpWLQWvu6xSw9Ytc2KbZTres4ZZWrzvFLIbw+ChdkwkIA -----
+--------------------------- SEr4EX8I26PZAwZHS3Aw== -------------------------------------------------
+----------------------------------------------------------------------------------------------------
+----- hash -------------- = 29af66976261f1d63c41ba1c7d5983e32779943dd12129d282603278a518e211 -------
+----- author ------------ = 60a63c803c0f8c7fcbe316d15c7298ddabf5f2eff96f42690159cb100bffb8e2 -------
+----- eventType --------- = EXAM_CONFIRM -----------------------------------------------------------
+----- receiver ---------- = 60a63c803c0f8c7fcbe316d15c7298ddabf5f2eff96f42690159cb100bffb8e2 -------
+----- key --------------- = Unj4/Fa5X6dHl2bcwIGTVP8c0n2UMHfXYLC4Pc+WzHw9l8FZ2IAnS2Eq5YY= -----------
+----- receiver ---------- = 70bbb91a8abbc9ca28eccae60c2226514425e47ad69651ad5e79c18296424acf -------
+----- key --------------- = gXN0L6V4mdnpJouEyK4fi62WRMeXjOM1/giMx9rEmLZzZyqej412hjxyNe8= -----------
+----- encrypted event --- = 54Usjksjue2Rr7VFdWlrSZZn2l1ZiPHSnhq2GqYMvx7uJ6EyNgrTkT0mnSLLPJWCv/ -----
+--------------------------- 28up6DeiG5sF3j0aW4AmrHnkUX7N7yCUf1tuUnfnFCMBFydeM2x6zku8JxgSuZeyHh -----
+--------------------------- tIoRjFjZQpgWArvqSRDq/hgQvhzV5ySDJstqf7DrW2xPBdYydj/dk89A9p0Ui74e0K -----
+--------------------------- mI3Nvw+wn2TUOITQDGckP7Y4HbGXvYzMGCjuqrhZkWXvDXk/bQ8TJmE+RkhOE9uNmB -----
+--------------------------- qjTE5LXgcE3QDfFwESZPVqsMEFV3Kjh3Xh9AzgQ8ZfChXUNtcMSZYQ6AhR3zKE74wZ -----
+--------------------------- 0IGN5TD8TNdoA2FzHpiavyBL8yhOfWOZQSXLO54LEqkPZlwImzc8CqYgf0qqoaAgk7 -----
+--------------------------- 8NCIYY6N58SX3GqEaxB8TomRH6cxwg== ---------------------------------------
+----- signature --------- = xE4JTvg9/Lq7+bDJiEri8qlc59i/Avu0H2G8q+/sWfCT6HlR3usdTeMZbvWCclYmVn -----
+--------------------------- BcVE8Zf5+JFTYN6pLuDQ== -------------------------------------------------
+----------------------------------------------------------------------------------------------------
+\end{verbatim}
+I due studenti accettano o rifiutano il proprio risultato all'esame. Come nel caso precedente solo il professore è autorizzato a leggere entrambi gli eventi, mentre i due studenti hanno accesso solo all'evento che gli riguarda senza che uno possa venire a conoscenza della volontà dell'altro.
 
