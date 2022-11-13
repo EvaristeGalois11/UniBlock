@@ -15,6 +15,7 @@ Di seguito è descritta una PoC di implementazione di UniBlock volta a considerar
 \section{Analisi PoC}
 La PoC di UniBlock è realizzata in Java e si presenta come un progetto Maven con due moduli al suo interno. Il modulo uniblock-thesis contiene i file necessari a compilare la presente tesi e necessita di un sistema \LaTeX correttamente installato affinché il plugin Maven possa generare correttamente il PDF. Il modulo uniblock-poc contiene invece i sorgenti Java dell'implementazione di UniBlock e necessita di una versione di Java pari o superiore a 17 per poter essere compilato ed eseguito. Per mantenere sotto controllo la complessità dei vari componenti del progetto è stato impiegato Dagger, una framework Java che permette l'iniezione delle dipendenze risolvendole durante la compilazione. Varie altre librerie come Guava e Apache Commons sono state utilizzate per semplificare alcune parti del programma,  come la formattazione di stringhe o la gestione dei parametri a riga di comando. Quando si avvia il programma DemoService è la classe principale deputata alla generazione di una piccola catena di blocchi a fini dimostrativi. E' possibile inoltre regolare i parametri della demo come la difficoltà dei blocchi generati (utilizzare il parametro -h/--help per stampare a schermo la lista di parametri supportati).
 
+\begin{scriptsize}
 \begin{verbatim}
 Generating genesis block
 Block mined in 0m 15s
@@ -39,8 +40,10 @@ Block mined in 0m 15s
 ----- signature --------- = GENESIS ----------------------------------------------------------------
 ----------------------------------------------------------------------------------------------------
 \end{verbatim}
+\end{scriptsize}
 Il primo blocco generato è il certificato di genesi dell'entità centrale. In uno scenario realistico tale blocco verrebbe generato una sola volta e usato come base della catena da tutti i nodi della rete. Nel caso di Bitcoin il blocco di genesi è inserito nel codice sorgente di ogni versione del programma. Per motivi di semplicità la PoC UniBlock genera un nuovo certificato di genesi ad ogni avvio. Possiamo notare inoltre le due chiavi pubbliche codificate in Base64 che permettono a chiunque di verificare le firme di tutti gli altri certificati. Come già discusso nel capitolo precedente il certificato di genesi non presenta firma venendo considerato legittimo a priori.
 
+\begin{scriptsize}
 \begin{verbatim}
 Generating professor and students certificates
 Block mined in 0m 18s
@@ -84,8 +87,10 @@ Block mined in 0m 18s
 --------------------------- I7g6pf4lF79+lpv2sZBg== -------------------------------------------------
 ----------------------------------------------------------------------------------------------------
 \end{verbatim}
+\end{scriptsize}
 Viene successivamente simulata la generazione di tre certficati diversi, uno per un professore e gli altri per due studenti. Possiamo notare le chiavi pubbliche dei tre utenti, ciascuna coppia con la rispettiva firma che ne prova l'emissione da parte dell'entità centrale. Per verificarne la legittimà basterebbe infatti usare le chiavi pubbliche presenti nel blocco precedente. Questo blocco permette inoltre di vedere come gli hash dei tre certificati siano stati ridotti nell'hash di radice presente nell'header del blocco.
 
+\begin{scriptsize}
 \begin{verbatim}
 Publishing exam
 Block mined in 0m 41s
@@ -121,8 +126,10 @@ Block mined in 0m 41s
 --------------------------- rp5QEbZ4vc3D26M/ptAg== -------------------------------------------------
 ----------------------------------------------------------------------------------------------------
 \end{verbatim}
+\end{scriptsize}
 In questo blocco il professore ha pubblicato un appello di esame apponendo la sua firma all'evento. Possiamo notare che il contenuto vero e proprio dell'evento sia illegibile senza prima decriptarlo, ma solo le tre persone riportare come receiver possono leggerlo. Confrontando gli ID con quelli dei certificati del blocco precedente possiamo accorgerci che il professore ha indirizzato tale evento ai due studenti aggiungendosi in copia.
 
+\begin{scriptsize}
 \begin{verbatim}
 Booking exams
 Block mined in 0m 18s
@@ -173,8 +180,10 @@ Block mined in 0m 18s
 --------------------------- SRZQ7YQvsn8+nbolzSDQ== -------------------------------------------------
 ----------------------------------------------------------------------------------------------------
 \end{verbatim}
+\end{scriptsize}
 I due studenti si iscrivono all'esame apponendo ciascuno la propria firma al relativo evento.
 
+\begin{scriptsize}
 \begin{verbatim}
 Publishing results
 Block mined in 0m 18s
@@ -229,8 +238,10 @@ Block mined in 0m 18s
 --------------------------- jGvRyYrUWCedcKlQLSCA== -------------------------------------------------
 ----------------------------------------------------------------------------------------------------
 \end{verbatim}
+\end{scriptsize}
 Il professore pubblica i risultati dell'esame. Possiamo notare inoltre che entrambi gli studenti sono segnati come destinatari solo per l'evento che gli riguarda personalmente. Così facendo quindi nessuno di loro due può venire a conoscenza dell'esito dell'altro.
 
+\begin{scriptsize}
 \begin{verbatim}
 Accepting exams
 Block mined in 0m 20s
@@ -281,5 +292,6 @@ Block mined in 0m 20s
 --------------------------- BcVE8Zf5+JFTYN6pLuDQ== -------------------------------------------------
 ----------------------------------------------------------------------------------------------------
 \end{verbatim}
+\end{scriptsize}
 I due studenti accettano o rifiutano il proprio risultato all'esame. Come nel caso precedente solo il professore è autorizzato a leggere entrambi gli eventi, mentre i due studenti hanno accesso solo all'evento che gli riguarda senza che uno possa venire a conoscenza della volontà dell'altro.
 
