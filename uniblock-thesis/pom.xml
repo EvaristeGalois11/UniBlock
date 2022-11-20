@@ -6,7 +6,7 @@
     <groupId>it.unifi.nave</groupId>
     <artifactId>uniblock-thesis</artifactId>
     <name>UniBlock thesis</name>
-    <version>0.5.0</version>
+    <version>1.0.0</version>
     <packaging>pdf</packaging>
     <build>
         <plugins>
