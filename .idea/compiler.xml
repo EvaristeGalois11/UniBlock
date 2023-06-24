@@ -2,13 +2,7 @@
 <project version="4">
   <component name="CompilerConfiguration">
     <annotationProcessing>
-      <profile name="Maven default annotation processors profile" enabled="true">
-        <sourceOutputDir name="target/generated-sources/annotations" />
-        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
-        <outputRelativeToContentRoot value="true" />
-        <module name="uni-block" />
-      </profile>
-      <profile name="Annotation profile for UniBlock poc" enabled="true">
+      <profile name="Annotation profile for UniBlock" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
@@ -40,9 +34,12 @@
         </processorPath>
         <module name="uniblock-poc" />
       </profile>
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="uniblock-thesis" />
+      </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel>
-      <module name="uniblock" target="17" />
-    </bytecodeTargetLevel>
   </component>
 </project>
