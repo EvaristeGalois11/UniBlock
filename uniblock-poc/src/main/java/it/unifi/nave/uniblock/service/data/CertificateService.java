@@ -1,16 +1,15 @@
 package it.unifi.nave.uniblock.service.data;
 
+import static it.unifi.nave.uniblock.data.event.Certificate.GENESIS;
+
 import it.unifi.nave.uniblock.data.event.Certificate;
 import it.unifi.nave.uniblock.persistence.KeyManager;
 import it.unifi.nave.uniblock.service.crypto.HashService;
 import it.unifi.nave.uniblock.service.crypto.PKService;
-
-import javax.inject.Inject;
-import javax.inject.Singleton;
 import java.nio.ByteBuffer;
 import java.security.PublicKey;
-
-import static it.unifi.nave.uniblock.data.event.Certificate.GENESIS;
+import javax.inject.Inject;
+import javax.inject.Singleton;
 
 @Singleton
 public class CertificateService {

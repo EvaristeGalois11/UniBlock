@@ -7,10 +7,6 @@ import it.unifi.nave.uniblock.data.event.Certificate;
 import it.unifi.nave.uniblock.data.event.EncryptedEvent;
 import it.unifi.nave.uniblock.data.event.Event;
 import it.unifi.nave.uniblock.service.crypto.HashService;
-import org.apache.commons.lang3.StringUtils;
-
-import javax.inject.Inject;
-import javax.inject.Singleton;
 import java.security.PublicKey;
 import java.time.Instant;
 import java.time.ZoneId;
@@ -19,6 +15,9 @@ import java.util.Base64;
 import java.util.Collection;
 import java.util.Map;
 import java.util.stream.Collectors;
+import javax.inject.Inject;
+import javax.inject.Singleton;
+import org.apache.commons.lang3.StringUtils;
 
 @Singleton
 public class ToStringService {

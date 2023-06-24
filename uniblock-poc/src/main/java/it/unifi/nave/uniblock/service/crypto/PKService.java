@@ -1,8 +1,5 @@
 package it.unifi.nave.uniblock.service.crypto;
 
-import javax.crypto.KeyAgreement;
-import javax.inject.Inject;
-import javax.inject.Singleton;
 import java.security.KeyPair;
 import java.security.KeyPairGenerator;
 import java.security.NoSuchAlgorithmException;
@@ -10,6 +7,9 @@ import java.security.PrivateKey;
 import java.security.PublicKey;
 import java.security.Signature;
 import java.util.Base64;
+import javax.crypto.KeyAgreement;
+import javax.inject.Inject;
+import javax.inject.Singleton;
 
 @Singleton
 public class PKService {

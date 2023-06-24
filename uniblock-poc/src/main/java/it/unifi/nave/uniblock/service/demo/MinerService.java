@@ -3,11 +3,10 @@ package it.unifi.nave.uniblock.service.demo;
 import it.unifi.nave.uniblock.data.block.Block;
 import it.unifi.nave.uniblock.data.block.BlockHeader;
 import it.unifi.nave.uniblock.service.crypto.HashService;
-
-import javax.inject.Inject;
-import javax.inject.Singleton;
 import java.util.OptionalInt;
 import java.util.stream.IntStream;
+import javax.inject.Inject;
+import javax.inject.Singleton;
 
 @Singleton
 public class MinerService {

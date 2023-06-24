@@ -7,15 +7,14 @@ import it.unifi.nave.uniblock.persistence.KeyManager;
 import it.unifi.nave.uniblock.service.crypto.AESService;
 import it.unifi.nave.uniblock.service.crypto.HashService;
 import it.unifi.nave.uniblock.service.crypto.PKService;
-
-import javax.inject.Inject;
-import javax.inject.Singleton;
 import java.nio.charset.StandardCharsets;
 import java.security.PrivateKey;
 import java.security.PublicKey;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Stream;
+import javax.inject.Inject;
+import javax.inject.Singleton;
 
 @Singleton
 public class EncryptedEventService {

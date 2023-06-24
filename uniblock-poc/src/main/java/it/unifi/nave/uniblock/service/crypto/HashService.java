@@ -1,7 +1,5 @@
 package it.unifi.nave.uniblock.service.crypto;
 
-import javax.inject.Inject;
-import javax.inject.Singleton;
 import java.io.ByteArrayOutputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
@@ -9,6 +7,8 @@ import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.HexFormat;
+import javax.inject.Inject;
+import javax.inject.Singleton;
 
 @Singleton
 public class HashService {

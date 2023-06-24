@@ -11,8 +11,6 @@ import it.unifi.nave.uniblock.service.crypto.PKService;
 import it.unifi.nave.uniblock.service.data.CertificateService;
 import it.unifi.nave.uniblock.service.data.EncryptedEventService;
 import it.unifi.nave.uniblock.service.data.MerkleTreeService;
-
-import javax.inject.Inject;
 import java.security.PrivateKey;
 import java.time.Duration;
 import java.time.Instant;
@@ -21,6 +19,7 @@ import java.time.Month;
 import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
+import javax.inject.Inject;
 
 public class DemoService {
   private final CertificateService certificateService;

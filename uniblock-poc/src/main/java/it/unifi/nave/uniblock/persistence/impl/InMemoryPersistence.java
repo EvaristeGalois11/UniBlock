@@ -5,12 +5,11 @@ import it.unifi.nave.uniblock.persistence.Blockchain;
 import it.unifi.nave.uniblock.persistence.KeyManager;
 import it.unifi.nave.uniblock.service.crypto.HashService;
 import it.unifi.nave.uniblock.service.crypto.PKService;
-
-import javax.inject.Inject;
-import javax.inject.Singleton;
 import java.security.PrivateKey;
 import java.util.HashMap;
 import java.util.Map;
+import javax.inject.Inject;
+import javax.inject.Singleton;
 
 @Singleton
 public class InMemoryPersistence extends Blockchain implements KeyManager {

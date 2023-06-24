@@ -5,7 +5,6 @@ import com.google.common.primitives.Bytes;
 import it.unifi.nave.uniblock.data.block.Block;
 import it.unifi.nave.uniblock.data.event.Certificate;
 import it.unifi.nave.uniblock.service.crypto.PKService;
-
 import java.security.PublicKey;
 import java.util.Collection;
 import java.util.Iterator;

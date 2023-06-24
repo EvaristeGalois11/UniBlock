@@ -1,7 +1,6 @@
 package it.unifi.nave.uniblock.data.block;
 
 import it.unifi.nave.uniblock.data.event.Event;
-
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;

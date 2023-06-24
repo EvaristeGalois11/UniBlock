@@ -3,10 +3,9 @@ package it.unifi.nave.uniblock.service.data;
 import com.google.common.collect.Lists;
 import it.unifi.nave.uniblock.data.event.Event;
 import it.unifi.nave.uniblock.service.crypto.HashService;
-
+import java.util.List;
 import javax.inject.Inject;
 import javax.inject.Singleton;
-import java.util.List;
 
 @Singleton
 public class MerkleTreeService {
