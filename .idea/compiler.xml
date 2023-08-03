@@ -2,12 +2,6 @@
 <project version="4">
   <component name="CompilerConfiguration">
     <annotationProcessing>
-      <profile name="Maven default annotation processors profile" enabled="true">
-        <sourceOutputDir name="target/generated-sources/annotations" />
-        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
-        <outputRelativeToContentRoot value="true" />
-        <module name="uniblock-thesis" />
-      </profile>
       <profile name="Annotation profile for UniBlock" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
@@ -39,7 +33,7 @@
           <entry name="$MAVEN_REPOSITORY$/org/jetbrains/kotlin/kotlin-reflect/1.6.10/kotlin-reflect-1.6.10.jar" />
           <entry name="$MAVEN_REPOSITORY$/net/ltgt/gradle/incap/incap/0.2/incap-0.2.jar" />
         </processorPath>
-        <module name="uniblock-poc" />
+        <module name="uniblock" />
       </profile>
     </annotationProcessing>
   </component>
