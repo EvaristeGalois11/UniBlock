@@ -21,7 +21,7 @@ jobs:
           cache: maven
 
       - name: 'Build and test'
-        run: mvn -B verify
+        run: ./mvnw -B verify
 
   deploy:
     name: 'Deploy to Docker Hub'
@@ -47,4 +47,4 @@ jobs:
           registry: 'docker.io'
 
       - name: 'Deploy'
-        run: mvn -B compile jib:build
+        run: ./mvnw -B compile jib:build
