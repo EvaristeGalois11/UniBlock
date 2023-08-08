@@ -12,8 +12,8 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.release>20</maven.compiler.release>
         <maven.deploy.skip>true</maven.deploy.skip>
-        <dagger.version>2.46.1</dagger.version>
         <guava.version>32.1.2-jre</guava.version>
+        <dagger.version>2.47</dagger.version>
         <commons-lang.version>3.12.0</commons-lang.version>
         <commons-cli.version>1.5.0</commons-cli.version>
         <maven-compiler-plugin.version>3.11.0</maven-compiler-plugin.version>
