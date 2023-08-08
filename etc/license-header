@@ -1,5 +1,5 @@
 /*
- *Copyright (C) 2023 Claudio Nave
+ *Copyright (C) $YEAR Claudio Nave
  *
  *This file is part of UniBlock.
  *
@@ -16,23 +16,3 @@
  *You should have received a copy of the GNU General Public License
  *along with UniBlock. If not, see <https://www.gnu.org/licenses/>.
  */
-package it.unifi.nave.uniblock.data.event;
-
-import java.security.PublicKey;
-
-public record Certificate(
-    String userId,
-    String name,
-    CertificateType certificateType,
-    PublicKey signPbk,
-    PublicKey dhPbk,
-    String sign)
-    implements Event {
-  public static final String GENESIS = "GENESIS";
-
-  public enum CertificateType {
-    PROFESSOR,
-    STUDENT,
-    GENESIS
-  }
-}
