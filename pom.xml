@@ -11,7 +11,6 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.release>20</maven.compiler.release>
-        <maven.deploy.skip>true</maven.deploy.skip>
         <commons-lang.version>3.13.0</commons-lang.version>
         <guava.version>32.1.2-jre</guava.version>
         <dagger.version>2.47</dagger.version>
@@ -98,14 +97,6 @@
                         <user>nobody</user>
                     </container>
                 </configuration>
-                <executions>
-                    <execution>
-                        <phase>deploy</phase>
-                        <goals>
-                            <goal>build</goal>
-                        </goals>
-                    </execution>
-                </executions>
             </plugin>
         </plugins>
     </build>
