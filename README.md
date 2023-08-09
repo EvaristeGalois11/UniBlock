@@ -10,7 +10,7 @@ University themed blockchain
 **_The project needs Java 20 to compile_**
 
 ### Run with podman
-`podman run --rm docker.io/evaristegalois/uniblock`
+`podman run --rm ghcr.io/evaristegalois11/uniblock`
 
 ### Usage
 ```
