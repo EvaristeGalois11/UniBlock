@@ -16,7 +16,7 @@
         <dagger.version>2.47</dagger.version>
         <commons-cli.version>1.5.0</commons-cli.version>
         <maven-compiler-plugin.version>3.11.0</maven-compiler-plugin.version>
-        <spotless-maven-plugin.version>2.38.0</spotless-maven-plugin.version>
+        <spotless-maven-plugin.version>2.39.0</spotless-maven-plugin.version>
         <jib-maven-plugin.version>3.3.2</jib-maven-plugin.version>
     </properties>
     <dependencies>
