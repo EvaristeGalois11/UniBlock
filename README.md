@@ -7,7 +7,7 @@ University themed blockchain
 ### Build from source
 `./mvnw verify`
 
-**_The project needs Java 20 to compile_**
+**_The project needs Java 21 to compile_**
 
 ### Run with podman
 `podman run --rm ghcr.io/evaristegalois11/uniblock`
