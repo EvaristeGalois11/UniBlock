@@ -15,7 +15,7 @@
         <guava.version>33.0.0-jre</guava.version>
         <dagger.version>2.49</dagger.version>
         <commons-cli.version>1.6.0</commons-cli.version>
-        <maven-compiler-plugin.version>3.11.0</maven-compiler-plugin.version>
+        <maven-compiler-plugin.version>3.12.0</maven-compiler-plugin.version>
         <spotless-maven-plugin.version>2.41.1</spotless-maven-plugin.version>
         <jib-maven-plugin.version>3.4.0</jib-maven-plugin.version>
     </properties>
