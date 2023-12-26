@@ -40,7 +40,7 @@ public class MerkleTreeService {
 
   private String getRootHash(List<String> hashes) {
     if (hashes.size() == 1) {
-      return hashes.get(0);
+      return hashes.getFirst();
     } else {
       return getRootHash(Lists.partition(hashes, 2).stream().map(this::reduceHash).toList());
     }
