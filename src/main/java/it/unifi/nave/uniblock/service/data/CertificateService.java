@@ -67,8 +67,8 @@ public class CertificateService {
   }
 
   private byte[] concatPbk(PublicKey signPbk, PublicKey dhPbk) {
-    byte[] signPbkEncoded = signPbk.getEncoded();
-    byte[] dhPbkEncoded = dhPbk.getEncoded();
+    var signPbkEncoded = signPbk.getEncoded();
+    var dhPbkEncoded = dhPbk.getEncoded();
     return ByteBuffer.allocate(signPbkEncoded.length + dhPbkEncoded.length)
         .put(signPbkEncoded)
         .put(dhPbkEncoded)

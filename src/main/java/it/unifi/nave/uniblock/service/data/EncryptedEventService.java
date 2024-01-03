@@ -26,8 +26,6 @@ import it.unifi.nave.uniblock.service.crypto.AESService;
 import it.unifi.nave.uniblock.service.crypto.HashService;
 import it.unifi.nave.uniblock.service.crypto.PKService;
 import java.nio.charset.StandardCharsets;
-import java.security.PrivateKey;
-import java.security.PublicKey;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Stream;
@@ -70,8 +68,8 @@ public class EncryptedEventService {
   }
 
   private Map.Entry<String, String> encryptKey(String id, byte[] key, String author) {
-    PublicKey pbk = blockchain.searchCertificate(id).dhPbk();
-    PrivateKey dhPk = keyManager.retrieveDhPk(author);
+    var pbk = blockchain.searchCertificate(id).dhPbk();
+    var dhPk = keyManager.retrieveDhPk(author);
     return Map.entry(id, pkService.encrypt(dhPk, pbk, key));
   }
 }
