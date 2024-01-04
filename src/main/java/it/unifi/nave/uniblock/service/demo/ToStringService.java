@@ -39,10 +39,10 @@ import org.apache.commons.lang3.StringUtils;
 
 @Singleton
 public class ToStringService {
-  private static final int LINE_LENGTH = 100;
+  private static final int LINE_LENGTH = 90;
   private static final String PADDING = "-";
-  private static final int MARGIN_LENGTH = 5;
-  private static final int FIELD_LENGTH = 25;
+  private static final int MARGIN_LENGTH = 2;
+  private static final int FIELD_LENGTH = 20;
 
   private final HashService hashService;
 
