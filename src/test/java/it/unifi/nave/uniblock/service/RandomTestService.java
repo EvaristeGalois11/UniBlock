@@ -16,7 +16,7 @@
  *You should have received a copy of the GNU General Public License
  *along with UniBlock. If not, see <https://www.gnu.org/licenses/>.
  */
-package it.unifi.nave.uniblock.test;
+package it.unifi.nave.uniblock.service;
 
 import it.unifi.nave.uniblock.service.crypto.RandomService;
 import javax.inject.Inject;

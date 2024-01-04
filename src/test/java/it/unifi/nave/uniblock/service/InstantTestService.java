@@ -16,25 +16,22 @@
  *You should have received a copy of the GNU General Public License
  *along with UniBlock. If not, see <https://www.gnu.org/licenses/>.
  */
-package it.unifi.nave.uniblock.test;
+package it.unifi.nave.uniblock.service;
 
-import it.unifi.nave.uniblock.service.demo.PrintService;
+import it.unifi.nave.uniblock.service.demo.InstantService;
+import java.time.Instant;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
 @Singleton
-public class PrintBufferService extends PrintService {
-  private final StringBuilder output = new StringBuilder();
+public class InstantTestService extends InstantService {
+  private static final Instant FIXED_INSTANT = Instant.parse("2007-12-03T10:15:30Z");
 
   @Inject
-  public PrintBufferService() {}
+  public InstantTestService() {}
 
   @Override
-  public void print(String str) {
-    output.append(str);
-  }
-
-  public String getOutput() {
-    return output.toString();
+  public Instant now() {
+    return FIXED_INSTANT;
   }
 }

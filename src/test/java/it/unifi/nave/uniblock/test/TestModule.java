@@ -20,6 +20,10 @@ package it.unifi.nave.uniblock.test;
 
 import dagger.Binds;
 import dagger.Module;
+import it.unifi.nave.uniblock.service.InstantTestService;
+import it.unifi.nave.uniblock.service.PkTestService;
+import it.unifi.nave.uniblock.service.PrintTestService;
+import it.unifi.nave.uniblock.service.RandomTestService;
 import it.unifi.nave.uniblock.service.crypto.PKService;
 import it.unifi.nave.uniblock.service.crypto.RandomService;
 import it.unifi.nave.uniblock.service.demo.InstantService;
@@ -29,7 +33,7 @@ import it.unifi.nave.uniblock.service.demo.factory.PersistenceModule;
 @Module(includes = PersistenceModule.class)
 public interface TestModule {
   @Binds
-  PrintService printService(PrintBufferService printBufferService);
+  PrintService printService(PrintTestService printTestService);
 
   @Binds
   RandomService randomService(RandomTestService randomTestService);

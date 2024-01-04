@@ -19,6 +19,7 @@
 package it.unifi.nave.uniblock.test;
 
 import dagger.Component;
+import it.unifi.nave.uniblock.service.PrintTestService;
 import it.unifi.nave.uniblock.service.demo.DemoService;
 import javax.inject.Singleton;
 
@@ -27,5 +28,5 @@ import javax.inject.Singleton;
 public interface TestFactory {
   DemoService getDemo();
 
-  PrintBufferService getPrint();
+  PrintTestService getPrint();
 }
