@@ -1,5 +1,5 @@
 /*
- *Copyright (C) 2024 Claudio Nave
+ *Copyright (C) 2022-2024 Claudio Nave
  *
  *This file is part of UniBlock.
  *
