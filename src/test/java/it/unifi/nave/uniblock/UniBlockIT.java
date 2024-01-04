@@ -22,25 +22,19 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import it.unifi.nave.uniblock.test.DaggerTestFactory;
 import it.unifi.nave.uniblock.test.TestFactory;
-import it.unifi.nave.uniblock.util.InstantUtil;
 import java.io.IOException;
-import java.time.Clock;
-import java.time.Instant;
-import java.time.ZoneOffset;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 class UniBlockIT {
   private static final int TEST_DIFFICULTY = 3;
   private static final String OUTPUT_FILE = "/output.txt";
-  private static final Instant FIXED_INSTANT = Instant.parse("2007-12-03T10:15:30Z");
 
   private TestFactory testFactory;
 
   @BeforeEach
   void setUp() {
     testFactory = DaggerTestFactory.create();
-    InstantUtil.setClock(Clock.fixed(FIXED_INSTANT, ZoneOffset.UTC));
   }
 
   @Test

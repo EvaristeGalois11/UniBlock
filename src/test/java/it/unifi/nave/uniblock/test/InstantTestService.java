@@ -1,5 +1,5 @@
 /*
- *Copyright (C) 2022-2024 Claudio Nave
+ *Copyright (C) 2024 Claudio Nave
  *
  *This file is part of UniBlock.
  *
@@ -18,25 +18,20 @@
  */
 package it.unifi.nave.uniblock.test;
 
-import dagger.Binds;
-import dagger.Module;
-import it.unifi.nave.uniblock.service.crypto.PKService;
-import it.unifi.nave.uniblock.service.crypto.RandomService;
 import it.unifi.nave.uniblock.service.demo.InstantService;
-import it.unifi.nave.uniblock.service.demo.PrintService;
-import it.unifi.nave.uniblock.service.demo.factory.PersistenceModule;
+import java.time.Instant;
+import javax.inject.Inject;
+import javax.inject.Singleton;
 
-@Module(includes = PersistenceModule.class)
-public interface TestModule {
-  @Binds
-  PrintService printService(PrintBufferService printBufferService);
+@Singleton
+public class InstantTestService extends InstantService {
+  private static final Instant FIXED_INSTANT = Instant.parse("2007-12-03T10:15:30Z");
 
-  @Binds
-  RandomService randomService(RandomTestService randomTestService);
+  @Inject
+  public InstantTestService() {}
 
-  @Binds
-  PKService pkService(PkTestService pkTestService);
-
-  @Binds
-  InstantService instantService(InstantTestService instantTestService);
+  @Override
+  public Instant now() {
+    return FIXED_INSTANT;
+  }
 }

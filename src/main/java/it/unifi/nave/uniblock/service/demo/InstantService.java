@@ -16,19 +16,18 @@
  *You should have received a copy of the GNU General Public License
  *along with UniBlock. If not, see <https://www.gnu.org/licenses/>.
  */
-package it.unifi.nave.uniblock.util;
+package it.unifi.nave.uniblock.service.demo;
 
-import java.time.Clock;
 import java.time.Instant;
+import javax.inject.Inject;
+import javax.inject.Singleton;
 
-public class InstantUtil {
-  public static Clock clock = Clock.systemUTC();
+@Singleton
+public class InstantService {
+  @Inject
+  public InstantService() {}
 
-  public static Instant now() {
-    return Instant.now(clock);
-  }
-
-  public static void setClock(Clock c) {
-    clock = c;
+  public Instant now() {
+    return Instant.now();
   }
 }

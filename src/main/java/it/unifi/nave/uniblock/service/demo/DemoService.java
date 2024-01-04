@@ -29,7 +29,6 @@ import it.unifi.nave.uniblock.service.crypto.PKService;
 import it.unifi.nave.uniblock.service.data.CertificateService;
 import it.unifi.nave.uniblock.service.data.EncryptedEventService;
 import it.unifi.nave.uniblock.service.data.MerkleTreeService;
-import it.unifi.nave.uniblock.util.InstantUtil;
 import java.security.PrivateKey;
 import java.time.Duration;
 import java.time.LocalDate;
@@ -49,6 +48,7 @@ public class DemoService {
   private final MinerService minerService;
   private final ToStringService toStringService;
   private final PrintService printService;
+  private final InstantService instantService;
 
   private int difficulty;
   private boolean progress;
@@ -64,7 +64,8 @@ public class DemoService {
       KeyManager keyManager,
       MinerService minerService,
       ToStringService toStringService,
-      PrintService printService) {
+      PrintService printService,
+      InstantService instantService) {
     this.certificateService = certificateService;
     this.encryptedEventService = encryptedEventService;
     this.merkleTreeService = merkleTreeService;
@@ -75,6 +76,7 @@ public class DemoService {
     this.minerService = minerService;
     this.toStringService = toStringService;
     this.printService = printService;
+    this.instantService = instantService;
   }
 
   public void startDemo(int difficulty, boolean progress) {
@@ -202,11 +204,16 @@ public class DemoService {
 
   private Block mineBlock(String previousHash, String message, List<? extends Event> events) {
     var block =
-        new Block(previousHash, difficulty, events, merkleTreeService.calculateRootHash(events));
+        new Block(
+            previousHash,
+            difficulty,
+            events,
+            merkleTreeService.calculateRootHash(events),
+            instantService.now());
     printService.print(message);
-    var start = InstantUtil.now();
+    var start = instantService.now();
     minerService.mine(block, progress);
-    var end = InstantUtil.now();
+    var end = instantService.now();
     var duration = Duration.between(start, end);
     printService.println(
         "\nBlock mined in "
