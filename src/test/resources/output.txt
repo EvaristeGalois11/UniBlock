@@ -3,21 +3,21 @@ Block mined in 0m 0s
 ------------------------------------------------------------------------------------------
 ---------------------------------------BLOCK HEADER---------------------------------------
 ------------------------------------------------------------------------------------------
--- hash ------------ = 000199e13dd81fea6e8c0fc3f98977f17b4ffc342088a6cb504013c1b3e1a5b2 --
+-- hash ------------ = 00091bcd75b3f8aafa309f682503f882f3568d353bdc87a8cd58ad4f924ec716 --
 -- previousHash ---- = GENESIS_BLOCK -----------------------------------------------------
 -- difficulty ------ = 3 -----------------------------------------------------------------
--- rootHash -------- = 9d56d2f9cf49780be577005597503374cf6427330348d1adaf6d7cbb364f915b --
--- timestamp ------- = 04/01/2024 21:13:02 -----------------------------------------------
--- nonce ----------- = 328132 ------------------------------------------------------------
+-- rootHash -------- = 2c508a1d1da9c8adb45ddd9c4a3b182fac0d4287542a91bf19c70173889024ea --
+-- timestamp ------- = 03/12/2007 11:15:30 -----------------------------------------------
+-- nonce ----------- = 3372 --------------------------------------------------------------
 ------------------------------------------------------------------------------------------
 ------------------------------------------EVENTS------------------------------------------
 ------------------------------------------------------------------------------------------
--- hash ------------ = 9d56d2f9cf49780be577005597503374cf6427330348d1adaf6d7cbb364f915b --
+-- hash ------------ = 2c508a1d1da9c8adb45ddd9c4a3b182fac0d4287542a91bf19c70173889024ea --
 -- userId ---------- = GENESIS -----------------------------------------------------------
 -- name ------------ = GENESIS -----------------------------------------------------------
 -- certificateType - = GENESIS -----------------------------------------------------------
--- sign public key - = MCowBQYDK2VwAyEAnn/H8+2RPD4GI01+EaXWAQ4ABeW/gr7+pkCY/nQq/fQ= ------
--- dh public key --- = MCowBQYDK2VuAyEAakZa6zIdakStdNx1t7kan88ODo9GRPjmSwCUK/8i0yI= ------
+-- sign public key - = MCowBQYDK2VwAyEAbmhuHOlRHdROXL+qAtmfiMvseJ1jPg9uM16f64Gg2yc= ------
+-- dh public key --- = MCowBQYDK2VuAyEAz2XwVeDd3IMWd2tvn7Wljizc9goWRLOm/jDmGf8pUT0= ------
 -- signature ------- = GENESIS -----------------------------------------------------------
 ------------------------------------------------------------------------------------------
 
@@ -26,41 +26,41 @@ Block mined in 0m 0s
 ------------------------------------------------------------------------------------------
 ---------------------------------------BLOCK HEADER---------------------------------------
 ------------------------------------------------------------------------------------------
--- hash ------------ = 00074a1433e75992cd42c981c12cc0c9346753029a5b236aa4c926bd985021c2 --
--- previousHash ---- = 000199e13dd81fea6e8c0fc3f98977f17b4ffc342088a6cb504013c1b3e1a5b2 --
+-- hash ------------ = 000b6fc10fbbe6ceab3e7703de2542a62cb64a14d984a3dbf0fec2edcb88f192 --
+-- previousHash ---- = 00091bcd75b3f8aafa309f682503f882f3568d353bdc87a8cd58ad4f924ec716 --
 -- difficulty ------ = 3 -----------------------------------------------------------------
--- rootHash -------- = 32cb83c14fbd321061adad6906585e45926214aed0f3f7a95df0825137e56d7c --
--- timestamp ------- = 04/01/2024 21:13:03 -----------------------------------------------
--- nonce ----------- = 454277 ------------------------------------------------------------
+-- rootHash -------- = 6aed799734d13fd1de1a3d9642c88b3d6eb41d21be46f1e0d9a012529a8189d1 --
+-- timestamp ------- = 03/12/2007 11:15:30 -----------------------------------------------
+-- nonce ----------- = 72 ----------------------------------------------------------------
 ------------------------------------------------------------------------------------------
 ------------------------------------------EVENTS------------------------------------------
 ------------------------------------------------------------------------------------------
--- hash ------------ = 32a1de510754c069bf995f232fe0b2f217a4f8dcd07be9238f31623f88559cc6 --
--- userId ---------- = 80a5db985fd1cc7655dd8df2bbdffc4bd1012ef365b9059092051482bf11d04d --
+-- hash ------------ = 81f68884f6e16ba1da3bdf34aa36ca579982f73f3d2d1bcbb4ae82f5b8e54c52 --
+-- userId ---------- = 3d076368647c511f003f83e70bb220e5a54eec10871817e6447ed1e383532f75 --
 -- name ------------ = Francesco Tiezzi --------------------------------------------------
 -- certificateType - = PROFESSOR ---------------------------------------------------------
--- sign public key - = MCowBQYDK2VwAyEA4xBAn9SXU1WefZQl49M3ouSy1SruoQlFgO4E626nYy8= ------
--- dh public key --- = MCowBQYDK2VuAyEAAxaA2aPoRpYrCtcNY2IlI0J3+lheD3RozYfiIwn0wG4= ------
--- signature ------- = ZxUZTP9UCqOSbHj3MpMXs2pvKwfdbGflXxcTHtQlkSkMYyXHir6wvjwy8L+7Zxhc --
----------------------- u89/KbU/bUz4r7YMlHEbDA== ------------------------------------------
+-- sign public key - = MCowBQYDK2VwAyEAbmhuHOlRHdROXL+qAtmfiMvseJ1jPg9uM16f64Gg2yc= ------
+-- dh public key --- = MCowBQYDK2VuAyEAz2XwVeDd3IMWd2tvn7Wljizc9goWRLOm/jDmGf8pUT0= ------
+-- signature ------- = lqGv0XD3IwqPmc2egWZ0pM8IVLhjdnhrVh4cE08DLgYFtwVo2S4bF96ZrdKODr0O --
+---------------------- 2Gq1trWx0prcUStxbKlRBg== ------------------------------------------
 ------------------------------------------------------------------------------------------
--- hash ------------ = 8e6058a92f96df098a5d788263ba9425de23140f85c52fa458ed45956fab3e3d --
--- userId ---------- = 231a2ef59019f9b092689621e7a134b5cba62909c5298d3e43121135eb34a708 --
+-- hash ------------ = a53322361af546bbdfcc16d25887acc643007b5046e0fa89afed85e1ea463f45 --
+-- userId ---------- = 3d076368647c511f003f83e70bb220e5a54eec10871817e6447ed1e383532f75 --
 -- name ------------ = Claudio Nave ------------------------------------------------------
 -- certificateType - = STUDENT -----------------------------------------------------------
--- sign public key - = MCowBQYDK2VwAyEAa8NMPHrGdzGuZOJk0wjH6LQxcYXZFNBYJ5CChIP6QKM= ------
--- dh public key --- = MCowBQYDK2VuAyEAr324vKkSy7H0HaxteKIZDH68SwROVJuiGmlgxuhylzg= ------
--- signature ------- = tORfT6OkIuwnEM7XYBH5ZFEPwh1yhLDjG96ZztWs5BdgDAJzBHrr5V8h/hZV1be3 --
----------------------- mbF/P1EjOtAa3kPOdf2ACQ== ------------------------------------------
+-- sign public key - = MCowBQYDK2VwAyEAbmhuHOlRHdROXL+qAtmfiMvseJ1jPg9uM16f64Gg2yc= ------
+-- dh public key --- = MCowBQYDK2VuAyEAz2XwVeDd3IMWd2tvn7Wljizc9goWRLOm/jDmGf8pUT0= ------
+-- signature ------- = lqGv0XD3IwqPmc2egWZ0pM8IVLhjdnhrVh4cE08DLgYFtwVo2S4bF96ZrdKODr0O --
+---------------------- 2Gq1trWx0prcUStxbKlRBg== ------------------------------------------
 ------------------------------------------------------------------------------------------
--- hash ------------ = 58c42aa5ff1cbf8f325065b08820efa1ee9448e5f5e9e728d7f08e379494dc98 --
--- userId ---------- = 705780e6480e41ee6442189b3f1b18c916afc8314517f06f8345c59ff0ef84e4 --
+-- hash ------------ = 3bc266057c765d8f0d0539d68174c4af7cbb3ad1e94d6000517ff571ff739f91 --
+-- userId ---------- = 3d076368647c511f003f83e70bb220e5a54eec10871817e6447ed1e383532f75 --
 -- name ------------ = Mario Rossi -------------------------------------------------------
 -- certificateType - = STUDENT -----------------------------------------------------------
--- sign public key - = MCowBQYDK2VwAyEAc+dFcGjxdOGYzCa8XMLJsbmXIkgCasqvcPK6GSKsbwY= ------
--- dh public key --- = MCowBQYDK2VuAyEAGUJ65GANQtDh8ZuUuCFlC/sL/jWL7SH5FFyjP5bCemM= ------
--- signature ------- = tUdpXX+wnNYI6Qhxhoxq4YiDABWRuTNyG2epx3rzdRF6rJ4cnd2NU5WgkMyXMm9/ --
----------------------- t/sP0l4AUIinQoqd6XN2AA== ------------------------------------------
+-- sign public key - = MCowBQYDK2VwAyEAbmhuHOlRHdROXL+qAtmfiMvseJ1jPg9uM16f64Gg2yc= ------
+-- dh public key --- = MCowBQYDK2VuAyEAz2XwVeDd3IMWd2tvn7Wljizc9goWRLOm/jDmGf8pUT0= ------
+-- signature ------- = lqGv0XD3IwqPmc2egWZ0pM8IVLhjdnhrVh4cE08DLgYFtwVo2S4bF96ZrdKODr0O --
+---------------------- 2Gq1trWx0prcUStxbKlRBg== ------------------------------------------
 ------------------------------------------------------------------------------------------
 
 Publishing exam
@@ -68,33 +68,29 @@ Block mined in 0m 0s
 ------------------------------------------------------------------------------------------
 ---------------------------------------BLOCK HEADER---------------------------------------
 ------------------------------------------------------------------------------------------
--- hash ------------ = 0000f7c9cc634c3d106c3e208253c7c8f9c9abca86206145213cd74d727adb94 --
--- previousHash ---- = 00074a1433e75992cd42c981c12cc0c9346753029a5b236aa4c926bd985021c2 --
+-- hash ------------ = 000e48e938b702869aef677c6d23912c606b52eaf6bb01ec3ac79001588351cf --
+-- previousHash ---- = 000b6fc10fbbe6ceab3e7703de2542a62cb64a14d984a3dbf0fec2edcb88f192 --
 -- difficulty ------ = 3 -----------------------------------------------------------------
--- rootHash -------- = 0459ce04b53632a165fd4b3ad65097fc8b55893126729d417688e809b1c67000 --
--- timestamp ------- = 04/01/2024 21:13:03 -----------------------------------------------
--- nonce ----------- = 31574 -------------------------------------------------------------
+-- rootHash -------- = ab695765833af1963a99dc7ceb0a5a22a88201e7aad21b29f06ea26209a559e9 --
+-- timestamp ------- = 03/12/2007 11:15:30 -----------------------------------------------
+-- nonce ----------- = 4264 --------------------------------------------------------------
 ------------------------------------------------------------------------------------------
 ------------------------------------------EVENTS------------------------------------------
 ------------------------------------------------------------------------------------------
--- hash ------------ = 0459ce04b53632a165fd4b3ad65097fc8b55893126729d417688e809b1c67000 --
--- author ---------- = 80a5db985fd1cc7655dd8df2bbdffc4bd1012ef365b9059092051482bf11d04d --
+-- hash ------------ = ab695765833af1963a99dc7ceb0a5a22a88201e7aad21b29f06ea26209a559e9 --
+-- author ---------- = 3d076368647c511f003f83e70bb220e5a54eec10871817e6447ed1e383532f75 --
 -- eventType ------- = EXAM_PUBLISHING ---------------------------------------------------
--- receiver -------- = 705780e6480e41ee6442189b3f1b18c916afc8314517f06f8345c59ff0ef84e4 --
--- key ------------- = Ptpr0W3LRLZfQI+6idQK4DzxYQJzAAHWe1GxR6WPoQ3p+LCG5ddK8G59xn0= ------
--- receiver -------- = 80a5db985fd1cc7655dd8df2bbdffc4bd1012ef365b9059092051482bf11d04d --
--- key ------------- = gfZpkq8J5qPCjPLfU5hp0cCTrRCmwdwdmMt5kWpxURKwCvH1PudncKKyoyw= ------
--- receiver -------- = 231a2ef59019f9b092689621e7a134b5cba62909c5298d3e43121135eb34a708 --
--- key ------------- = 0NponUCnaDlPE3VTe09CPXXJdNooD2MgSgBXAhjU6elMphoKFTKBLxCW/To= ------
--- encrypted event - = ypuDDbA4bds5nCR28aBTQaicaHJJ6yAMdMuMY/BIbWCvMin8+esncOMfUVYYETWz --
----------------------- 0RIYRFjeUS9/iEeN4FNU3et6cK1SbWAVXf2nmazHqvcrcWGHnBu2Q796aPYQSpH/ --
----------------------- uo9nE/Hj8MuvU6ueKSvvr4n/w8CC6t0Kvag+7KoUdbiLqM4wuhEzKPiM7meJ5sBV --
----------------------- qbp+41Em01KcFM6YkAEMyMBXK+X92XOHMQ9NpWmzX/1Twi/oyHi9wHpT+qqyZxhF --
----------------------- niirE42a5lWif3tYIFwjoJ4XBc9tLDOjc+RRHD7gYiT+wp7hcNKwKXYdUwOtsS0d --
----------------------- evbarBYwrB4+z2I6u5v3N6AUAhLBVEgB3vzw+ir+WFkT1JKieioeZ70CCx1DPxqW --
----------------------- cxexbvT+DAt1SUy+AbZgEYlacR/YYvcWWw== ------------------------------
--- signature ------- = 8REqp3X26Qz2Ql7IedWSYKv8H5Eyq+G+PjglmjJAJeMEUWWQMvCG2Z/1X/WE04qM --
----------------------- clPEeJF1PYyC3IcBY2z/CQ== ------------------------------------------
+-- receiver -------- = 3d076368647c511f003f83e70bb220e5a54eec10871817e6447ed1e383532f75 --
+-- key ------------- = AAAAAAAAAAAAAAAArsY/qp59Xxwu6tWH0SwjoBwmQFRsFCUK9ohp+x/R8AE= ------
+-- encrypted event - = AAAAAAAAAAAAAAAAr2XayxPEo66aXOzMH9uYEdn7y90sZSxNnp/lkPfg74RBdnAP --
+---------------------- KwXxtFSn88Kz4dKQvSzAdXSqbAUaE+zJq6/hgeK3E+Ko7jVhb3EkqdcnAd2VsC50 --
+---------------------- 8qPVh05AlwvgoOOBdDJXAnMLY9+JzX4hzWQakjNBgtEyewieeScQn6uJEDS33p9I --
+---------------------- 2Jee7jns7L+/piTyGgy7p1JFdA0TgPuyF2sMiC1lRSUI/h/tfPLs2PdBzqqIHx6n --
+---------------------- 1/rCIRO0jwudDxYmM2c7+Ou7HqI5popzowN05dA4jgQ353BZoZ2jpm2+zzpvhHAt --
+---------------------- +IjqNTY6cRLvWdxLYiiNmfrW9ilb7zAY3oKvqdk7R8QpnIrFQIDuiT1TJmhN1F+f --
+---------------------- lmVKdBnkTuNl44YhNJchmfIP3cVuHGm3Og== ------------------------------
+-- signature ------- = R6L2F5haaWKD/q3GVAaZ2HtlE5XlgCLhtCY0BnVSoNrpr2RNpesUFW/7C3iehTFE --
+---------------------- 2RmTb48wYOc7Z4AUplJKCQ== ------------------------------------------
 ------------------------------------------------------------------------------------------
 
 Booking exams
@@ -102,48 +98,44 @@ Block mined in 0m 0s
 ------------------------------------------------------------------------------------------
 ---------------------------------------BLOCK HEADER---------------------------------------
 ------------------------------------------------------------------------------------------
--- hash ------------ = 0000944e36410b519befddf319f2c7be4f97cd7a94dfeace2553259cf3a89519 --
--- previousHash ---- = 0000f7c9cc634c3d106c3e208253c7c8f9c9abca86206145213cd74d727adb94 --
+-- hash ------------ = 0004c695c043e039c9b32a8ab2d57a833d1c8a485eea5930e158104321432e19 --
+-- previousHash ---- = 000e48e938b702869aef677c6d23912c606b52eaf6bb01ec3ac79001588351cf --
 -- difficulty ------ = 3 -----------------------------------------------------------------
--- rootHash -------- = 2b00f7f0fb8b02c744605849de882b2a65b384d4632fba86542bdb1b9d23c90f --
--- timestamp ------- = 04/01/2024 21:13:03 -----------------------------------------------
--- nonce ----------- = 158179 ------------------------------------------------------------
+-- rootHash -------- = 73324d996dbd3e88888696fd0c85b6c19e497b1c46cf83bcc2a91ace1afa75f9 --
+-- timestamp ------- = 03/12/2007 11:15:30 -----------------------------------------------
+-- nonce ----------- = 3805 --------------------------------------------------------------
 ------------------------------------------------------------------------------------------
 ------------------------------------------EVENTS------------------------------------------
 ------------------------------------------------------------------------------------------
--- hash ------------ = 860dce7fcbaf20873b9daf5fbc559f2a0babfdf030edbd8ff6acaffe0c17299f --
--- author ---------- = 231a2ef59019f9b092689621e7a134b5cba62909c5298d3e43121135eb34a708 --
+-- hash ------------ = 01f7f59ecfa8b6ef38008a21013d2b1a41e910ddfa31bbc5940fc403c45e235d --
+-- author ---------- = 3d076368647c511f003f83e70bb220e5a54eec10871817e6447ed1e383532f75 --
 -- eventType ------- = EXAM_BOOKING ------------------------------------------------------
--- receiver -------- = 80a5db985fd1cc7655dd8df2bbdffc4bd1012ef365b9059092051482bf11d04d --
--- key ------------- = nsHZrk18cSSp2+aNNe2vZ7ZEE/zqPZX4KJsTRXbn1rXnfZOxsF3sA3MEMlc= ------
--- receiver -------- = 231a2ef59019f9b092689621e7a134b5cba62909c5298d3e43121135eb34a708 --
--- key ------------- = up0JSTSEdGe9ee3RKUYe76pXJPDbJdvqeo7wndHHHrUS1NMW6LP2Wpnv0nc= ------
--- encrypted event - = R9gv+i91pvTgJNhZHHqkoUxFjFDSI3E1OLc00Ua+kBBI8pOv5vxub/IY+6QeNLXr --
----------------------- Wlorgq860UyB+s5nkxZBOWknTHmRNri1KG5fpcE29ra+LfF+17UhrafKCarXVIy4 --
----------------------- 2UNXtikrqH0raWOlIJMFBuBqTscEK0k7alOq4pI42R/iCqeTGbWWPkXeV4gGuJQJ --
----------------------- KIXnoR4LtgC9+DUDNgjgdTAyVCY+rU8953EXFYKRdLZWCvF/LLM0GQJYNHfRJFzr --
----------------------- XKACxO8Ef7lCaae19NcTuAceCg1QugJCMnU8T6Z9ueKqLade7cKSG8i5LN+RC1Hb --
----------------------- CfXOxP0IZBglloB4PhxtqrJcbqneBjX8yjxjxoHJjF6d9Peh1dk7f93GIboGbjqb --
----------------------- bZN9cWMxpvd/naEiXN8tXxqWqdU= --------------------------------------
--- signature ------- = MFXAeE+Zz3UBzBIrtBIaqPqz2AyFUv03TagKseo/QHgLsIvZiBr43NuBlXv/XKsF --
----------------------- 17ajbaK1ZgPuk0OBQ2haDQ== ------------------------------------------
+-- receiver -------- = 3d076368647c511f003f83e70bb220e5a54eec10871817e6447ed1e383532f75 --
+-- key ------------- = AAAAAAAAAAAAAAAArsY/qp59Xxwu6tWH0SwjoBwmQFRsFCUK9ohp+x/R8AE= ------
+-- encrypted event - = AAAAAAAAAAAAAAAAr2XayxPEo6uaXOzMH9uYEdn7y90sZSxNnp/lkPfg74RBdnAP --
+---------------------- KwXxtFSn88Kz4dKQvSzAdXSqbAUaE/7TpqjhnO3efYWo7jVhb3MkqpknCvL63Che --
+---------------------- 7qf9iy8/r2GTmujPbjIWCT02cIKz12tz7wMlulIxg8RGCzD0DR0b0amBUiXx/5UE --
+---------------------- 9ZS57iHNtofamhuGZhispkBRBwB88/LCHWsDoA9eAnkZ4R3rdPru2/No9eXLMAyj --
+---------------------- ttncKQiwjyyREOZV5LhST/6NqLkblkgIpAAMlaDeixlPlJEfj4HnkRu+nTJuhnR4 --
+---------------------- 9Y/vZGU/c0WxWolPNHLczv/W8X4I6DQYjoCrrYRpFc0ok9jCTIXuiW9Wd2wQg1vJ --
+---------------------- lztOdF0YQYz/eKpAYoC2hNgs9KM= --------------------------------------
+-- signature ------- = Lx/kA0S+w+BdI3gAkjSE1ZM8FRW/mlUr1sfucknBU8kVn2YIn598n5dmzW67l2PG --
+---------------------- NYc/JExak7MjRaX2dNUpBg== ------------------------------------------
 ------------------------------------------------------------------------------------------
--- hash ------------ = 69be95c06bdc4cb6794bcd2cdde75632382113033f242314c239cd76b5e75b96 --
--- author ---------- = 705780e6480e41ee6442189b3f1b18c916afc8314517f06f8345c59ff0ef84e4 --
+-- hash ------------ = 01f7f59ecfa8b6ef38008a21013d2b1a41e910ddfa31bbc5940fc403c45e235d --
+-- author ---------- = 3d076368647c511f003f83e70bb220e5a54eec10871817e6447ed1e383532f75 --
 -- eventType ------- = EXAM_BOOKING ------------------------------------------------------
--- receiver -------- = 705780e6480e41ee6442189b3f1b18c916afc8314517f06f8345c59ff0ef84e4 --
--- key ------------- = U8fgroL+9RaOCqnMfS1o9fuXyrcWhIPcs8Dlu2ZCIGrWkvl+keNFJy7w6DU= ------
--- receiver -------- = 80a5db985fd1cc7655dd8df2bbdffc4bd1012ef365b9059092051482bf11d04d --
--- key ------------- = LF8vnYs6V479gM/6C3gPO0PpDEnEc/zXcMfarNTuo61CZPjt3vqIdwIiYKQ= ------
--- encrypted event - = 2as72i7I+mj8mWIAYli4dMFl1SWTUGze3p3WnLUveCBNhHvsuZ5yc8yR6Brn/0uW --
----------------------- HNf9myXQDWUqwh4N566pIrfDcVb+9tBZU+QmP/x4Qh/tCurSl3sAlYXp0AcYjLeR --
----------------------- 2u7nO0BBApKLzs/LgbB2IqTmj85lY+FzJQDVwJ1I0G1776CwhbCi/YZwZx4YRoXC --
----------------------- CXw62NiYIPKuyXk7epjMWUXogheTgeqQhOQXw3IODnC5GFyn+lvmRsntFJzJLr0c --
----------------------- Bh/vqTFg04hZHtMiNz6VCPgE/xc89glBon8nW/4XXFKUdgQzEjYp4aT6ZMQXRVfR --
----------------------- 7AfxLjWnB2972MxINSF5/maZhqZ/VTGPQ24dNHqHsisgnWAE2hytPTp5nfIimfmm --
----------------------- 852knWoUtlsSqkSNoRUEv90keqY= --------------------------------------
--- signature ------- = RzjuTZNd8ycIUmmNS2WD24n0SLGvFhV5vlCcfwsdogqrpvofDPZEKdPCQitQF99f --
----------------------- X+Jjbo6PCfu1Kloc4D/7DA== ------------------------------------------
+-- receiver -------- = 3d076368647c511f003f83e70bb220e5a54eec10871817e6447ed1e383532f75 --
+-- key ------------- = AAAAAAAAAAAAAAAArsY/qp59Xxwu6tWH0SwjoBwmQFRsFCUK9ohp+x/R8AE= ------
+-- encrypted event - = AAAAAAAAAAAAAAAAr2XayxPEo6uaXOzMH9uYEdn7y90sZSxNnp/lkPfg74RBdnAP --
+---------------------- KwXxtFSn88Kz4dKQvSzAdXSqbAUaE/7TpqjhnO3efYWo7jVhb3MkqpknCvL63Che --
+---------------------- 7qf9iy8/r2GTmujPbjIWCT02cIKz12tz7wMlulIxg8RGCzD0DR0b0amBUiXx/5UE --
+---------------------- 9ZS57iHNtofamhuGZhispkBRBwB88/LCHWsDoA9eAnkZ4R3rdPru2/No9eXLMAyj --
+---------------------- ttncKQiwjyyREOZV5LhST/6NqLkblkgIpAAMlaDeixlPlJEfj4HnkRu+nTJuhnR4 --
+---------------------- 9Y/vZGU/c0WxWolPNHLczv/W8X4I6DQYjoCrrYRpFc0ok9jCTIXuiW9Wd2wQg1vJ --
+---------------------- lztOdF0YQYz/eKpAYoC2hNgs9KM= --------------------------------------
+-- signature ------- = Lx/kA0S+w+BdI3gAkjSE1ZM8FRW/mlUr1sfucknBU8kVn2YIn598n5dmzW67l2PG --
+---------------------- NYc/JExak7MjRaX2dNUpBg== ------------------------------------------
 ------------------------------------------------------------------------------------------
 
 Publishing results
@@ -151,52 +143,48 @@ Block mined in 0m 0s
 ------------------------------------------------------------------------------------------
 ---------------------------------------BLOCK HEADER---------------------------------------
 ------------------------------------------------------------------------------------------
--- hash ------------ = 000757e8a4ed9c0456fa5fb157849e5e9abca686ac16e49d5636cf84bf5aa0c4 --
--- previousHash ---- = 0000944e36410b519befddf319f2c7be4f97cd7a94dfeace2553259cf3a89519 --
+-- hash ------------ = 000e275bf54d92cc0ce0b773c8ffaf4af7ed29f6f70aac5c553dbad1eb3d7fb1 --
+-- previousHash ---- = 0004c695c043e039c9b32a8ab2d57a833d1c8a485eea5930e158104321432e19 --
 -- difficulty ------ = 3 -----------------------------------------------------------------
--- rootHash -------- = a722a79b1590e17e65a084f42c399b789de8baef65407e9e8e0b56812f0fc684 --
--- timestamp ------- = 04/01/2024 21:13:03 -----------------------------------------------
--- nonce ----------- = 328553 ------------------------------------------------------------
+-- rootHash -------- = f2752a7be479cabfc73e4f6321893fd51e16341076bb1c8f42ac5ba262a1d12b --
+-- timestamp ------- = 03/12/2007 11:15:30 -----------------------------------------------
+-- nonce ----------- = 1280 --------------------------------------------------------------
 ------------------------------------------------------------------------------------------
 ------------------------------------------EVENTS------------------------------------------
 ------------------------------------------------------------------------------------------
--- hash ------------ = 48121827ed80a7b3d6cf8c53941ab5e25c54e1f63b07d8fea1e7a080a4f1aebe --
--- author ---------- = 80a5db985fd1cc7655dd8df2bbdffc4bd1012ef365b9059092051482bf11d04d --
+-- hash ------------ = a514fca02d897dad78c3c994e12fd350c49fb67d7d42bc64b607404547b6b2d4 --
+-- author ---------- = 3d076368647c511f003f83e70bb220e5a54eec10871817e6447ed1e383532f75 --
 -- eventType ------- = EXAM_RESULT -------------------------------------------------------
--- receiver -------- = 80a5db985fd1cc7655dd8df2bbdffc4bd1012ef365b9059092051482bf11d04d --
--- key ------------- = 12zS+paGoU7rfRjpkkXbpxMhyNKB+TWn+9R4khg67x91MjAtX7Br4EoSy/w= ------
--- receiver -------- = 231a2ef59019f9b092689621e7a134b5cba62909c5298d3e43121135eb34a708 --
--- key ------------- = Eor02evVimwb0N+KxnatTPct7M2NSkyy6cb8WEvQBkuM+8qXzfwZMxvguDU= ------
--- encrypted event - = EB/jN24k07KfhHKpIyQy1HG5WPaiTW1KZW5tLJ+NqcQqADTbU9vlY3kN9jh4LfVx --
----------------------- /KUaSfLDu+nWZIMFOOxVXO+5+svFT8UCQEhIIr91c5d6SD2IpDYuzwJNg8nEaQOC --
----------------------- 1RJ4h2kIV8RjaafJfFX0ICuEVyVY4TKwD/bFAJwpmYJA53wl/EYbR8tCAmN3k6lk --
----------------------- RfpPtK8D+PsOuHYCf/zPKhYR8mfFRoQ0TZzTYruuZl9geIncHu5gxm/M/cDkbUsu --
----------------------- YGzKD91mq60kj+rapIRUhVHiE8Q4Rb+7oDh4xnbP03pMF1UNJ8bgg+epJUyyg1RF --
----------------------- aV95g27M66A8A1TWTZCByO/p3kXHoQIcD+vXaQAv4y22vdBvFj/gl0op7/dEY7W3 --
----------------------- e4qwD18jR4YcfkayvEiERFLTbHpjCb0/SFfxXp1HIZOblV8ZBQvo5TQKBn/UQd0v --
----------------------- HQUWX3/BnJFNavXb7/43pgRT8Gy6RBJlbc4C4CXVOAxAbASV8+53IZzy/hZonz4b --
----------------------- rfHG6UCPvKbpVarXvArQy5tjoJg= --------------------------------------
--- signature ------- = /Q0o5+Np4KkLqw9kd7FNcK8JbxRQv0wKjpsBNwdHfJFfFusaTcX/XXgZjpzln7wD --
----------------------- 5rR4mm0/rVhSvuYUKi5rBg== ------------------------------------------
+-- receiver -------- = 3d076368647c511f003f83e70bb220e5a54eec10871817e6447ed1e383532f75 --
+-- key ------------- = AAAAAAAAAAAAAAAArsY/qp59Xxwu6tWH0SwjoBwmQFRsFCUK9ohp+x/R8AE= ------
+-- encrypted event - = AAAAAAAAAAAAAAAAr2XayxPEo6qaXOzMH9uYEdn7y90sZSxNnp/lkPfg74RBdnAP --
+---------------------- KwXxtFSn88Kz4dKQvSzAdXSqbAUaE+7ZurbkhorefYWo7jVhbXEh4NUhcPTmzSFv --
+---------------------- 2saYnEBJhk6KjeSUAkE0BHMTZd+22GIvjFBVrForgYsKHnj6DR8fit39cyq/xZtI --
+---------------------- 4JGQ6nrk4qi78SyTZxnyhDQpdwwTlO/BGgR/gV1vRSoUrFfZWsbF8Nhv9uW4Wmyt --
+---------------------- p/eoQHyhoXGkMDxPMkMEIPdl7fZVq0sNow5m9NFeo3BejfRx74ClM3AJERF6+vEX --
+---------------------- wL6mciIIQyOJbg1+GWjK/I3V8Hte6zNL09Wuqt9rFcR/lI3HHonqiTxXcD0agl6f --
+---------------------- kDxMdU+zS+VgsfTyPMh61pQpwvrKCR9LCA1ndNzELO4wU+cSl9bbg+aSMTTU1q9N --
+---------------------- Eh7qGsSFt9atk5xgzdpKWqYHhkilvh62HKXC9tFg30+ej+lToK+WS4h0pxtd16VJ --
+---------------------- 1kzZtFtii23CIFNIHFd4o4U5jRU= --------------------------------------
+-- signature ------- = m80BpBaXMUA5lmaf81dRve/H5LifX1C287e/Pc4VVqOCQJbqwbFwcbjtqQIkYgVi --
+---------------------- R7t4JWV8AaupaWnaqMj+CQ== ------------------------------------------
 ------------------------------------------------------------------------------------------
--- hash ------------ = a648f7bc788eab73e57e7170dc16c5cd8421ad4d6d887085010a78a930b1a9ba --
--- author ---------- = 80a5db985fd1cc7655dd8df2bbdffc4bd1012ef365b9059092051482bf11d04d --
+-- hash ------------ = a514fca02d897dad78c3c994e12fd350c49fb67d7d42bc64b607404547b6b2d4 --
+-- author ---------- = 3d076368647c511f003f83e70bb220e5a54eec10871817e6447ed1e383532f75 --
 -- eventType ------- = EXAM_RESULT -------------------------------------------------------
--- receiver -------- = 705780e6480e41ee6442189b3f1b18c916afc8314517f06f8345c59ff0ef84e4 --
--- key ------------- = F495qUofgOyXedkGM9lIH6Ybs5GtJgsLdB/2+sHevX/F5fslHAr4aO9vHIo= ------
--- receiver -------- = 80a5db985fd1cc7655dd8df2bbdffc4bd1012ef365b9059092051482bf11d04d --
--- key ------------- = U5haVk2lgghMhPk6g3Cqdyuq9UTOurHdgGMDgyxSlPuMjRdWrIBhPfb05us= ------
--- encrypted event - = RLc718M2AWpvtNxW1op0t74eedPIBkK2popjAdqWyiB1VcVRurXUAf7YZlKUVIxu --
----------------------- EgOT4TkUl9DsOoIlZ3/RVrp9ZPToZNs4mtWGCG4tnd/H/l6IYSepQ+sFxa7aKmAB --
----------------------- gZnZJtb6FoyPMZilJ6+MvDV/aBstHQgHvdtpF7U3uDk0GHAKCg7SFMI4Ielbqi4j --
----------------------- dHvGNNlbnB8HHAfOPAUBi/xqWVp4/R+Ai2opiZIcsd24h82cecpDddK/VAOCEhoQ --
----------------------- PSO+oZtrqFwa44HyYUOglNQnGC+qhA9SC91oy+yroaDFpaalvalzbAq7DEIOYdq+ --
----------------------- DutaJKfxaWN0LJnjuL+bwBXaPmPVBmlVrcboX9RWwr8hqtzuvsgf3YLXqPTXwWJV --
----------------------- 4yYDX6QzCLbjRjY+UZtCDS885TJtWACia3/TMlz7Y0mhjLhYi0WBYgxINhtLTojA --
----------------------- rftxqv6LpR3bYf8DojHzf9sFD1HftxZJtp5SgJoSgj+R/rSutGS4PZCapK4pimQ6 --
----------------------- Dg3DM0tiX39hS5rDk+nFXgmq6gE= --------------------------------------
--- signature ------- = Pi1g2xyla2amFJ2nMgzQfM/Dj3+XsysxnQJkoADJGb6KK303VobB0/hkHcIPylHm --
----------------------- mBIVYfOSw7FIkJZkF9UaBA== ------------------------------------------
+-- receiver -------- = 3d076368647c511f003f83e70bb220e5a54eec10871817e6447ed1e383532f75 --
+-- key ------------- = AAAAAAAAAAAAAAAArsY/qp59Xxwu6tWH0SwjoBwmQFRsFCUK9ohp+x/R8AE= ------
+-- encrypted event - = AAAAAAAAAAAAAAAAr2XayxPEo6qaXOzMH9uYEdn7y90sZSxNnp/lkPfg74RBdnAP --
+---------------------- KwXxtFSn88Kz4dKQvSzAdXSqbAUaE+7ZurbkhorefYWo7jVhbXEh4NUhcPTmzSFv --
+---------------------- 2saYnEBJhk6KjeSUAkE0BHMTZd+22GIvjFBVrForgYsKHnj6DR8fit39cyq/xZtI --
+---------------------- 4JGQ6nrk4qi78SyTZxnyhDQpdwwTlO/BGgR/gV1vRSoUrFfZWsbF8Nhv9uW4Wmyt --
+---------------------- p/eoQHyhoXGkMDxPMkMEIPdl7fZVq0sNow5m9NFeo3BejfRx74ClM3AJERF6+vEX --
+---------------------- wL6mciIIQyOJbg1+GWjK/I3V8Hte6zNL09Wuqt9rFcR/lI3HHonqiTxXcD0agl6f --
+---------------------- kDxMdU+zS+VgsfTyPMh61pQpwvrKCR9LCA1ndNzELO4wU+cSl9bbg+aSMTTU1q9N --
+---------------------- Eh7qGsSFt9atk5xgzdpKWqYHhkilvh62HKXC9tFg30+ej+lToK+WS4h0pxtd16VJ --
+---------------------- 1kzZtFtii23CIFNIHFd4o4U5jRU= --------------------------------------
+-- signature ------- = m80BpBaXMUA5lmaf81dRve/H5LifX1C287e/Pc4VVqOCQJbqwbFwcbjtqQIkYgVi --
+---------------------- R7t4JWV8AaupaWnaqMj+CQ== ------------------------------------------
 ------------------------------------------------------------------------------------------
 
 Accepting exams
@@ -204,46 +192,43 @@ Block mined in 0m 0s
 ------------------------------------------------------------------------------------------
 ---------------------------------------BLOCK HEADER---------------------------------------
 ------------------------------------------------------------------------------------------
--- hash ------------ = 00078d8912f6ba96811e0e8a2c206785fe15a2d3ca06679f14c4d1f72e7902e1 --
--- previousHash ---- = 000757e8a4ed9c0456fa5fb157849e5e9abca686ac16e49d5636cf84bf5aa0c4 --
+-- hash ------------ = 000230c2858f7280e5018dde8eb5ba6b95e348aa392ecc5a05cd776b637145da --
+-- previousHash ---- = 000e275bf54d92cc0ce0b773c8ffaf4af7ed29f6f70aac5c553dbad1eb3d7fb1 --
 -- difficulty ------ = 3 -----------------------------------------------------------------
--- rootHash -------- = 449494d8a61f462b74172e75f36a15b68361e4484f7368399cbdfc11dbfb652d --
--- timestamp ------- = 04/01/2024 21:13:03 -----------------------------------------------
--- nonce ----------- = 32100 -------------------------------------------------------------
+-- rootHash -------- = 22a4f65a51763e48a5625dfa459719ae86cff6fafeef5eb2e93ea9057d82a1d9 --
+-- timestamp ------- = 03/12/2007 11:15:30 -----------------------------------------------
+-- nonce ----------- = 637 ---------------------------------------------------------------
 ------------------------------------------------------------------------------------------
 ------------------------------------------EVENTS------------------------------------------
 ------------------------------------------------------------------------------------------
--- hash ------------ = ace5b825cb0c01ff98e8750c96d5a3b24a0c578d6990ffdf1734d4e384f05e96 --
--- author ---------- = 231a2ef59019f9b092689621e7a134b5cba62909c5298d3e43121135eb34a708 --
+-- hash ------------ = 6e515cf865b165650f183fffb6d5b598206ae1c3b3d8ccea0034bce358a7d78b --
+-- author ---------- = 3d076368647c511f003f83e70bb220e5a54eec10871817e6447ed1e383532f75 --
 -- eventType ------- = EXAM_CONFIRM ------------------------------------------------------
--- receiver -------- = 80a5db985fd1cc7655dd8df2bbdffc4bd1012ef365b9059092051482bf11d04d --
--- key ------------- = b1ZGUyh5OrihyzuL5xXKxOk+l1SmInjZE+n8UvksX7qVSzWfGODwMTWLbVc= ------
--- receiver -------- = 231a2ef59019f9b092689621e7a134b5cba62909c5298d3e43121135eb34a708 --
--- key ------------- = 93u2F1Yft21PqByFZpoWVnqLY4nOmwnooGlknEULYlSPejqD6Hg1Asxg0Qc= ------
--- encrypted event - = KGgPHCQYET8aQkYE9YD7TNBKArKuq1dfxFWqJbdcDvfZuGbtt9RT/XRzX4jHMDES --
----------------------- X0FYNozK7KBJoRn9XlBBAxF/O9yP2TTSQr/91xsz7vY8kTpWk4Upog7w91yhVOjH --
----------------------- /+0VCkABQJhxzusRKrCKqCpnSJTRjQldZvBXhnO1tUR4bdQdsOWjmnaERRFhfnh4 --
----------------------- GNNu4ToL3aoh9RcTNEsbz/PzINmpAVdGW02/dtCnlcsKBJF8taHCkqnLyFx4+cYt --
----------------------- x+XGIyxR8g35bc4PxrzfrKV8qMKzLBWhAGouEc2b2jOFrgQQTmnN6pZ8UkTm1eKO --
----------------------- AO1OnPZLRCgo9MxK4XLxjLgg1Mqd8M2iePRKK/JlExtoWB4L3Fqvc9T9mYhOP9D1 --
----------------------- RHR5/UCKa2Kl+mfwnXKhu8WXXb+1zqIHw2zaMjVtcQ== ----------------------
--- signature ------- = BJ5+eYOQB2ywN1ibKO/ojJaAwnSTZR0qmQVWKVnZCM2pD+BlmosHjT5cS1W5Csd3 --
----------------------- AMktB+ep+29A23JRJdyrDA== ------------------------------------------
+-- receiver -------- = 3d076368647c511f003f83e70bb220e5a54eec10871817e6447ed1e383532f75 --
+-- key ------------- = AAAAAAAAAAAAAAAArsY/qp59Xxwu6tWH0SwjoBwmQFRsFCUK9ohp+x/R8AE= ------
+-- encrypted event - = AAAAAAAAAAAAAAAAr2XayxPEo6uaXOzMH9uYEdn7y90sZSxNnp/lkPfg74RBdnAP --
+---------------------- KwXxtFSn88Kz4dKQvSzAdXSqbAUaE//Tp6XhgOfefYWo7jVhb3MkrY8nBfL61ity --
+---------------------- 5Kvc/ydOjG+XqfGBbyd4fF4PZYa7lmApzWQOjUc3j94hJTCeaA8biricP1WS2ZsR --
+---------------------- 9deJ5jjNooe1/gmeVx29rQ9sB3kPhv/WDAV5gV1vRSog3FHeLr3xx/lc1aSLFyyP --
+---------------------- nrjmBRanoXKeAwVpTnYgANMR99xpe2X7GRgu3RUzjQRPkOZYv+XXocyLtnIssgMo --
+---------------------- pI7pNGY5eBW9Xo9NNSHYzP3V8nNauDdNiYGor4w7EZQskNiRG4Dp1DxWKm4f1VjO --
+---------------------- kWocJRuzG+xjvPDxYs54w+9KJyzPPF942syFAuo0uA== ----------------------
+-- signature ------- = deYf6qMPmLuYmNh1T4ZVYy7TFgBo7b1WA0gQdytqmSAdWXqLPJNGzCw9efxKW4SP --
+---------------------- VZbgDldikMH+Dp1f2XhNCg== ------------------------------------------
 ------------------------------------------------------------------------------------------
--- hash ------------ = 83ae072518802b2602477c7266a0518880a92765d789fa5d8c6be3272d5ff913 --
--- author ---------- = 705780e6480e41ee6442189b3f1b18c916afc8314517f06f8345c59ff0ef84e4 --
+-- hash ------------ = 6e515cf865b165650f183fffb6d5b598206ae1c3b3d8ccea0034bce358a7d78b --
+-- author ---------- = 3d076368647c511f003f83e70bb220e5a54eec10871817e6447ed1e383532f75 --
 -- eventType ------- = EXAM_CONFIRM ------------------------------------------------------
--- receiver -------- = 705780e6480e41ee6442189b3f1b18c916afc8314517f06f8345c59ff0ef84e4 --
--- key ------------- = ps2PIPla9HMqyXrvcgdKa4Oq1BVas/6j2dmH+G3TmxFCyQOZZ0OBnOWIXaQ= ------
--- receiver -------- = 80a5db985fd1cc7655dd8df2bbdffc4bd1012ef365b9059092051482bf11d04d --
--- key ------------- = eweq5y+a9Y7/NUP3vNexAo40hKr7fa0chOfEkAnbOyDdituFPaXF8C0+IyY= ------
--- encrypted event - = ttUSgWPh53bCg/lptkzZ/DvYHa6gAN/ddbMB/uYQHeYxfEHFDCfUhPJia3wiDHu2 --
----------------------- YQWHUYfLLzsc2S3U27PEUrXPUx+Sp9/rwmKw7jAoxPXpmtxUS8XruWTti6jWik8z --
----------------------- GOtth/Y9z63/fOty0/OJ7mn71qH1xkT36O1SXOLyUSO2aFjl8znqN3ZQV78j9fR4 --
----------------------- Hye1hm/sYyyByBTB3KE5hN2NVOSunADybYE+il1l14XSxjzdV8Q2yaMzn4yr4upp --
----------------------- WfeBnzPej6Y2xV371uzKkWRNVw7earV10lpAaiaGmqbmLDz2HNr3GmBEPojBWzoI --
----------------------- Dmmh/Swg9m7d/IRER0ykccySqAd7404nCy/ub2naf71gOY6LSMjPjIJfRJmC7XM3 --
----------------------- dd4Yk4K0fU3jK49EQrQfIhxL/X5fDSsCkK4/jPs+aw== ----------------------
--- signature ------- = GO0gOTbDkwUlhIkBA2+bOqxVmd0KqN2NUHDIUXcDOkaqkuyz8MPLU56cmlO+m0d+ --
----------------------- 7Mj9E2rV4oZT7Z4O8QFGBw== ------------------------------------------
+-- receiver -------- = 3d076368647c511f003f83e70bb220e5a54eec10871817e6447ed1e383532f75 --
+-- key ------------- = AAAAAAAAAAAAAAAArsY/qp59Xxwu6tWH0SwjoBwmQFRsFCUK9ohp+x/R8AE= ------
+-- encrypted event - = AAAAAAAAAAAAAAAAr2XayxPEo6uaXOzMH9uYEdn7y90sZSxNnp/lkPfg74RBdnAP --
+---------------------- KwXxtFSn88Kz4dKQvSzAdXSqbAUaE//Tp6XhgOfefYWo7jVhb3MkrY8nBfL61ity --
+---------------------- 5Kvc/ydOjG+XqfGBbyd4fF4PZYa7lmApzWQOjUc3j94hJTCeaA8biricP1WS2ZsR --
+---------------------- 9deJ5jjNooe1/gmeVx29rQ9sB3kPhv/WDAV5gV1vRSog3FHeLr3xx/lc1aSLFyyP --
+---------------------- nrjmBRanoXKeAwVpTnYgANMR99xpe2X7GRgu3RUzjQRPkOZYv+XXocyLtnIssgMo --
+---------------------- pI7pNGY5eBW9Xo9NNSHYzP3V8nNauDdNiYGor4w7EZQskNiRG4Dp1DxWKm4f1VjO --
+---------------------- kWocJRuzG+xjvPDxYs54w+9KJyzPPF942syFAuo0uA== ----------------------
+-- signature ------- = deYf6qMPmLuYmNh1T4ZVYy7TFgBo7b1WA0gQdytqmSAdWXqLPJNGzCw9efxKW4SP --
+---------------------- VZbgDldikMH+Dp1f2XhNCg== ------------------------------------------
 ------------------------------------------------------------------------------------------
+

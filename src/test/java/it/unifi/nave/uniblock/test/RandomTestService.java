@@ -18,21 +18,17 @@
  */
 package it.unifi.nave.uniblock.test;
 
-import dagger.Binds;
-import dagger.Module;
-import it.unifi.nave.uniblock.service.crypto.PKService;
 import it.unifi.nave.uniblock.service.crypto.RandomService;
-import it.unifi.nave.uniblock.service.demo.PrintService;
-import it.unifi.nave.uniblock.service.demo.factory.PersistenceModule;
+import javax.inject.Inject;
+import javax.inject.Singleton;
 
-@Module(includes = PersistenceModule.class)
-public interface TestModule {
-  @Binds
-  PrintService printService(PrintBufferService printBufferService);
+@Singleton
+public class RandomTestService extends RandomService {
+  @Inject
+  public RandomTestService() {}
 
-  @Binds
-  RandomService randomService(RandomTestService randomTestService);
-
-  @Binds
-  PKService pkService(PkTestService pkTestService);
+  @Override
+  public byte[] generateRandom(int length) {
+    return new byte[length];
+  }
 }

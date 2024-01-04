@@ -20,7 +20,6 @@ package it.unifi.nave.uniblock.service.crypto;
 
 import com.google.common.primitives.Bytes;
 import java.nio.charset.StandardCharsets;
-import java.security.SecureRandom;
 import java.util.Arrays;
 import java.util.Base64;
 import javax.crypto.Cipher;
@@ -36,19 +35,20 @@ public class AESService {
   private static final int IV_GCM_SIZE_BYTE = 12;
   private static final String SYMMETRIC_CIPHER = "AES";
   private static final String AES_SUITE = "AES/GCM/NoPadding";
-  private static final SecureRandom SECURE_RANDOM = new SecureRandom();
 
   private final HashService hashService;
+  private final RandomService randomService;
 
   @Inject
-  public AESService(HashService hashService) {
+  public AESService(HashService hashService, RandomService randomService) {
     this.hashService = hashService;
+    this.randomService = randomService;
   }
 
   public String encrypt(byte[] secret, byte[] plain, boolean derive) {
     try {
       var key = derive ? deriveKey(secret) : secret;
-      var iv = generateRandom(IV_GCM_SIZE_BYTE);
+      var iv = randomService.generateRandom(IV_GCM_SIZE_BYTE);
       var cipher = Cipher.getInstance(AES_SUITE);
       var parameterSpec = new GCMParameterSpec(GCM_TAG_SIZE_BIT, iv);
       cipher.init(Cipher.ENCRYPT_MODE, new SecretKeySpec(key, SYMMETRIC_CIPHER), parameterSpec);
@@ -78,12 +78,6 @@ public class AESService {
   }
 
   public byte[] randomKey() {
-    return generateRandom(AES_KEY_SIZE_BYTE);
-  }
-
-  private byte[] generateRandom(int length) {
-    var random = new byte[length];
-    SECURE_RANDOM.nextBytes(random);
-    return random;
+    return randomService.generateRandom(AES_KEY_SIZE_BYTE);
   }
 }

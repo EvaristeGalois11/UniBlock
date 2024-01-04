@@ -29,14 +29,13 @@ import it.unifi.nave.uniblock.service.crypto.PKService;
 import it.unifi.nave.uniblock.service.data.CertificateService;
 import it.unifi.nave.uniblock.service.data.EncryptedEventService;
 import it.unifi.nave.uniblock.service.data.MerkleTreeService;
+import it.unifi.nave.uniblock.util.InstantUtil;
 import java.security.PrivateKey;
 import java.time.Duration;
-import java.time.Instant;
 import java.time.LocalDate;
 import java.time.Month;
 import java.util.Collections;
 import java.util.List;
-import java.util.concurrent.ThreadLocalRandom;
 import javax.inject.Inject;
 
 public class DemoService {
@@ -172,11 +171,7 @@ public class DemoService {
             .map(
                 s ->
                     new Encryptable.ExamResult(
-                        professor,
-                        s,
-                        "PROGRAMMAZIONE",
-                        LocalDate.of(2017, Month.JUNE, 29),
-                        ThreadLocalRandom.current().nextInt(18, 31)))
+                        professor, s, "PROGRAMMAZIONE", LocalDate.of(2017, Month.JUNE, 29), 25))
             .map(
                 e ->
                     encryptedEventService.build(
@@ -209,9 +204,9 @@ public class DemoService {
     var block =
         new Block(previousHash, difficulty, events, merkleTreeService.calculateRootHash(events));
     printService.print(message);
-    var start = Instant.now();
+    var start = InstantUtil.now();
     minerService.mine(block, progress);
-    var end = Instant.now();
+    var end = InstantUtil.now();
     var duration = Duration.between(start, end);
     printService.println(
         "\nBlock mined in "

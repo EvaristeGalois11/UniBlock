@@ -18,6 +18,7 @@
  */
 package it.unifi.nave.uniblock.data.block;
 
+import it.unifi.nave.uniblock.util.InstantUtil;
 import java.io.Serializable;
 import java.time.Instant;
 
@@ -25,7 +26,7 @@ public class BlockHeader implements Serializable, Cloneable {
   private final String previousHash;
   private final int difficulty;
   private final String rootHash;
-  private final Instant timestamp = Instant.now();
+  private final Instant timestamp = InstantUtil.now();
 
   private int nonce = 0;
 
@@ -40,7 +41,7 @@ public class BlockHeader implements Serializable, Cloneable {
     try {
       return (BlockHeader) super.clone();
     } catch (CloneNotSupportedException e) {
-      throw new AssertionError();
+      throw new RuntimeException(e);
     }
   }
 

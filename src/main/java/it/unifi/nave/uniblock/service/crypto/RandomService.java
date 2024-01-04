@@ -16,23 +16,22 @@
  *You should have received a copy of the GNU General Public License
  *along with UniBlock. If not, see <https://www.gnu.org/licenses/>.
  */
-package it.unifi.nave.uniblock.test;
+package it.unifi.nave.uniblock.service.crypto;
 
-import dagger.Binds;
-import dagger.Module;
-import it.unifi.nave.uniblock.service.crypto.PKService;
-import it.unifi.nave.uniblock.service.crypto.RandomService;
-import it.unifi.nave.uniblock.service.demo.PrintService;
-import it.unifi.nave.uniblock.service.demo.factory.PersistenceModule;
+import java.security.SecureRandom;
+import javax.inject.Inject;
+import javax.inject.Singleton;
 
-@Module(includes = PersistenceModule.class)
-public interface TestModule {
-  @Binds
-  PrintService printService(PrintBufferService printBufferService);
+@Singleton
+public class RandomService {
+  private static final SecureRandom SECURE_RANDOM = new SecureRandom();
 
-  @Binds
-  RandomService randomService(RandomTestService randomTestService);
+  @Inject
+  public RandomService() {}
 
-  @Binds
-  PKService pkService(PkTestService pkTestService);
+  public byte[] generateRandom(int length) {
+    var random = new byte[length];
+    SECURE_RANDOM.nextBytes(random);
+    return random;
+  }
 }

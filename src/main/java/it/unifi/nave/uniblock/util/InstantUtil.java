@@ -16,23 +16,19 @@
  *You should have received a copy of the GNU General Public License
  *along with UniBlock. If not, see <https://www.gnu.org/licenses/>.
  */
-package it.unifi.nave.uniblock.test;
+package it.unifi.nave.uniblock.util;
 
-import dagger.Binds;
-import dagger.Module;
-import it.unifi.nave.uniblock.service.crypto.PKService;
-import it.unifi.nave.uniblock.service.crypto.RandomService;
-import it.unifi.nave.uniblock.service.demo.PrintService;
-import it.unifi.nave.uniblock.service.demo.factory.PersistenceModule;
+import java.time.Clock;
+import java.time.Instant;
 
-@Module(includes = PersistenceModule.class)
-public interface TestModule {
-  @Binds
-  PrintService printService(PrintBufferService printBufferService);
+public class InstantUtil {
+  public static Clock clock = Clock.systemUTC();
 
-  @Binds
-  RandomService randomService(RandomTestService randomTestService);
+  public static Instant now() {
+    return Instant.now(clock);
+  }
 
-  @Binds
-  PKService pkService(PkTestService pkTestService);
+  public static void setClock(Clock c) {
+    clock = c;
+  }
 }
