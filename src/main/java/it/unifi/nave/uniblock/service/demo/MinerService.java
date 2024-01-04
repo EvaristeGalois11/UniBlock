@@ -66,9 +66,9 @@ public class MinerService {
 
   public OptionalInt findNonce(int offset) {
     return IntStream.range(offset * NUMBER_OF_HASH, (offset + 1) * NUMBER_OF_HASH)
-        //        .parallel()
+        .parallel()
         .filter(n -> checkNonce(n, block.getBlockHeader().clone()))
-        .findAny();
+        .findFirst();
   }
 
   private boolean checkNonce(int i, BlockHeader blockHeader) {
