@@ -13,7 +13,7 @@
         <maven.compiler.release>21</maven.compiler.release>
         <commons-lang.version>3.14.0</commons-lang.version>
         <guava.version>33.1.0-jre</guava.version>
-        <dagger.version>2.51</dagger.version>
+        <dagger.version>2.51.1</dagger.version>
         <junit.version>5.10.2</junit.version>
         <commons-cli.version>1.6.0</commons-cli.version>
         <maven-compiler-plugin.version>3.13.0</maven-compiler-plugin.version>
