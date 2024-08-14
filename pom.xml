@@ -14,7 +14,7 @@
         <commons-lang.version>3.16.0</commons-lang.version>
         <guava.version>33.2.1-jre</guava.version>
         <dagger.version>2.52</dagger.version>
-        <junit.version>5.10.3</junit.version>
+        <junit.version>5.11.0</junit.version>
         <commons-cli.version>1.8.0</commons-cli.version>
         <maven-compiler-plugin.version>3.13.0</maven-compiler-plugin.version>
         <maven-surefire-plugin.version>3.3.1</maven-surefire-plugin.version>
