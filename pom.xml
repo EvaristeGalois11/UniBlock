@@ -11,7 +11,7 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.release>21</maven.compiler.release>
-        <commons-lang.version>3.16.0</commons-lang.version>
+        <commons-lang.version>3.17.0</commons-lang.version>
         <guava.version>33.3.0-jre</guava.version>
         <dagger.version>2.52</dagger.version>
         <junit.version>5.11.0</junit.version>
