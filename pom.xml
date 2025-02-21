@@ -16,7 +16,7 @@
         <dagger.version>2.55</dagger.version>
         <junit.version>5.11.4</junit.version>
         <commons-cli.version>1.9.0</commons-cli.version>
-        <maven-compiler-plugin.version>3.13.0</maven-compiler-plugin.version>
+        <maven-compiler-plugin.version>3.14.0</maven-compiler-plugin.version>
         <maven-surefire-plugin.version>3.5.2</maven-surefire-plugin.version>
         <maven-failsafe-plugin.version>3.5.2</maven-failsafe-plugin.version>
         <spotless-maven-plugin.version>2.44.3</spotless-maven-plugin.version>
