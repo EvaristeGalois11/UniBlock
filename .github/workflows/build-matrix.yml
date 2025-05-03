@@ -1,0 +1,29 @@
+name: 'Build with matrix'
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    types: [opened, synchronize, reopened]
+jobs:
+  build:
+    strategy:
+      matrix:
+        java: [ 8, 11, 17, 21, 24 ]
+    name: 'Verify project JDK ${{ matrix.java }}'
+    runs-on: ubuntu-latest
+    steps:
+      - name: 'Checkout project'
+        uses: actions/checkout@v4
+
+      - name: 'Set up Java 21'
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: |
+            21
+            ${{ matrix.java }}
+          cache: maven
+
+      - name: 'Build and test'
+        run: ./mvnw -B verify

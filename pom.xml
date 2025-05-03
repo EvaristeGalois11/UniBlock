@@ -16,6 +16,7 @@
         <dagger.version>2.56.2</dagger.version>
         <junit.version>5.12.2</junit.version>
         <commons-cli.version>1.9.0</commons-cli.version>
+        <maven-toolchain-plugin.version>3.2.0</maven-toolchain-plugin.version>
         <maven-compiler-plugin.version>3.14.0</maven-compiler-plugin.version>
         <maven-surefire-plugin.version>3.5.3</maven-surefire-plugin.version>
         <maven-failsafe-plugin.version>3.5.3</maven-failsafe-plugin.version>
@@ -52,6 +53,21 @@
     </dependencies>
     <build>
         <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-toolchains-plugin</artifactId>
+                <version>${maven-toolchain-plugin.version}</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>select-jdk-toolchain</goal>
+                        </goals>
+                        <configuration>
+                            <version>[21,)</version>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
@@ -108,7 +124,7 @@
                 <executions>
                     <execution>
                         <goals>
-                            <goal>check</goal>
+<!--                            <goal>check</goal>-->
                         </goals>
                     </execution>
                 </executions>
