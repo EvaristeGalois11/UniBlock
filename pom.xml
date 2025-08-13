@@ -11,6 +11,7 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.release>21</maven.compiler.release>
+        <maven.deploy.skip>true</maven.deploy.skip>
         <commons-lang.version>3.18.0</commons-lang.version>
         <guava.version>33.4.8-jre</guava.version>
         <dagger.version>2.57</dagger.version>
@@ -117,22 +118,30 @@
                 <groupId>com.google.cloud.tools</groupId>
                 <artifactId>jib-maven-plugin</artifactId>
                 <version>${jib-maven-plugin.version}</version>
-                <configuration>
-                    <from>
-                        <image>eclipse-temurin:21-jre-alpine</image>
-                    </from>
-                    <to>
-                        <image>ghcr.io/evaristegalois11/uniblock</image>
-                        <tags>
-                            <tag>${project.version}</tag>
-                            <tag>latest</tag>
-                        </tags>
-                    </to>
-                    <container>
-                        <format>OCI</format>
-                        <user>nobody</user>
-                    </container>
-                </configuration>
+                <executions>
+                    <execution>
+                        <phase>deploy</phase>
+                        <goals>
+                            <goal>build</goal>
+                        </goals>
+                        <configuration>
+                            <from>
+                                <image>eclipse-temurin:21-jre-alpine</image>
+                            </from>
+                            <to>
+                                <image>ghcr.io/evaristegalois11/uniblock</image>
+                                <tags>
+                                    <tag>${project.version}</tag>
+                                    <tag>latest</tag>
+                                </tags>
+                            </to>
+                            <container>
+                                <format>OCI</format>
+                                <user>nobody</user>
+                            </container>
+                        </configuration>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>
