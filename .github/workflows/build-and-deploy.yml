@@ -32,7 +32,7 @@ jobs:
       - name: 'Checkout project'
         uses: actions/checkout@v5
 
-      - name: 'Set up Java 21'
+      - name: 'Set up Java'
         uses: actions/setup-java@v4
         with:
           distribution: temurin
@@ -47,4 +47,4 @@ jobs:
           registry: 'ghcr.io'
 
       - name: 'Deploy'
-        run: ./mvnw -B compile jib:build
+        run: ./mvnw -B deploy -DskipTests
