@@ -19,7 +19,7 @@
         <commons-cli.version>1.10.0</commons-cli.version>
         <maven-compiler-plugin.version>3.14.0</maven-compiler-plugin.version>
         <maven-surefire-plugin.version>3.5.4</maven-surefire-plugin.version>
-        <maven-failsafe-plugin.version>3.5.3</maven-failsafe-plugin.version>
+        <maven-failsafe-plugin.version>3.5.4</maven-failsafe-plugin.version>
         <spotless-maven-plugin.version>2.46.1</spotless-maven-plugin.version>
         <jib-maven-plugin.version>3.4.6</jib-maven-plugin.version>
     </properties>
