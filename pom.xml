@@ -14,7 +14,7 @@
         <maven.deploy.skip>true</maven.deploy.skip>
         <commons-lang.version>3.19.0</commons-lang.version>
         <guava.version>33.5.0-jre</guava.version>
-        <dagger.version>2.57.1</dagger.version>
+        <dagger.version>2.57.2</dagger.version>
         <junit.version>5.13.4</junit.version>
         <commons-cli.version>1.10.0</commons-cli.version>
         <maven-compiler-plugin.version>3.14.1</maven-compiler-plugin.version>
