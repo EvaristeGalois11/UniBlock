@@ -40,7 +40,7 @@ jobs:
           cache: maven
 
       - name: 'Login to Github Container Registry'
-        uses: redhat-actions/podman-login@v1
+        uses: redhat-actions/podman-login@v2
         with:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
