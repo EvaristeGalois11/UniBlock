@@ -1,5 +1,4 @@
 [![Build and deploy](https://github.com/EvaristeGalois11/UniBlock/actions/workflows/build-and-deploy.yml/badge.svg)](https://github.com/EvaristeGalois11/UniBlock/actions/workflows/build-and-deploy.yml)
-[![CodeQL](https://github.com/EvaristeGalois11/UniBlock/actions/workflows/codeql.yml/badge.svg)](https://github.com/EvaristeGalois11/UniBlock/actions/workflows/codeql.yml)
 
 # UniBlock
 University themed blockchain
