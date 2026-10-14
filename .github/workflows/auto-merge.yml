@@ -1,5 +1,6 @@
 name: 'Auto merge dependency update'
 on: pull_request_target
+permissions: {}
 jobs:
   auto-merge:
     name: 'Auto merge'
