@@ -10,7 +10,8 @@
     <packaging>jar</packaging>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <maven.compiler.release>21</maven.compiler.release>
+        <java.version>25</java.version>
+        <maven.compiler.release>${java.version}</maven.compiler.release>
         <maven.deploy.skip>true</maven.deploy.skip>
         <commons-lang.version>3.21.0</commons-lang.version>
         <guava.version>33.7.2-jre</guava.version>
@@ -126,7 +127,7 @@
                         </goals>
                         <configuration>
                             <from>
-                                <image>eclipse-temurin:21-jre-alpine</image>
+                                <image>eclipse-temurin:${java.version}-jre-alpine</image>
                             </from>
                             <to>
                                 <image>ghcr.io/evaristegalois11/uniblock</image>
