@@ -7,11 +7,6 @@ jobs:
     runs-on: ubuntu-latest
     if: github.actor == 'dependabot[bot]' && github.repository_owner == 'EvaristeGalois11'
     steps:
-      - name: 'Approve'
-        run: gh pr review --approve "$PR_URL"
-        env:
-          GH_TOKEN: ${{ secrets.AUTO_MERGE_TOKEN }}
-          PR_URL: ${{ github.event.pull_request.html_url }}
       - name: 'Merge'
         run: gh pr merge --auto --rebase "$PR_URL"
         env:
