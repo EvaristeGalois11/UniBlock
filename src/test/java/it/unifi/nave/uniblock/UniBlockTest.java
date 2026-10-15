@@ -26,7 +26,7 @@ import java.io.IOException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-class UniBlockIT {
+class UniBlockTest {
   private static final int TEST_DIFFICULTY = 3;
   private static final String OUTPUT_FILE = "/output.txt";
 
