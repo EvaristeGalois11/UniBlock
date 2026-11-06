@@ -154,14 +154,11 @@ public class DemoService {
         previousHash,
         "Booking exams",
         students.stream()
-            .map(
-                s ->
-                    new Encryptable.ExamBooking(
-                        s, "PROGRAMMAZIONE", LocalDate.of(2017, Month.JUNE, 29)))
-            .map(
-                e ->
-                    encryptedEventService.build(
-                        e, e.student(), Collections.singletonList(professor)))
+            .map(s ->
+                new Encryptable.ExamBooking(
+                    s, "PROGRAMMAZIONE", LocalDate.of(2017, Month.JUNE, 29)))
+            .map(e ->
+                encryptedEventService.build(e, e.student(), Collections.singletonList(professor)))
             .toList());
   }
 
@@ -170,14 +167,11 @@ public class DemoService {
         previousHash,
         "Publishing results",
         students.stream()
-            .map(
-                s ->
-                    new Encryptable.ExamResult(
-                        professor, s, "PROGRAMMAZIONE", LocalDate.of(2017, Month.JUNE, 29), 25))
-            .map(
-                e ->
-                    encryptedEventService.build(
-                        e, professor, Collections.singletonList(e.student())))
+            .map(s ->
+                new Encryptable.ExamResult(
+                    professor, s, "PROGRAMMAZIONE", LocalDate.of(2017, Month.JUNE, 29), 25))
+            .map(e ->
+                encryptedEventService.build(e, professor, Collections.singletonList(e.student())))
             .toList());
   }
 
@@ -186,14 +180,11 @@ public class DemoService {
         previousHash,
         "Accepting exams",
         students.stream()
-            .map(
-                s ->
-                    new Encryptable.ExamConfirm(
-                        s, "PROGRAMMAZIONE", LocalDate.of(2017, Month.JUNE, 29), true))
-            .map(
-                e ->
-                    encryptedEventService.build(
-                        e, e.student(), Collections.singletonList(professor)))
+            .map(s ->
+                new Encryptable.ExamConfirm(
+                    s, "PROGRAMMAZIONE", LocalDate.of(2017, Month.JUNE, 29), true))
+            .map(e ->
+                encryptedEventService.build(e, e.student(), Collections.singletonList(professor)))
             .toList());
   }
 
